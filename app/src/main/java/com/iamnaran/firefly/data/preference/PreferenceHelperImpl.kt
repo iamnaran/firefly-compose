@@ -11,12 +11,34 @@ class PreferenceHelperImpl @Inject constructor(
 
     override suspend fun saveLoggedInUserId(userId: String) {
         val preference = sharedPreferences.edit();
-        preference.putString(PrefConstants.PREF_USER_TOKEN_KEY, userId)
+        preference.putString(PrefConstants.USER_ID_PREF_KEY, userId)
         preference.apply();
     }
 
-    override suspend fun getLoggedInUserId(): String? {
-        return sharedPreferences.getString(PrefConstants.PREF_USER_TOKEN_KEY, null)
+    override fun getLoggedInUserId(): String? {
+        return sharedPreferences.getString(PrefConstants.USER_ID_PREF_KEY, null)
+    }
+
+
+    override suspend fun saveAccessToken(accessToken: String) {
+        val preference = sharedPreferences.edit();
+        preference.putString(PrefConstants.USER_TOKEN_PREF_KEY, accessToken)
+        preference.apply();
+    }
+
+    override fun getAccessToken(): String? {
+        return sharedPreferences.getString(PrefConstants.USER_TOKEN_PREF_KEY, null)
+    }
+
+    override suspend fun saveLoggedInStatus(status: Boolean) {
+        val preference = sharedPreferences.edit();
+        preference.putBoolean(PrefConstants.LOGGED_IN_STATUS, status)
+        preference.apply();
+    }
+
+    override fun getLoggedInStatus(): Boolean {
+        return sharedPreferences.getBoolean(PrefConstants.LOGGED_IN_STATUS, false)
+
     }
 
 

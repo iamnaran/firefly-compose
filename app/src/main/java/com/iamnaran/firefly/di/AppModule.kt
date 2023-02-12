@@ -24,11 +24,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
-    @Provides
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
-
     @Provides
     @Singleton
     fun provideContext(@ApplicationContext context: Context?): Context? {
@@ -37,22 +32,27 @@ object AppModule {
 
 
     @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder().create();
-    }
-
-    @Provides
     @PreferenceInfo
     fun providePreferenceName(): String {
         return PrefConstants.PREF_FILE_NAME
     }
 
     @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+
+    @Provides
     @Singleton
     fun providePreferencesHelper(preferenceHelper: PreferenceHelperImpl): PreferenceHelper {
         return preferenceHelper
     }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return GsonBuilder().create()
+    }
+
 
     @Provides
     @Singleton

@@ -1,5 +1,8 @@
 package com.iamnaran.firefly.di
 
+import com.iamnaran.firefly.data.preference.PreferenceHelper
+import com.iamnaran.firefly.domain.SupportAuthenticator
+import com.iamnaran.firefly.domain.SupportInterceptor
 import com.iamnaran.firefly.domain.login.service.LoginApiService
 import dagger.Module
 import dagger.Provides
@@ -11,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,6 +24,26 @@ object NetworkModule {
     @Named("BaseUrl")
     fun provideBaseUrl() = "BuildConfig.BASE_URL"
 
+
+    @Provides
+    @Singleton
+    fun provideHttpLogInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.HEADERS)
+            .setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSupportInterceptor(): SupportInterceptor {
+        return SupportInterceptor()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUnAuthorizedInterceptor(preferenceHelper: PreferenceHelper): SupportAuthenticator {
+        return SupportAuthenticator(preferenceHelper)
+    }
 
     @Provides
     fun provideRetrofit(
@@ -34,31 +58,15 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        supportAuthenticator: SupportAuthenticator,
+        supportInterceptor: SupportInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .addInterceptor {
-                val original = it.request()
-                val newRequestBuilder = original.newBuilder()
-                newRequestBuilder.addHeader("Content-Type", "application/json")
-                newRequestBuilder.addHeader("Accept", "application/json")
-                newRequestBuilder.addHeader("Authorization", "Bearer")
-                it.proceed(newRequestBuilder.build())
-            }
-            .addInterceptor {
-                val original = it.request()
-                val newUrl = original.url
-                    .newBuilder()
-                    .build()
-                val newRequest = original
-                    .newBuilder()
-                    .url(newUrl)
-                    .build()
-
-                it.proceed(newRequest)
-            }
+            .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(supportInterceptor)
+            .authenticator(supportAuthenticator)
             .callTimeout(1, TimeUnit.MINUTES)
             .readTimeout(1, TimeUnit.MINUTES)
             .writeTimeout(1, TimeUnit.MINUTES)
