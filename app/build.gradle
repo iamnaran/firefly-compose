@@ -50,6 +50,22 @@ android {
     kapt {
         correctErrorTypes true
     }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        development {
+            dimension "version"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            buildConfigField 'String', 'BASE_URL', '"https://newsapi.org/"'
+        }
+
+        production {
+            dimension "version"
+            buildConfigField 'String', 'BASE_URL', '"https://newsapi.org/"'
+        }
+    }
 }
 
 dependencies {
@@ -65,6 +81,7 @@ dependencies {
 
     // DI Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation 'androidx.core:core-ktx:1.9.0'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
 
@@ -81,6 +98,7 @@ dependencies {
 
     // Room Database
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     // Logging
