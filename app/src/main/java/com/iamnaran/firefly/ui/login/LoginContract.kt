@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.ui.login
 
-import com.iamnaran.firefly.domain.model.LoginResponse
+import com.iamnaran.firefly.domain.login.model.LoginResponse
 
 class LoginContract {
     data class State(

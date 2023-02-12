@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.di
 
-import com.iamnaran.firefly.domain.service.LoginApiService
+import com.iamnaran.firefly.domain.login.service.LoginApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

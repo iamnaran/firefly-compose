@@ -1,8 +1,8 @@
 package com.iamnaran.firefly.repository.user
 
-import com.iamnaran.firefly.domain.model.LoginRequest
-import com.iamnaran.firefly.domain.model.LoginResponse
-import com.iamnaran.firefly.domain.service.LoginApiService
+import com.iamnaran.firefly.domain.login.model.LoginRequest
+import com.iamnaran.firefly.domain.login.model.LoginResponse
+import com.iamnaran.firefly.domain.login.service.LoginApiService
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(

@@ -1,7 +1,7 @@
-package com.iamnaran.firefly.domain.usecase
+package com.iamnaran.firefly.domain.login.usecase
 
-import com.iamnaran.firefly.domain.model.LoginRequest
-import com.iamnaran.firefly.domain.model.LoginResponse
+import com.iamnaran.firefly.domain.login.model.LoginRequest
+import com.iamnaran.firefly.domain.login.model.LoginResponse
 import com.iamnaran.firefly.repository.user.UserRepository
 import javax.inject.Inject
 
