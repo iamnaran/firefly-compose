@@ -32,7 +32,7 @@ object AppModule {
 
 
     @Provides
-    @PreferenceInfo
+    @PreferenceInfoQualifier
     fun providePreferenceName(): String {
         return PrefConstants.PREF_FILE_NAME
     }

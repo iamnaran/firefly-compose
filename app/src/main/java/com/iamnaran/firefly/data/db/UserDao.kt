@@ -7,12 +7,9 @@ import androidx.room.Query
 import com.iamnaran.firefly.data.model.User
 
 @Dao
-interface UserDao {
+abstract class UserDao : BaseDao<User>() {
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertPosterList(posters: List<User>)
-
-  @Query("SELECT * FROM user WHERE id = :id_")
-  suspend fun getUser(id_: Long): User?
+    @Query("SELECT * FROM user WHERE id = :id_")
+    abstract suspend fun getUser(id_: Long): User?
 
 }
