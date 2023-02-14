@@ -1,40 +1,77 @@
 package com.iamnaran.firefly.ui.login
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.iamnaran.firefly.routes.Routes
-import com.iamnaran.firefly.ui.theme.primaryColor
+import com.iamnaran.firefly.R
+import com.iamnaran.firefly.ui.login.components.FireflyInputType
+import com.iamnaran.firefly.ui.login.components.FireflyTextInput
 
 @Composable
-fun LoginScreen(navController: NavHostController?)  {
+fun LoginScreen(navController: NavHostController?) {
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        ClickableText(
-            text = AnnotatedString("Sign up here"),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(20.dp),
-            onClick = { navController!!.navigate(Routes.SignUp.route) },
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Default,
-                textDecoration = TextDecoration.Underline,
-                color = primaryColor
-            )
+    val passwordFocusRequester = FocusRequester()
+    val focusManager: FocusManager = LocalFocusManager.current
+
+
+    Column(
+        Modifier
+            .background(Color.White)
+            .padding(30.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Icon(
+            painter = painterResource(id = R.drawable.ic_google_logo),
+            contentDescription = "logo",
+            Modifier
+                .size(150.dp)
         )
+
+        FireflyTextInput(
+            inputType = FireflyInputType.Name,
+            keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() })
+        )
+
+        FireflyTextInput(
+            inputType = FireflyInputType.Password,
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            focusRequester = passwordFocusRequester
+        )
+
+        Button(onClick = { }, Modifier.fillMaxWidth()) {
+            Text(text = "Sign In", Modifier.padding(vertical = 8.dp))
+        }
+
+        Divider(
+            color = Color.White.copy(alpha = 0.3f),
+            thickness = 1.dp,
+            modifier = Modifier.padding(50.dp)
+        )
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Don't have an account?", color = Color.Black)
+            TextButton(onClick = { /*TODO*/ }) {
+                Text(text = "Sign Up")
+            }
+
+        }
+
     }
 
 
 }
+
