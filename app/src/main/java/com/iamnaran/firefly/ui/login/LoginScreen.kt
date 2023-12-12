@@ -3,7 +3,11 @@ package com.iamnaran.firefly.ui.login
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,11 +16,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.login.components.FireflyInputType
 import com.iamnaran.firefly.ui.login.components.FireflyTextInput
+import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 @Composable
 fun LoginScreen(navController: NavHostController?) {
@@ -35,7 +41,7 @@ fun LoginScreen(navController: NavHostController?) {
     ) {
 
         Icon(
-            painter = painterResource(id = R.drawable.ic_google_logo),
+            painter = painterResource(id = R.drawable.ic_person_search_24),
             contentDescription = "logo",
             Modifier
                 .size(150.dp)
@@ -46,11 +52,11 @@ fun LoginScreen(navController: NavHostController?) {
             keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() })
         )
 
-        FireflyTextInput(
-            inputType = FireflyInputType.Password,
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-            focusRequester = passwordFocusRequester
-        )
+//        FireflyTextInput(
+//            inputType = FireflyInputType.Password,
+//            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+//            focusRequester = passwordFocusRequester
+//        )
 
         Button(onClick = { }, Modifier.fillMaxWidth()) {
             Text(text = "Sign In", Modifier.padding(vertical = 8.dp))
@@ -73,5 +79,13 @@ fun LoginScreen(navController: NavHostController?) {
     }
 
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    FireflyComposeTheme {
+        LoginScreen(null)
+    }
 }
 

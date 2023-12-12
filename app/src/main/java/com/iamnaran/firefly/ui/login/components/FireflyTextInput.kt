@@ -3,10 +3,14 @@ package com.iamnaran.firefly.ui.login.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -19,8 +23,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.iamnaran.firefly.ui.theme.Shapes
-import com.iamnaran.firefly.ui.theme.lightGreyColor
-import com.iamnaran.firefly.ui.theme.primaryColor
 
 sealed class FireflyInputType(
     val label: String,
@@ -44,6 +46,7 @@ sealed class FireflyInputType(
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FireflyTextInput(
     inputType: FireflyInputType,
@@ -62,11 +65,6 @@ fun FireflyTextInput(
         leadingIcon = { Icon(imageVector = inputType.icon, contentDescription = "Username Icon") },
         label = { Text(text = inputType.label) },
         shape = Shapes.small,
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = lightGreyColor,
-            focusedIndicatorColor = primaryColor,
-            unfocusedIndicatorColor = lightGreyColor
-        ),
         singleLine = true,
         keyboardActions = keyboardActions,
         visualTransformation = inputType.visualTransformation
