@@ -1,6 +1,7 @@
 # A template app 
 Includes
 - Jetpack Compose
+- Navigation Graph
 - Login Authentication
 - Flow / LiveData
 - Room
