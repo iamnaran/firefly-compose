@@ -1,8 +1,12 @@
 package com.iamnaran.firefly.ui.login
 
+import android.widget.Space
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -36,50 +40,75 @@ fun LoginScreen(navHostController: NavHostController) {
         Modifier
             .background(Color.White)
             .padding(30.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_flag_of_nepal),
-            contentDescription = "logo",
-            Modifier
-                .size(150.dp)
-        )
-
-        FireflyTextInput(
-            inputType = FireflyInputType.Name,
-            keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() })
-        )
-
-        FireflyTextInput(
-            inputType = FireflyInputType.Password,
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-            focusRequester = passwordFocusRequester
-        )
-
-        Button(onClick = {
-
-        }, Modifier.fillMaxWidth()) {
-            Text(text = "Sign In", Modifier.padding(vertical = 8.dp))
+        Box(
+            modifier = Modifier
+                .weight(2f)
+                .padding(10.dp), contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_google_logo),
+                contentDescription = "logo",
+                Modifier
+                    .padding(10.dp)
+            )
         }
 
-        Divider(
-            color = Color.White.copy(alpha = 0.3f),
-            thickness = 1.dp,
-            modifier = Modifier.padding(50.dp)
-        )
+        Box(
+            modifier = Modifier.weight(3f),
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Don't have an account?", color = Color.Black)
-            TextButton(onClick = { /*TODO*/
+            Column(verticalArrangement = Arrangement.Center) {
+                FireflyTextInput(
+                    inputType = FireflyInputType.Name,
+                    keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() })
+                )
 
-            }) {
-                Text(text = "Sign Up")
+                Spacer(modifier = Modifier.height(20.dp))
+
+                FireflyTextInput(
+                    inputType = FireflyInputType.Password,
+                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                    focusRequester = passwordFocusRequester
+                )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Button(onClick = {
+
+                }, Modifier.fillMaxWidth()) {
+                    Text(text = "Sign In", Modifier.padding(vertical = 8.dp))
+                }
+            }
+        }
+
+        Box(
+            modifier = Modifier.weight(0.5f)
+        ) {
+
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Don't have an account?", color = Color.Black)
+                    TextButton(onClick = { /*TODO*/
+
+                    }) {
+                        Text(text = "Sign Up")
+                    }
+
+                }
             }
 
         }
+
 
     }
 
