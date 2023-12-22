@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.home
+package com.iamnaran.firefly.ui.dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,7 +19,7 @@ import com.iamnaran.firefly.ui.login.components.FireflyInputType
 import com.iamnaran.firefly.ui.login.components.FireflyTextInput
 
 @Composable
-fun HomeScreen() {
+fun DashBoardScreen() {
 
     Column(
         Modifier

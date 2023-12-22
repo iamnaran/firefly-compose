@@ -44,4 +44,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="dismiss">Dismiss</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_article">Articles</string>
+    <string name="tab_DM">Message</string>
+    <string name="tab_groups">Groups</string>
 </resources>

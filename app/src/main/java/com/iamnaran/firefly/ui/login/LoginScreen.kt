@@ -19,13 +19,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.login.components.FireflyInputType
 import com.iamnaran.firefly.ui.login.components.FireflyTextInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 @Composable
-fun LoginScreen(navController: NavHostController?) {
+fun LoginScreen(navHostController: NavHostController) {
 
     val passwordFocusRequester = FocusRequester()
     val focusManager: FocusManager = LocalFocusManager.current
@@ -41,7 +42,7 @@ fun LoginScreen(navController: NavHostController?) {
     ) {
 
         Icon(
-            painter = painterResource(id = R.drawable.ic_person_search_24),
+            painter = painterResource(id = R.drawable.ic_flag_of_nepal),
             contentDescription = "logo",
             Modifier
                 .size(150.dp)
@@ -52,13 +53,15 @@ fun LoginScreen(navController: NavHostController?) {
             keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() })
         )
 
-//        FireflyTextInput(
-//            inputType = FireflyInputType.Password,
-//            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-//            focusRequester = passwordFocusRequester
-//        )
+        FireflyTextInput(
+            inputType = FireflyInputType.Password,
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            focusRequester = passwordFocusRequester
+        )
 
-        Button(onClick = { }, Modifier.fillMaxWidth()) {
+        Button(onClick = {
+
+        }, Modifier.fillMaxWidth()) {
             Text(text = "Sign In", Modifier.padding(vertical = 8.dp))
         }
 
@@ -70,7 +73,9 @@ fun LoginScreen(navController: NavHostController?) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Don't have an account?", color = Color.Black)
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { /*TODO*/
+
+            }) {
                 Text(text = "Sign Up")
             }
 
@@ -85,7 +90,7 @@ fun LoginScreen(navController: NavHostController?) {
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        LoginScreen(null)
+        LoginScreen(navHostController = rememberNavController())
     }
 }
 
