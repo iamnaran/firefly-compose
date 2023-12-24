@@ -17,20 +17,20 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.Login.route
         ) {
-            Login(navHostController,
+            Login(
                 navigateToHome = {
-
+                    navHostController.navigate(Screen.Home.route)
                 },
                 navigateToSignUp = {
                     navHostController.navigate(Screen.SignUp.route)
-                }
+                },
             )
         }
 
         composable(
             route = Screen.SignUp.route
         ) {
-            SignUp(navHostController, onNavigateBack = {
+            SignUp(onNavigateBack = {
                 navHostController.navigateUp()
             })
         }

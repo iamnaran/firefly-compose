@@ -57,7 +57,7 @@ android {
             dimension "version"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            buildConfigField 'String', 'BASE_URL', '"https://newsapi.org/"'
+            buildConfigField 'String', 'BASE_URL', '"https://dummyjson.com/"'
         }
 
 //        production {

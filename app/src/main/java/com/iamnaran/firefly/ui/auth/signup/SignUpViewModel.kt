@@ -1,9 +1,9 @@
 package com.iamnaran.firefly.ui.auth.signup
 
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.repository.user.UserRepository
-import com.iamnaran.firefly.ui.base.BaseViewModel
-import com.iamnaran.firefly.ui.base.ScreenState
+import com.iamnaran.firefly.data.repository.user.UserRepository
+import com.iamnaran.firefly.ui.common.BaseViewModel
+import com.iamnaran.firefly.ui.common.ViewState
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,14 +31,14 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
     }
 
     // State for tracking login status
-    private val _signUpState = MutableStateFlow<ScreenState<Nothing>>(ScreenState.Initial)
-    val signUpState: StateFlow<ScreenState<Nothing>> = _signUpState
+    private val _signUpState = MutableStateFlow<ViewState<Nothing>>(ViewState.Initial)
+    val signUpState: StateFlow<ViewState<Nothing>> = _signUpState
 
 
     fun signUp() {
 
         viewModelScope.launch {
-            _signUpState.value = ScreenState.Loading
+            _signUpState.value = ViewState.Loading
 //            userRepository.login(loginRequest).collect { response ->
 //                when (response) {
 //                    is Result.Success -> _loginStateResponse.value = response.data

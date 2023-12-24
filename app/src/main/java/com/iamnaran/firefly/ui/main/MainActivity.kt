@@ -33,9 +33,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     FireflyComposeTheme {
-        val navHostController = rememberNavController()
-        Login(navHostController = navHostController,
-                navigateToHome = {},
+        Login(
+            navigateToHome = {},
             navigateToSignUp = {})
     }
 }

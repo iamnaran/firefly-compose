@@ -2,9 +2,9 @@ package com.iamnaran.firefly.di
 
 import com.iamnaran.firefly.BuildConfig
 import com.iamnaran.firefly.data.preference.PreferenceHelper
-import com.iamnaran.firefly.domain.SupportAuthenticator
-import com.iamnaran.firefly.domain.SupportInterceptor
-import com.iamnaran.firefly.domain.login.service.LoginApiService
+import com.iamnaran.firefly.domain.api.SupportAuthenticator
+import com.iamnaran.firefly.domain.api.SupportInterceptor
+import com.iamnaran.firefly.domain.api.service.LoginApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -75,7 +75,7 @@ object  NetworkModule {
     }
 
     @Provides
-    fun providerLoginApiService(retrofit: Retrofit): LoginApiService =
-        retrofit.create(LoginApiService::class.java)
+    fun providerLoginApiService(retrofit: Retrofit): LoginApi =
+        retrofit.create(LoginApi::class.java)
 
 }

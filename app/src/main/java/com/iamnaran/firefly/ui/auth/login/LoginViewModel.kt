@@ -1,11 +1,9 @@
 package com.iamnaran.firefly.ui.auth.login
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.domain.login.model.LoginRequest
-import com.iamnaran.firefly.repository.user.UserRepository
-import com.iamnaran.firefly.ui.base.BaseViewModel
-import com.iamnaran.firefly.ui.base.ScreenState
+import com.iamnaran.firefly.data.repository.user.UserRepository
+import com.iamnaran.firefly.ui.common.BaseViewModel
+import com.iamnaran.firefly.ui.common.ViewState
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,8 +31,8 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     }
 
     // State for tracking login status
-    private val _loginState = MutableStateFlow<ScreenState<Nothing>>(ScreenState.Initial)
-    val loginState: StateFlow<ScreenState<Nothing>> = _loginState
+    private val _loginState = MutableStateFlow<ViewState<Nothing>>(ViewState.Initial)
+    val loginState: StateFlow<ViewState<Nothing>> = _loginState
 
 
     fun login() {
@@ -43,7 +41,7 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
         AppLog.showDebug(TAG, "login: " + loginRequest.email + loginRequest.password)
 
         viewModelScope.launch {
-            _loginState.value = ScreenState.Loading
+            _loginState.value = ViewState.Loading
 //            userRepository.login(loginRequest).collect { response ->
 //                when (response) {
 //                    is Result.Success -> _loginStateResponse.value = response.data

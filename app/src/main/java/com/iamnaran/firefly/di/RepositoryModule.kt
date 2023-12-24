@@ -1,7 +1,7 @@
 package com.iamnaran.firefly.di
 
-import com.iamnaran.firefly.repository.user.UserRepository
-import com.iamnaran.firefly.repository.user.UserRepositoryImpl
+import com.iamnaran.firefly.data.repository.user.UserRepository
+import com.iamnaran.firefly.data.repository.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

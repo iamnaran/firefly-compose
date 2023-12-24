@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.domain
+package com.iamnaran.firefly.domain.api
 
 sealed class ApiResourceState<T>(val data: T? = null, val message: String? = null) {
 

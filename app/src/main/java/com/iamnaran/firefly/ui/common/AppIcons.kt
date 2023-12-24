@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.base.design
+package com.iamnaran.firefly.ui.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle

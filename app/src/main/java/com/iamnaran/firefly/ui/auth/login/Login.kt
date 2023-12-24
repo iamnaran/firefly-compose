@@ -39,7 +39,6 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 @Composable
 fun Login(
-    navHostController: NavHostController,
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
@@ -159,7 +158,7 @@ fun LoginContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        Login(navHostController = rememberNavController(),
+        Login(
             navigateToHome = {},
             navigateToSignUp = {})
     }

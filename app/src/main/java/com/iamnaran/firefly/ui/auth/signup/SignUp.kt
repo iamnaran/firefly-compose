@@ -42,7 +42,6 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 @Composable
 fun SignUp(
-    navHostController: NavHostController,
     viewModel: SignUpViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
@@ -160,7 +159,7 @@ fun SignUpContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        SignUp(navHostController = rememberNavController(),
+        SignUp(
             onNavigateBack = {}
         )
     }

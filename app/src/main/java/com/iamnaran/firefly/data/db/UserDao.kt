@@ -1,10 +1,8 @@
 package com.iamnaran.firefly.data.db
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.iamnaran.firefly.data.model.User
+import com.iamnaran.firefly.data.entities.User
 
 @Dao
 abstract class UserDao : BaseDao<User>() {
