@@ -1,8 +1,8 @@
-package com.iamnaran.firefly.ui.navigraph
+package com.iamnaran.firefly.ui.navgraph
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.design.AppIcons
+import com.iamnaran.firefly.ui.base.design.AppIcons
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,

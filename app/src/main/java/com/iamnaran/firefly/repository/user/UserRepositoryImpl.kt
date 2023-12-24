@@ -11,7 +11,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun login(loginRequest: LoginRequest): Result<LoginResponse> {
         TODO("Not yet implemented")
-//        loginApiService.serverLogin(loginRequest);
+        loginApiService.serverLogin(loginRequest);
 
     }
 

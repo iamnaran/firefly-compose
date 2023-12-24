@@ -1,5 +1,6 @@
 package com.iamnaran.firefly.di
 
+import com.iamnaran.firefly.BuildConfig
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.domain.SupportAuthenticator
 import com.iamnaran.firefly.domain.SupportInterceptor
@@ -22,7 +23,7 @@ object  NetworkModule {
 
     @Provides
     @Named("BaseUrl")
-    fun provideBaseUrl() = "BuildConfig.BASE_URL"
+    fun provideBaseUrl() = BuildConfig.BASE_URL
 
 
     @Provides

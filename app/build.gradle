@@ -70,22 +70,31 @@ android {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.activity:activity-compose:1.8.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // compose
+    implementation 'androidx.activity:activity-compose:1.8.2'
     implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation 'androidx.compose.ui:ui-android:1.5.4'
+    implementation "androidx.compose.foundation:foundation:1.5.4"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     implementation "androidx.compose.material3:material3:$material3_version"
 
+    //life cycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
 
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.6'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.6'
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.1.0'
+
     // DI Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
-    implementation 'androidx.compose.ui:ui-android:1.5.4'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -93,7 +102,6 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$http_log_version"
 
     // Navigation
-    implementation "androidx.navigation:navigation-compose:$nav_version"
 
     // Image loading
     implementation("io.coil-kt:coil-compose:$coil_version")

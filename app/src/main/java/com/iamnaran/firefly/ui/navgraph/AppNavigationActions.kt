@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.iamnaran.firefly.ui.navigraph
+package com.iamnaran.firefly.ui.navgraph
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination

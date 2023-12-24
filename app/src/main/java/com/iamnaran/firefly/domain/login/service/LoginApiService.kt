@@ -10,4 +10,5 @@ interface LoginApiService {
     suspend fun serverLogin(
         loginRequest: LoginRequest
     ): Response<LoginResponse>
+
 }

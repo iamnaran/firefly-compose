@@ -1,11 +1,12 @@
-package com.iamnaran.firefly.ui.navigraph
+package com.iamnaran.firefly.ui.navgraph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.iamnaran.firefly.ui.auth.login.Login
+import com.iamnaran.firefly.ui.auth.signup.SignUp
 import com.iamnaran.firefly.ui.home.HomeScreen
-import com.iamnaran.firefly.ui.login.LoginScreen
 
 @Composable
 fun SetupNavGraph(navHostController: NavHostController) {
@@ -16,7 +17,22 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.Login.route
         ) {
-            LoginScreen(navHostController)
+            Login(navHostController,
+                navigateToHome = {
+
+                },
+                navigateToSignUp = {
+                    navHostController.navigate(Screen.SignUp.route)
+                }
+            )
+        }
+
+        composable(
+            route = Screen.SignUp.route
+        ) {
+            SignUp(navHostController, onNavigateBack = {
+                navHostController.navigateUp()
+            })
         }
 
         composable(
