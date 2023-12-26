@@ -1,15 +1,15 @@
-# A template app 
+# A production based template app to start with Jetpack Compose Android
 Includes
 - Jetpack Compose
 - Navigation Graph
-- Login Authentication
-- Flow / LiveData
+- Dependency Inject - Hilt
+- Kotlin Flow
 - Room
-- DI - Hilt
 - Retrofit
 - Repository
 - Clean Architecture
-- Login Auuthentication
+- UseCase
+- Login Authentication
 
 
 WIP
