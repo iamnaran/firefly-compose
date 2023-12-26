@@ -86,7 +86,6 @@ fun LoginContent(
 
     Column(
         Modifier
-            .background(Color.White)
             .padding(30.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
