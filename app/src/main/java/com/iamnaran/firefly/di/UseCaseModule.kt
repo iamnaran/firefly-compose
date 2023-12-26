@@ -14,8 +14,7 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideAuthUseCase(repository: AuthRepository): AuthUseCase =
-        AuthUseCase(repository)
+    fun provideAuthUseCase(repository: AuthRepository): AuthUseCase = AuthUseCase(repository)
 
 
 }

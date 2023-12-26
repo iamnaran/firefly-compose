@@ -2,17 +2,14 @@ package com.iamnaran.firefly.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.api.Resource
-import com.iamnaran.firefly.data.dto.LoginRequest
 import com.iamnaran.firefly.domain.usecase.AuthUseCase
 import com.iamnaran.firefly.ui.common.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,7 +56,7 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
 
                     }
                 }
-            }
+            }.launchIn(this)
         }
     }
 
