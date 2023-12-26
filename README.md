@@ -9,10 +9,12 @@ Includes
 - Retrofit
 - Repository
 - Clean Architecture
-
-WIP
 - Login Auuthentication
 
+
+WIP
+- Changing Preference to Data Store
+- Show Product Listing Offline first with Room 
+
 Todo
-- Room
-- LazyColumn
+- Code and UI optimization
