@@ -1,57 +1,65 @@
 package com.iamnaran.firefly.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.data.repository.user.UserRepository
+import com.iamnaran.firefly.data.api.Resource
+import com.iamnaran.firefly.data.dto.LoginRequest
+import com.iamnaran.firefly.domain.usecase.AuthUseCase
 import com.iamnaran.firefly.ui.common.BaseViewModel
-import com.iamnaran.firefly.ui.common.ViewState
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val userRepository: UserRepository) :
+class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
     BaseViewModel() {
 
     private val TAG = AppLog.tagFor(this.javaClass)
 
-    private val _emailState = MutableStateFlow("")
+    private val _emailState = MutableStateFlow("kminchelle")
     val emailState: StateFlow<String> = _emailState
 
-    private val _passwordState = MutableStateFlow("")
+    private val _passwordState = MutableStateFlow("0lelplR")
     val passwordState: StateFlow<String> = _passwordState
 
     fun setEmail(email: String) {
         _emailState.value = email
     }
+
     fun setPassword(password: String) {
         _passwordState.value = password
     }
 
     // State for tracking login status
-    private val _loginState = MutableStateFlow<ViewState<Nothing>>(ViewState.Initial)
-    val loginState: StateFlow<ViewState<Nothing>> = _loginState
+    private val _loginState = MutableStateFlow<LoginUIEvent>(LoginUIEvent.Loading)
+    val loginState: StateFlow<LoginUIEvent> = _loginState
 
 
     fun login() {
-        val loginRequest = LoginRequest(_emailState.value, _passwordState.value)
-
-        AppLog.showDebug(TAG, "login: " + loginRequest.email + loginRequest.password)
-
         viewModelScope.launch {
-            _loginState.value = ViewState.Loading
-//            userRepository.login(loginRequest).collect { response ->
-//                when (response) {
-//                    is Result.Success -> _loginStateResponse.value = response.data
-//
-//                    is Result.GenericError -> { //Error
-//                    }
-//                    else -> { //Loading
-//                    }
-//                }
-//            }
+            authUseCase.loginUseCase(_emailState.value, _passwordState.value).onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _loginState.value = LoginUIEvent.Loading
+                    }
+
+                    is Resource.Success -> {
+                        _loginState.value = LoginUIEvent.NavigateToHome(resource.data!!)
+                    }
+
+                    else -> {
+                        _loginState.value =
+                            LoginUIEvent.ShowErrorMessage(resource.message.toString())
+
+                    }
+                }
+            }
         }
     }
 

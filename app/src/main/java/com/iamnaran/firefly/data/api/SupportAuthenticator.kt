@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.domain.api
+package com.iamnaran.firefly.data.api
 
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import okhttp3.Authenticator

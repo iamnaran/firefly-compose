@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.domain.model
+package com.iamnaran.firefly.data.entities
 
 import androidx.compose.runtime.Immutable
 import androidx.room.Entity

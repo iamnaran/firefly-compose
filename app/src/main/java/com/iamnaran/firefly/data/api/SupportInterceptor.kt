@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.domain.api
+package com.iamnaran.firefly.data.api
 
 import okhttp3.Interceptor
 import okhttp3.Response

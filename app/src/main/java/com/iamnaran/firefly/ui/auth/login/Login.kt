@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
@@ -29,8 +30,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.auth.components.FireflyInputType
 import com.iamnaran.firefly.ui.auth.components.FireflyTextInput
@@ -45,6 +44,21 @@ fun Login(
 ) {
     val emailState = viewModel.emailState.collectAsState()
     val passwordState = viewModel.passwordState.collectAsState()
+
+    val loginState by viewModel.loginState.collectAsState()
+
+    when (loginState) {
+        is LoginUIEvent.Loading -> {
+            // Show loading UI
+            // You can use a CircularProgressIndicator or any other loading indicator
+        }
+        is LoginUIEvent.NavigateToHome ->{
+            navigateToHome()
+        }
+        else -> {
+
+        }
+    }
 
     LoginContent(
         emailState.value,

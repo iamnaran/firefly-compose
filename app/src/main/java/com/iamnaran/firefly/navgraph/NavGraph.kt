@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.navgraph
+package com.iamnaran.firefly.navgraph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

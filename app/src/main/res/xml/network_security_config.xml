@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+
+    <!-- Enforce secure connections -->
+    <base-config cleartextTrafficPermitted="false" />
+
+    <!-- Specify domains that are allowed or denied -->
+<!--    <domain-config cleartextTrafficPermitted="false">-->
+<!--        <domain includeSubdomains="true">example.com</domain>-->
+<!--        <domain includeSubdomains="true">api.example.com</domain>-->
+<!--        &lt;!&ndash; You can add more domains as needed &ndash;&gt;-->
+<!--    </domain-config>-->
+
+    <!--
+    <trust-anchors>
+        <certificates src="@raw/custom_cert" />
+    </trust-anchors>
+    -->
+
+</network-security-config>

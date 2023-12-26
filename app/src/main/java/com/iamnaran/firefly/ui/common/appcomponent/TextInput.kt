@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.appcomponent
+package com.iamnaran.firefly.ui.common.appcomponent
 
 import android.text.InputType
 import androidx.compose.foundation.layout.fillMaxWidth

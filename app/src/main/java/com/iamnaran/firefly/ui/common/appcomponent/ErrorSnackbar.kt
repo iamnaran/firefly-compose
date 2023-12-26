@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.appcomponent
+package com.iamnaran.firefly.ui.common.appcomponent
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

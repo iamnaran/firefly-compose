@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.ui.auth.login.Login
-import com.iamnaran.firefly.ui.navgraph.SetupNavGraph
+import com.iamnaran.firefly.navgraph.SetupNavGraph
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 

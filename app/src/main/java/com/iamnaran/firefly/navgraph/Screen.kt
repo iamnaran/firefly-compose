@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.navgraph
+package com.iamnaran.firefly.navgraph
 
 private object Route {
     const val LOGIN = "LOGIN"
