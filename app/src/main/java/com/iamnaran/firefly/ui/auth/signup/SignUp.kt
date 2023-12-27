@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -37,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
+import com.iamnaran.firefly.ui.common.AppIcons
 import com.iamnaran.firefly.ui.common.appcomponent.EmailInput
 import com.iamnaran.firefly.ui.common.appcomponent.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
@@ -106,7 +104,7 @@ fun SignUpContent(
                     currentValue = email,
                     keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
                     onValueChange = onEmailChange,
-                    icon = Icons.Default.Email,
+                    icon = AppIcons.Email,
                     label = stringResource(id = R.string.label_email),
                 )
 
@@ -117,7 +115,7 @@ fun SignUpContent(
                     keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                     focusRequester = passwordFocusRequester,
                     onValueChange = onPasswordChange,
-                    icon = Icons.Default.Lock,
+                    icon = AppIcons.Password,
                     label = stringResource(id = R.string.label_password),
                 )
 

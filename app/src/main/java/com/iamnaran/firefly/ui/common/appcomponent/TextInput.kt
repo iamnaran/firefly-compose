@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.iamnaran.firefly.ui.common.AppIcons
 import com.iamnaran.firefly.ui.theme.Shapes
 
 @Composable
@@ -50,8 +52,9 @@ fun EmailInput(
             capitalization = KeyboardCapitalization.None,
             autoCorrect = true,
             keyboardType = KeyboardType.Email,
-            imeAction = ImeAction.Next),
-        )
+            imeAction = ImeAction.Next
+        ),
+    )
 }
 
 
@@ -76,9 +79,9 @@ fun PasswordInput(
         leadingIcon = { Icon(imageVector = icon, contentDescription = label) },
         trailingIcon = {
             val passwordIcon = if (passwordVisible) {
-                Icons.Filled.Lock
+                AppIcons.PasswordEyeVisible
             } else {
-                Icons.Default.Lock
+                AppIcons.PasswordEyeInvisible
             }
             val description = if (passwordVisible) {
                 "Hide Password"
@@ -93,7 +96,11 @@ fun PasswordInput(
         shape = Shapes.medium,
         singleLine = true,
         keyboardActions = keyboardActions,
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisible) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        },
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.None,
             autoCorrect = true,
@@ -168,6 +175,7 @@ fun NameInput(
             capitalization = KeyboardCapitalization.Words,
             autoCorrect = true,
             keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Next),
+            imeAction = ImeAction.Next
+        ),
     )
 }
