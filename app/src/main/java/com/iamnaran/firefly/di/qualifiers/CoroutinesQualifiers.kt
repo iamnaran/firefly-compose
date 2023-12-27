@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.di
+package com.iamnaran.firefly.di.qualifiers
 
 import javax.inject.Qualifier
 

@@ -1,6 +1,9 @@
 package com.iamnaran.firefly.data.api
 
 import com.iamnaran.firefly.data.preference.PreferenceHelper
+import com.iamnaran.firefly.utils.AppLog
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -13,23 +16,23 @@ class SupportAuthenticator @Inject constructor(
 ) :
     Authenticator {
 
-    override fun authenticate(route: Route?, response: Response): Request? {
+    val TAG = AppLog.tagFor(this.javaClass)
 
-        var requestAvailable: Request? = null
+    override fun authenticate(route: Route?, response: Response): Request {
 
+        val requestBuilder: Request.Builder = response.request.newBuilder()
+        requestBuilder.addHeader("Accept", "Accept: application/json")
         try {
-
-            requestAvailable = response.request.newBuilder()
-                .addHeader(
-                    "Authorization", preferencesHelper.getAccessToken() ?: ""
-                )
-                .addHeader("Accept", "Accept: application/json")
-                .build()
-            return requestAvailable
+            preferencesHelper.getAccessToken().let {
+                requestBuilder.addHeader("Authorization", it.toString())
+            }
+            return requestBuilder.build()
         } catch (ex: Exception) {
-            ignoreIoExceptions { }
+            ignoreIoExceptions {
+                AppLog.showDebug(TAG, ex.message.toString())
+            }
         }
-        return requestAvailable
+        return requestBuilder.build()
 
     }
 }

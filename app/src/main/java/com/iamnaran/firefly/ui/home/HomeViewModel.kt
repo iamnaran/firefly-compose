@@ -2,14 +2,14 @@ package com.iamnaran.firefly.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.domain.usecase.AuthUseCase
+import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
 import com.iamnaran.firefly.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
+class HomeViewModel @Inject constructor(private val serverLoginUseCase: ServerLoginUseCase) :
     BaseViewModel() {
 
     private var _loginStateResponse = MutableLiveData<Boolean>()

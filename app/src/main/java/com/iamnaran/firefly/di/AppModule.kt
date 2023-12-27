@@ -1,17 +1,12 @@
 package com.iamnaran.firefly.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build.VERSION.SDK_INT
-import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.iamnaran.firefly.data.preference.PrefConstants
-import com.iamnaran.firefly.data.preference.PreferenceHelper
-import com.iamnaran.firefly.data.preference.PreferenceHelperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,23 +23,6 @@ object AppModule {
     @Singleton
     fun provideContext(@ApplicationContext context: Context?): Context? {
         return context
-    }
-
-
-    @Provides
-    @PreferenceInfoQualifier
-    fun providePreferenceName(): String {
-        return PrefConstants.PREF_FILE_NAME
-    }
-
-    @Provides
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
-
-    @Provides
-    @Singleton
-    fun providePreferencesHelper(preferenceHelper: PreferenceHelperImpl): PreferenceHelper {
-        return preferenceHelper
     }
 
     @Provides

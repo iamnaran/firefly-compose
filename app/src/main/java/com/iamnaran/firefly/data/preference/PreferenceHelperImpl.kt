@@ -1,44 +1,54 @@
 package com.iamnaran.firefly.data.preference
 
-import android.content.SharedPreferences
-import com.google.gson.Gson
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PreferenceHelperImpl @Inject constructor(
-    private val sharedPreferences: SharedPreferences,
-    private val gson: Gson
+    private val dataStore: DataStore<Preferences>
 ) : PreferenceHelper {
-
-    override suspend fun saveLoggedInUserId(userId: String) {
-        val preference = sharedPreferences.edit();
-        preference.putString(PrefConstants.USER_ID_PREF_KEY, userId)
-        preference.apply();
+    override suspend fun saveLoggedInStatus(status: Boolean) {
+        dataStore.edit { preference ->
+            preference[PrefKeys.LOGGED_IN_STATUS] = status
+        }
     }
 
-    override fun getLoggedInUserId(): String? {
-        return sharedPreferences.getString(PrefConstants.USER_ID_PREF_KEY, null)
+    override fun getLoggedInStatus(): Flow<Boolean> {
+        return dataStore.data
+            .catch {
+                emit(emptyPreferences())
+            }
+            .map { preference ->
+                preference[PrefKeys.LOGGED_IN_STATUS] != null
+            }
     }
 
+    override fun getAccessToken(): Flow<String> {
+        return dataStore.data
+            .catch {
+                emit(emptyPreferences())
+            }
+            .map { preference ->
+                preference[PrefKeys.ACCESS_TOKEN] ?: ""
+            }
+
+    }
 
     override suspend fun saveAccessToken(accessToken: String) {
-        val preference = sharedPreferences.edit();
-        preference.putString(PrefConstants.USER_TOKEN_PREF_KEY, accessToken)
-        preference.apply();
+        dataStore.edit { preference ->
+            preference[PrefKeys.ACCESS_TOKEN] = accessToken
+        }
     }
 
-    override fun getAccessToken(): String? {
-        return sharedPreferences.getString(PrefConstants.USER_TOKEN_PREF_KEY, null)
-    }
-
-    override suspend fun saveLoggedInStatus(status: Boolean) {
-        val preference = sharedPreferences.edit();
-        preference.putBoolean(PrefConstants.LOGGED_IN_STATUS, status)
-        preference.apply();
-    }
-
-    override fun getLoggedInStatus(): Boolean {
-        return sharedPreferences.getBoolean(PrefConstants.LOGGED_IN_STATUS, false)
-
+    override suspend fun clearPreference() {
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
     }
 
 

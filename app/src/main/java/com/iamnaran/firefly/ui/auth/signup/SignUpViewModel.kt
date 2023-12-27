@@ -1,7 +1,7 @@
 package com.iamnaran.firefly.ui.auth.signup
 
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.domain.usecase.AuthUseCase
+import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
 import com.iamnaran.firefly.ui.common.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
+class SignUpViewModel @Inject constructor(private val serverLoginUseCase: ServerLoginUseCase) :
     BaseViewModel() {
 
     private val TAG = AppLog.tagFor(this.javaClass)

@@ -7,7 +7,7 @@
  *
  */
 
-package com.iamnaran.firefly.di;
+package com.iamnaran.firefly.di.qualifiers;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

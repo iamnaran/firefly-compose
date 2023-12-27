@@ -1,5 +1,9 @@
 package com.iamnaran.firefly.di
 
+import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
+import com.iamnaran.firefly.di.qualifiers.IoDispatcher
+import com.iamnaran.firefly.di.qualifiers.MainDispatcher
+import com.iamnaran.firefly.di.qualifiers.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

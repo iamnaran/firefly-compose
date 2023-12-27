@@ -1,7 +1,7 @@
 package com.iamnaran.firefly.di
 
 import com.iamnaran.firefly.data.repository.auth.AuthRepository
-import com.iamnaran.firefly.domain.usecase.AuthUseCase
+import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideAuthUseCase(repository: AuthRepository): AuthUseCase = AuthUseCase(repository)
+    fun provideAuthUseCase(repository: AuthRepository): ServerLoginUseCase = ServerLoginUseCase(repository)
 
 
 }

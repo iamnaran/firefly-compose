@@ -4,9 +4,8 @@ import com.iamnaran.firefly.data.api.BaseApiResponse
 import com.iamnaran.firefly.data.api.Resource
 import com.iamnaran.firefly.data.dto.User
 import com.iamnaran.firefly.data.api.endpoint.LoginApi
-import com.iamnaran.firefly.di.DefaultDispatcher
-import com.iamnaran.firefly.di.IoDispatcher
-import com.iamnaran.firefly.utils.networkBoundResourceOnly
+import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
+import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
