@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -29,14 +32,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.ui.auth.components.FireflyInputType
-import com.iamnaran.firefly.ui.auth.components.FireflyTextInput
+import com.iamnaran.firefly.ui.common.appcomponent.EmailInput
+import com.iamnaran.firefly.ui.common.appcomponent.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
@@ -100,24 +102,24 @@ fun SignUpContent(
             Spacer(modifier = Modifier.height(20.dp))
 
             Column(verticalArrangement = Arrangement.Center) {
-                FireflyTextInput(
+                EmailInput(
                     currentValue = email,
-                    inputType = FireflyInputType.Name,
                     keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
-                    onValueChange = onEmailChange
+                    onValueChange = onEmailChange,
+                    icon = Icons.Default.Email,
+                    label = stringResource(id = R.string.label_email),
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                FireflyTextInput(
+                PasswordInput(
                     currentValue = password,
-                    inputType = FireflyInputType.Password,
                     keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                     focusRequester = passwordFocusRequester,
-                    onValueChange = onPasswordChange
+                    onValueChange = onPasswordChange,
+                    icon = Icons.Default.Lock,
+                    label = stringResource(id = R.string.label_password),
                 )
-
-
 
                 Spacer(modifier = Modifier.height(30.dp))
 

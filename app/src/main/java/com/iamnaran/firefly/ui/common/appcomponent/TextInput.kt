@@ -1,8 +1,8 @@
 package com.iamnaran.firefly.ui.common.appcomponent
 
-import android.text.InputType
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
@@ -18,16 +18,48 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.iamnaran.firefly.ui.auth.components.FireflyInputType
 import com.iamnaran.firefly.ui.theme.Shapes
 
 @Composable
-fun TextInput(
+fun EmailInput(
     label: String,
     icon: ImageVector,
     currentValue: String,
-    inputType: Int,
+    focusRequester: FocusRequester? = null,
+    keyboardActions: KeyboardActions,
+    onValueChange: (String) -> Unit
+) {
+
+    TextField(
+        value = currentValue,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester ?: FocusRequester()),
+        leadingIcon = { Icon(imageVector = icon, contentDescription = label) },
+        label = { Text(text = label) },
+        shape = Shapes.medium,
+        singleLine = true,
+        keyboardActions = keyboardActions,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = true,
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next),
+        )
+}
+
+
+@Composable
+fun PasswordInput(
+    label: String,
+    icon: ImageVector,
+    currentValue: String,
     focusRequester: FocusRequester? = null,
     keyboardActions: KeyboardActions,
     onValueChange: (String) -> Unit
@@ -41,30 +73,101 @@ fun TextInput(
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(focusRequester ?: FocusRequester()),
-        leadingIcon = { Icon(imageVector = icon, contentDescription = "Username Icon") },
+        leadingIcon = { Icon(imageVector = icon, contentDescription = label) },
         trailingIcon = {
-            if (inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
-                val passwordIcon = if (passwordVisible) {
-                    Icons.Filled.Lock
-                } else {
-                    Icons.Default.Lock
-                }
-                val description = if (passwordVisible) {
-                    "Hide Password"
-                } else {
-                    "Show Password"
-                }
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(imageVector = passwordIcon, contentDescription = description)
-                }
+            val passwordIcon = if (passwordVisible) {
+                Icons.Filled.Lock
+            } else {
+                Icons.Default.Lock
+            }
+            val description = if (passwordVisible) {
+                "Hide Password"
+            } else {
+                "Show Password"
+            }
+            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                Icon(imageVector = passwordIcon, contentDescription = description)
             }
         },
         label = { Text(text = label) },
         shape = Shapes.medium,
         singleLine = true,
         keyboardActions = keyboardActions,
+        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = true,
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Next
+        ),
 
         )
 
 
+}
+
+
+@Composable
+fun NumberTextInput(
+    label: String,
+    icon: ImageVector,
+    currentValue: String,
+    focusRequester: FocusRequester? = null,
+    keyboardActions: KeyboardActions,
+    onValueChange: (String) -> Unit
+) {
+
+    TextField(
+        value = currentValue,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester ?: FocusRequester()),
+        leadingIcon = { Icon(imageVector = icon, contentDescription = label) },
+        label = { Text(text = label) },
+        shape = Shapes.medium,
+        singleLine = true,
+        keyboardActions = keyboardActions,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = true,
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Next
+        ),
+
+        )
+
+
+}
+
+
+@Composable
+fun NameInput(
+    label: String,
+    icon: ImageVector,
+    currentValue: String,
+    visualTransformation: VisualTransformation,
+    focusRequester: FocusRequester? = null,
+    keyboardActions: KeyboardActions,
+    onValueChange: (String) -> Unit
+) {
+
+    TextField(
+        value = currentValue,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester ?: FocusRequester()),
+        leadingIcon = { Icon(imageVector = icon, contentDescription = label) },
+        label = { Text(text = label) },
+        shape = Shapes.medium,
+        singleLine = true,
+        keyboardActions = keyboardActions,
+        visualTransformation = visualTransformation,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Words,
+            autoCorrect = true,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next),
+    )
 }
