@@ -11,4 +11,5 @@ Includes
 - Retrofit
 - Data Store Preference
 - Login Authentication
+- Kotlin Coroutine NetworkResourceBound
 - Product Listing with Offline First - Rendered in Lazy Column
