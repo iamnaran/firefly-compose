@@ -1,20 +1,14 @@
 # A production based template app to start with Jetpack Compose Android
 Includes
 - Jetpack Compose
-- Navigation Graph
 - Dependency Inject - Hilt
+- Navigation Graph
+- Nested Navigation Graph
+- Splash Screen API
+- Clean Architecture - Repository, Usecase, Domain, SOC
 - Kotlin Flow
 - Room
 - Retrofit
-- Repository
-- Clean Architecture
-- UseCase
+- Data Store Preference
 - Login Authentication
-
-
-WIP
-- Changing Preference to Data Store
-- Show Product Listing Offline first with Room 
-
-Todo
-- Code and UI optimization
+- Product Listing with Offline First - Rendered in Lazy Column
