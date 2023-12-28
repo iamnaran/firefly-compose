@@ -1,9 +1,7 @@
-package com.iamnaran.firefly.data.api
+package com.iamnaran.firefly.data.remote
 
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.utils.AppLog
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response

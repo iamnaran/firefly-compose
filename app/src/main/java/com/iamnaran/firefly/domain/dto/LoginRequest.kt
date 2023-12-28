@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.data.dto
+package com.iamnaran.firefly.domain.dto
 
 data class LoginRequest(
     val username: String,

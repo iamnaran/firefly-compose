@@ -13,13 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -52,18 +50,17 @@ fun Login(
     val loginState by viewModel.loginState.collectAsState()
 
     when (loginState) {
-        is LoginUIEvent.Loading -> {
+        is LoginState.Loading -> {
             // Show loading UI
             // You can use a CircularProgressIndicator or any other loading indicator
         }
-        is LoginUIEvent.NavigateToHome ->{
+        is LoginState.NavigateToHome ->{
             navigateToHome()
         }
         else -> {
 
         }
     }
-
     LoginContent(
         emailState.value,
         passwordState.value,

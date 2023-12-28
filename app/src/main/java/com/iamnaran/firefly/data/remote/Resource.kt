@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.data.api
+package com.iamnaran.firefly.data.remote
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
 

@@ -1,6 +1,6 @@
-package com.iamnaran.firefly.data.api.endpoint
+package com.iamnaran.firefly.data.remote.endpoint
 
-import com.iamnaran.firefly.data.dto.User
+import com.iamnaran.firefly.domain.dto.User
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

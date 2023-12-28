@@ -2,9 +2,10 @@ package com.iamnaran.firefly.di
 
 import com.iamnaran.firefly.BuildConfig
 import com.iamnaran.firefly.data.preference.PreferenceHelper
-import com.iamnaran.firefly.data.api.SupportAuthenticator
-import com.iamnaran.firefly.data.api.SupportInterceptor
-import com.iamnaran.firefly.data.api.endpoint.LoginApi
+import com.iamnaran.firefly.data.remote.SupportAuthenticator
+import com.iamnaran.firefly.data.remote.SupportInterceptor
+import com.iamnaran.firefly.data.remote.endpoint.LoginApi
+import com.iamnaran.firefly.data.remote.endpoint.ProductApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,6 +53,7 @@ object NetworkModule {
     fun provideConverterFactory(): GsonConverterFactory =
         GsonConverterFactory.create()
 
+    @Singleton
     @Provides
     fun provideRetrofit(
         @Named("BaseUrl") baseUrl: String,
@@ -64,6 +66,7 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
@@ -80,8 +83,14 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
-    fun providerLoginApiService(retrofit: Retrofit): LoginApi =
+    fun provideLoginApiService(retrofit: Retrofit): LoginApi =
         retrofit.create(LoginApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideProductApiService(retrofit: Retrofit): ProductApi =
+        retrofit.create(ProductApi::class.java)
 
 }

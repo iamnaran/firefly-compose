@@ -1,5 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <!-- Base application theme. -->
-  <style name="Theme.FireflyCompose" parent="android:Theme.Material.NoActionBar" />
+    <!-- Base application theme. -->
+    <style name="Theme.FireflyCompose" parent="android:Theme.Material.NoActionBar" />
+
+    <style name="Theme.FireflyCompose.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FFD0BCFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.FireflyCompose</item>
+    </style>
 
 </resources>

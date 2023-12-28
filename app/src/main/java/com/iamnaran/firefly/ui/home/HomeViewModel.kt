@@ -1,34 +1,46 @@
 package com.iamnaran.firefly.ui.home
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
+import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.usecase.GetProductUseCase
 import com.iamnaran.firefly.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val serverLoginUseCase: ServerLoginUseCase) :
+class HomeViewModel @Inject constructor(private val getProductUseCase: GetProductUseCase) :
     BaseViewModel() {
 
-    private var _loginStateResponse = MutableLiveData<Boolean>()
-    val loginStateResponse: MutableLiveData<Boolean> get() = _loginStateResponse
 
-    fun login() {
+    private val _homeState = MutableStateFlow(HomeState())
+    val homeState: StateFlow<HomeState> = _homeState
+
+    init {
+        getProducts()
+    }
+
+    private fun getProducts() {
 
         viewModelScope.launch {
+            getProductUseCase().onEach { productResource ->
+                when (productResource) {
+                    is Resource.Success -> {
+                        _homeState.value = HomeState(productResource.data!!)
 
-//            userRepository.login(loginRequest).collect { response ->
-//                when (response) {
-//                    is Result.Success -> _loginStateResponse.value = response.data
-//
-//                    is Result.GenericError -> { //Error
-//                    }
-//                    else -> { //Loading
-//                    }
-//                }
-//            }
+                    }
+
+                    else -> {
+
+                    }
+                }
+
+            }.launchIn(this)
+
         }
     }
 

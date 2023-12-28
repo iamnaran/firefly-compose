@@ -1,7 +1,7 @@
 package com.iamnaran.firefly.data.repository.auth
 
-import com.iamnaran.firefly.data.api.Resource
-import com.iamnaran.firefly.data.dto.User
+import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.dto.User
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

@@ -43,6 +43,7 @@ class PreferenceHelperImpl @Inject constructor(
         dataStore.edit { preference ->
             preference[PrefKeys.ACCESS_TOKEN] = accessToken
         }
+        saveLoggedInStatus(true)
     }
 
     override suspend fun clearPreference() {

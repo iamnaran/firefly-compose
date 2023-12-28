@@ -11,7 +11,6 @@ import com.iamnaran.firefly.data.preference.PrefKeys
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.preference.PreferenceHelperImpl
 import com.iamnaran.firefly.di.qualifiers.PreferenceInfoQualifier
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

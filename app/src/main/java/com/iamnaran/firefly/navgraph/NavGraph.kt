@@ -6,29 +6,29 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.iamnaran.firefly.ui.auth.login.Login
 import com.iamnaran.firefly.ui.auth.signup.SignUp
-import com.iamnaran.firefly.ui.home.HomeScreen
+import com.iamnaran.firefly.ui.home.Home
 
 @Composable
-fun SetupNavGraph(navHostController: NavHostController) {
+fun SetupNavGraph(initialRoute: String, navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.Login.route
+        startDestination = initialRoute
     ) {
         composable(
-            route = Screen.Login.route
+            route = AppScreen.Login.route
         ) {
             Login(
                 navigateToHome = {
-                    navHostController.navigate(Screen.Home.route)
+                    navHostController.navigate(AppScreen.Home.route)
                 },
                 navigateToSignUp = {
-                    navHostController.navigate(Screen.SignUp.route)
+                    navHostController.navigate(AppScreen.SignUp.route)
                 },
             )
         }
 
         composable(
-            route = Screen.SignUp.route
+            route = AppScreen.SignUp.route
         ) {
             SignUp(onNavigateBack = {
                 navHostController.navigateUp()
@@ -36,9 +36,9 @@ fun SetupNavGraph(navHostController: NavHostController) {
         }
 
         composable(
-            route = Screen.Home.route
+            route = AppScreen.Home.route
         ) {
-            HomeScreen()
+            Home(navigateToLogin = {})
         }
     }
 }

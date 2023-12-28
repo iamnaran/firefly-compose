@@ -7,14 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.iamnaran.firefly.data.local.entities.Product
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
 @Composable
-fun ProductLazyList(names: List<String> = List(100) { "$it" }) {
+fun ProductLazyList(allProducts: List<Product>) {
     LazyColumn(modifier = Modifier.padding(8.dp)){
-        items(items =names){name ->
-            ProductItem(name = name)
+        items(items =allProducts){product ->
+            ProductItem(product)
         }
     }
 }
@@ -24,7 +25,7 @@ fun ProductLazyList(names: List<String> = List(100) { "$it" }) {
 @Composable
 fun DefaultHomePreview() {
     FireflyComposeTheme {
-        ProductLazyList()
+        ProductLazyList(emptyList())
     }
 }
 

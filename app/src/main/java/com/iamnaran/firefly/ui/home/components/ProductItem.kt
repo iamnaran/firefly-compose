@@ -3,22 +3,25 @@ package com.iamnaran.firefly.ui.home.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.iamnaran.firefly.R
+import coil.compose.AsyncImage
+import com.iamnaran.firefly.data.local.entities.Product
 
 @Composable
-fun ProductItem(name: String) {
+fun ProductItem(product: Product) {
     Row(
         Modifier
             .background(Color.Cyan)
@@ -28,16 +31,20 @@ fun ProductItem(name: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_google_logo),
-            contentDescription = "logo",
-            Modifier
-                .size(150.dp)
-                .padding(8.dp)
+        AsyncImage(
+            model = product.thumbnail,
+            contentDescription = product.title,
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxHeight()
+                .width(100.dp)
+                .clip(RoundedCornerShape(12.dp)),
+            contentScale = ContentScale.Crop,
         )
 
+
         Button(onClick = { }, Modifier.fillMaxWidth()) {
-            Text(text = name, Modifier.padding(vertical = 8.dp))
+            Text(text = "Buy " + product.price, Modifier.padding(vertical = 8.dp))
         }
     }
 }

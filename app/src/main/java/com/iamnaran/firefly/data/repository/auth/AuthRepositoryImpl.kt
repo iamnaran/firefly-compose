@@ -1,9 +1,9 @@
 package com.iamnaran.firefly.data.repository.auth
 
-import com.iamnaran.firefly.data.api.BaseApiResponse
-import com.iamnaran.firefly.data.api.Resource
-import com.iamnaran.firefly.data.dto.User
-import com.iamnaran.firefly.data.api.endpoint.LoginApi
+import com.iamnaran.firefly.data.remote.BaseApiResponse
+import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.dto.User
+import com.iamnaran.firefly.data.remote.endpoint.LoginApi
 import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
 import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher

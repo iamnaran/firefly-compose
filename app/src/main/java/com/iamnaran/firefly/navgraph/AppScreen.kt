@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.navgraph
 
-private object Route {
+private object AppRoute {
     const val LOGIN = "LOGIN"
     const val SIGNUP = "SIGNUP"
     const val MAIN = "MAIN"
@@ -12,8 +12,8 @@ private object Route {
 
 }
 
-sealed class Screen (val route: String){
-    object Login: Screen(Route.LOGIN)
-    object SignUp: Screen(Route.SIGNUP)
-    object Home: Screen(Route.HOME)
+sealed class AppScreen (val route: String){
+    object Login: AppScreen(AppRoute.LOGIN)
+    object SignUp: AppScreen(AppRoute.SIGNUP)
+    object Home: AppScreen(AppRoute.HOME)
 }

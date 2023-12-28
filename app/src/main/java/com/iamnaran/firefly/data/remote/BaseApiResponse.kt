@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.data.api
+package com.iamnaran.firefly.data.remote
 
 import retrofit2.Response
 

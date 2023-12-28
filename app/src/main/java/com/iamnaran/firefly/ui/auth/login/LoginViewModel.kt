@@ -1,15 +1,15 @@
 package com.iamnaran.firefly.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.data.api.Resource
+import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
 import com.iamnaran.firefly.ui.common.BaseViewModel
+import com.iamnaran.firefly.ui.home.HomeState
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -39,29 +39,27 @@ class LoginViewModel @Inject constructor(
     }
 
     // State for tracking login status
-    private val _loginState = MutableStateFlow<LoginUIEvent>(LoginUIEvent.Loading)
-    val loginState: StateFlow<LoginUIEvent> = _loginState
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
+    val loginState: StateFlow<LoginState> = _loginState
+
 
 
     fun login() {
-
-
-
         viewModelScope.launch {
             serverLoginUseCase(_emailState.value, _passwordState.value).onEach { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        _loginState.value = LoginUIEvent.Loading
+                        _loginState.value = LoginState.Loading
                     }
 
                     is Resource.Success -> {
                         preferenceHelper.saveAccessToken(resource.data!!.token)
-                        _loginState.value = LoginUIEvent.NavigateToHome(resource.data)
+                        _loginState.value = LoginState.NavigateToHome(resource.data)
                     }
 
                     else -> {
                         _loginState.value =
-                            LoginUIEvent.ShowErrorMessage(resource.message.toString())
+                            LoginState.ShowErrorMessage(resource.message.toString())
 
                     }
                 }

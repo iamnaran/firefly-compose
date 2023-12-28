@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.utils
 
-import com.iamnaran.firefly.data.api.Resource
+import com.iamnaran.firefly.data.remote.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
