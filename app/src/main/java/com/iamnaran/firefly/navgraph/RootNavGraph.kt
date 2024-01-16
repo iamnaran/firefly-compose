@@ -6,10 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun RootNavGraph(initialRoute: String, navHostController: NavHostController) {
+fun RootNavGraph(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = initialRoute
+        startDestination = AppScreen.Main.route
     ) {
 
         authNavGraph(navHostController)

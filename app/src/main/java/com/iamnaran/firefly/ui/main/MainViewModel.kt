@@ -6,6 +6,8 @@ import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,21 +15,18 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val getLoginStatusUseCase: GetLoginStatusUseCase) :
     BaseViewModel() {
 
-    private val _loginStatus = MutableStateFlow<Boolean>(false)
+    private val _loginStatus = MutableStateFlow(false)
     val loginStatus: StateFlow<Boolean> = _loginStatus
-
 
     init {
         getLoggedInStatus()
     }
 
     private fun getLoggedInStatus() {
-
         viewModelScope.launch {
-
-            getLoginStatusUseCase().collect {
+            getLoginStatusUseCase().onEach {
                 _loginStatus.value = it;
-            }
+            }.launchIn(this)
         }
     }
 

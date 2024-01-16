@@ -4,8 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.iamnaran.firefly.ui.auth.login.Login
-import com.iamnaran.firefly.ui.auth.signup.SignUp
 import com.iamnaran.firefly.ui.dashboard.home.Home
 
 fun NavGraphBuilder.mainNavGraph(
