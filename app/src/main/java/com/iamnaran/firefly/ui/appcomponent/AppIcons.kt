@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.common
+package com.iamnaran.firefly.ui.appcomponent
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add

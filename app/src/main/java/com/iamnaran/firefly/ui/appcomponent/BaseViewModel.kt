@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.common
+package com.iamnaran.firefly.ui.appcomponent
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel

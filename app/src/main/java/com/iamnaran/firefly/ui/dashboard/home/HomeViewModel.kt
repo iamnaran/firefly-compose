@@ -1,9 +1,9 @@
-package com.iamnaran.firefly.ui.home
+package com.iamnaran.firefly.ui.dashboard.home
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.domain.usecase.GetProductUseCase
-import com.iamnaran.firefly.ui.common.BaseViewModel
+import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,11 +1,8 @@
-package com.iamnaran.firefly.ui.common.appcomponent
+package com.iamnaran.firefly.ui.appcomponent.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,7 +21,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.iamnaran.firefly.ui.common.AppIcons
+import com.iamnaran.firefly.ui.appcomponent.AppIcons
 import com.iamnaran.firefly.ui.theme.Shapes
 
 @Composable

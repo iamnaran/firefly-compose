@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.home
+package com.iamnaran.firefly.ui.dashboard.home
 
 import com.iamnaran.firefly.data.local.entities.Product
 import com.iamnaran.firefly.domain.dto.User

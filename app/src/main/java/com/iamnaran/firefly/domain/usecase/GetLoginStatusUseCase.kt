@@ -7,7 +7,7 @@ class GetLoginStatusUseCase @Inject constructor(
     private val preferenceHelper: PreferenceHelper
 ) {
 
-    suspend operator fun invoke() =
+    operator fun invoke() =
         preferenceHelper.getLoggedInStatus()
 
 

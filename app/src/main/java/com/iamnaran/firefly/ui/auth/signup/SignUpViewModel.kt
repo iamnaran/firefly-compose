@@ -2,7 +2,7 @@ package com.iamnaran.firefly.ui.auth.signup
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
-import com.iamnaran.firefly.ui.common.BaseViewModel
+import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

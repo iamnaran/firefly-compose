@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.home.components
+package com.iamnaran.firefly.ui.dashboard.home.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn

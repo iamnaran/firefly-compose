@@ -1,19 +1,26 @@
 package com.iamnaran.firefly.navgraph
 
 private object AppRoute {
+
+    const val AUTH = "AUTH"
     const val LOGIN = "LOGIN"
-    const val SIGNUP = "SIGNUP"
+    const val REGISTER = "SIGNUP"
+
     const val MAIN = "MAIN"
     const val HOME = "HOME"
-    const val MESSAGE = "MESSAGE"
-    const val ARTICLES = "ARTICLES"
-    const val DM = "DM"
-    const val GROUPS = "Groups"
+
 
 }
 
 sealed class AppScreen (val route: String){
-    object Login: AppScreen(AppRoute.LOGIN)
-    object SignUp: AppScreen(AppRoute.SIGNUP)
-    object Home: AppScreen(AppRoute.HOME)
+
+    object Auth : AppScreen(AppRoute.AUTH){
+        object Login: AppScreen(AppRoute.LOGIN)
+        object Register: AppScreen(AppRoute.REGISTER)
+
+    }
+
+    object Main : AppScreen(AppRoute.MAIN){
+        object Home: AppScreen(AppRoute.HOME)
+    }
 }

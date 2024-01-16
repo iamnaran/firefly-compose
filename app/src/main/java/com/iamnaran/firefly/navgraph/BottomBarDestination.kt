@@ -2,9 +2,9 @@ package com.iamnaran.firefly.navgraph
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.ui.common.AppIcons
+import com.iamnaran.firefly.ui.appcomponent.AppIcons
 
-enum class TopLevelDestination(
+enum class BottomBarDestination(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val iconTextId: Int,

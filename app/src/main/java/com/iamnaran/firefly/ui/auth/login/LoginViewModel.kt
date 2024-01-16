@@ -4,8 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
-import com.iamnaran.firefly.ui.common.BaseViewModel
-import com.iamnaran.firefly.ui.home.HomeState
+import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
