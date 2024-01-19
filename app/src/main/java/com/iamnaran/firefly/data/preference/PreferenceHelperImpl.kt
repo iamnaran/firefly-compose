@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -19,31 +20,22 @@ class PreferenceHelperImpl @Inject constructor(
     }
 
     override fun getLoggedInStatus(): Flow<Boolean> {
-        return dataStore.data
-            .catch {
-                emit(emptyPreferences())
-            }
-            .map { preference ->
-                preference[PrefKeys.LOGGED_IN_STATUS] != null
-            }
+        return dataStore.data.map {
+            preference -> preference[PrefKeys.LOGGED_IN_STATUS] ?: false
+        }
     }
 
     override fun getAccessToken(): Flow<String> {
-        return dataStore.data
-            .catch {
-                emit(emptyPreferences())
-            }
-            .map { preference ->
+        return dataStore.data.map { preference ->
                 preference[PrefKeys.ACCESS_TOKEN] ?: ""
             }
-
     }
 
     override suspend fun saveAccessToken(accessToken: String) {
+        saveLoggedInStatus(true)
         dataStore.edit { preference ->
             preference[PrefKeys.ACCESS_TOKEN] = accessToken
         }
-        saveLoggedInStatus(true)
     }
 
     override suspend fun clearPreference() {

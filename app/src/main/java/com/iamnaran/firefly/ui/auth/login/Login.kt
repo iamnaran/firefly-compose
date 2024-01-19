@@ -60,14 +60,20 @@ fun Login(
 
         }
     }
-    LoginContent(
-        emailState.value,
-        passwordState.value,
-        onEmailChange = { viewModel.setEmail(it) },
-        onPasswordChange = { viewModel.setPassword(it) },
-        { viewModel.login() },
-        navigateToSignUp
-    )
+    val status: Boolean = true
+    if (status){
+        navigateToHome()
+    }else{
+        LoginContent(
+            emailState.value,
+            passwordState.value,
+            onEmailChange = { viewModel.setEmail(it) },
+            onPasswordChange = { viewModel.setPassword(it) },
+            { viewModel.login() },
+            navigateToSignUp
+        )
+    }
+
 
 }
 

@@ -52,8 +52,10 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
-                        preferenceHelper.saveAccessToken(resource.data!!.token)
-                        _loginState.value = LoginState.NavigateToHome(resource.data)
+                        if (resource.data != null){
+                            preferenceHelper.saveAccessToken(resource.data.token)
+                            _loginState.value = LoginState.NavigateToHome(resource.data)
+                        }
                     }
 
                     else -> {

@@ -6,8 +6,7 @@ interface PreferenceHelper {
 
 
     suspend fun saveLoggedInStatus(status: Boolean)
-    fun  getLoggedInStatus(): Flow<Boolean>
-
+    fun getLoggedInStatus(): Flow<Boolean>
 
     /**
      * returns user name flow

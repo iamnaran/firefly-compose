@@ -1,15 +1,14 @@
 package com.iamnaran.firefly.navgraph
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun RootNavGraph(navHostController: NavHostController) {
+fun RootNavGraph(loginStatus: Boolean, navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = AppScreen.Main.route
+        startDestination = if (loginStatus) AppScreen.Main.route else AppScreen.Auth.route
     ) {
 
         authNavGraph(navHostController)

@@ -2,6 +2,7 @@ package com.iamnaran.firefly.ui.dashboard.home
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.usecase.GetLoginStatusUseCase
 import com.iamnaran.firefly.domain.usecase.GetProductUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,15 +14,31 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getProductUseCase: GetProductUseCase) :
-    BaseViewModel() {
+class HomeViewModel @Inject constructor(
+    private val getProductUseCase: GetProductUseCase,
+    private val getLoginStatusUseCase: GetLoginStatusUseCase
+) : BaseViewModel() {
 
 
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> = _homeState
 
+    private val _loginStatus = MutableStateFlow(false)
+    val loginStatus: StateFlow<Boolean> = _loginStatus
+
     init {
-        getProducts()
+        getLoggedInStatus()
+    }
+
+    private fun getLoggedInStatus() {
+        viewModelScope.launch {
+            getLoginStatusUseCase().onEach {
+                _loginStatus.value = it;
+                if (it){
+                    getProducts()
+                }
+            }.launchIn(this)
+        }
     }
 
     private fun getProducts() {
@@ -31,16 +48,11 @@ class HomeViewModel @Inject constructor(private val getProductUseCase: GetProduc
                 when (productResource) {
                     is Resource.Success -> {
                         _homeState.value = HomeState(productResource.data!!)
-
                     }
-
                     else -> {
-
                     }
                 }
-
             }.launchIn(this)
-
         }
     }
 

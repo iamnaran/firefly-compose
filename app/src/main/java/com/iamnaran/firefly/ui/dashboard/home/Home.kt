@@ -1,5 +1,7 @@
 package com.iamnaran.firefly.ui.dashboard.home
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,6 +16,9 @@ fun Home(
 
     val homeState by viewModel.homeState.collectAsState()
 
+    val loginStatus by viewModel.loginStatus.collectAsState()
+
+
     HomeContent(homeState) {
         navigateToLogin()
     }
@@ -24,7 +29,11 @@ fun Home(
 @Composable
 fun HomeContent(homeState: HomeState, onLogoutClick: () -> Unit) {
 
-    ProductLazyList(homeState.allProducts)
+    Column {
+
+        Text(text = "Home")
+        ProductLazyList(homeState.allProducts)
+    }
 
 }
 
