@@ -5,6 +5,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+
+
+fun <T> Throwable.asFlow(): Flow<T> = flow {
+    emit(suspendCancellableCoroutine { cancellableContinuation ->
+        cancellableContinuation.cancel(this@asFlow)
+    })
+}
 
 fun <T1, T2> CoroutineScope.combineFlows(
     flow1: Flow<T1>,

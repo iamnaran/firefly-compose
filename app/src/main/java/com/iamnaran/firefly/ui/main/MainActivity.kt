@@ -14,7 +14,6 @@ import com.iamnaran.firefly.ui.auth.login.Login
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -27,15 +26,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-
         setContent {
             FireflyComposeTheme {
                 navController = rememberNavController()
-                var loginStatus: Boolean
-                runBlocking {
-                    loginStatus = mainViewModel.loginStatus.value
-                }
-                RootNavGraph(loginStatus,navHostController = navController)
+                RootNavGraph(mainViewModel.isUserAuthenticated(),navHostController = navController)
             }
         }
     }

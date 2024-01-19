@@ -53,26 +53,23 @@ fun Login(
             // Show loading UI
             // You can use a CircularProgressIndicator or any other loading indicator
         }
-        is LoginState.NavigateToHome ->{
+
+        is LoginState.NavigateToHome -> {
             navigateToHome()
         }
+
         else -> {
 
         }
     }
-    val status: Boolean = true
-    if (status){
-        navigateToHome()
-    }else{
-        LoginContent(
-            emailState.value,
-            passwordState.value,
-            onEmailChange = { viewModel.setEmail(it) },
-            onPasswordChange = { viewModel.setPassword(it) },
-            { viewModel.login() },
-            navigateToSignUp
-        )
-    }
+    LoginContent(
+        emailState.value,
+        passwordState.value,
+        onEmailChange = { viewModel.setEmail(it) },
+        onPasswordChange = { viewModel.setPassword(it) },
+        { viewModel.login() },
+        navigateToSignUp
+    )
 
 
 }

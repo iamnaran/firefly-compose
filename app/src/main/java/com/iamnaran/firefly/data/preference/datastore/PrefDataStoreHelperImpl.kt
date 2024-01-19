@@ -1,21 +1,19 @@
-package com.iamnaran.firefly.data.preference
+package com.iamnaran.firefly.data.preference.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class PreferenceHelperImpl @Inject constructor(
+class PrefDataStoreHelperImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
-) : PreferenceHelper {
-    override suspend fun saveLoggedInStatus(status: Boolean) {
+) : PrefDataStoreHelper {
+    override suspend fun saveLoggedInStatus() {
         dataStore.edit { preference ->
-            preference[PrefKeys.LOGGED_IN_STATUS] = status
+            preference[PrefKeys.LOGGED_IN_STATUS] = true
         }
     }
 
@@ -25,6 +23,12 @@ class PreferenceHelperImpl @Inject constructor(
         }
     }
 
+    override suspend fun isLoggedIn(): Boolean {
+        return dataStore.data.map {
+                preference -> preference[PrefKeys.LOGGED_IN_STATUS] ?: false
+        }.first()
+    }
+
     override fun getAccessToken(): Flow<String> {
         return dataStore.data.map { preference ->
                 preference[PrefKeys.ACCESS_TOKEN] ?: ""
@@ -32,7 +36,6 @@ class PreferenceHelperImpl @Inject constructor(
     }
 
     override suspend fun saveAccessToken(accessToken: String) {
-        saveLoggedInStatus(true)
         dataStore.edit { preference ->
             preference[PrefKeys.ACCESS_TOKEN] = accessToken
         }

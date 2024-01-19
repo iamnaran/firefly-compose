@@ -2,19 +2,13 @@ package com.iamnaran.firefly.data.repository.product
 
 import androidx.room.withTransaction
 import com.iamnaran.firefly.data.local.AppDatabase
-import com.iamnaran.firefly.data.local.dao.ProductDao
-import com.iamnaran.firefly.data.local.entities.Product
 import com.iamnaran.firefly.data.remote.BaseApiResponse
-import com.iamnaran.firefly.data.remote.endpoint.ProductApi
+import com.iamnaran.firefly.data.remote.service.ProductApi
 import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
 import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import com.iamnaran.firefly.utils.networkBoundResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(

@@ -123,6 +123,9 @@ dependencies {
     // Icons
     implementation 'androidx.compose.material:material-icons-extended:1.5.4'
 
+    // secure shared Pref
+    implementation 'androidx.security:security-crypto:1.1.0-alpha04'
+
     // Splash
     implementation 'androidx.core:core-splashscreen:1.0.1'
 

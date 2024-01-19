@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.data.remote.endpoint
+package com.iamnaran.firefly.data.remote.service
 
 import com.iamnaran.firefly.domain.dto.AllProduct
 import retrofit2.Response

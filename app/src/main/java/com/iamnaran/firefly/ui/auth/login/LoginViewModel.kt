@@ -2,7 +2,8 @@ package com.iamnaran.firefly.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.data.preference.PreferenceHelper
+import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelper
+import com.iamnaran.firefly.data.preference.sharedpref.SharedPrefHelper
 import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val serverLoginUseCase: ServerLoginUseCase,
-    private val preferenceHelper: PreferenceHelper
+    private val sharedPrefHelper: SharedPrefHelper
 ) :
     BaseViewModel() {
 
@@ -53,7 +54,8 @@ class LoginViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         if (resource.data != null){
-                            preferenceHelper.saveAccessToken(resource.data.token)
+                            sharedPrefHelper.saveAccessToken(resource.data.token)
+                            sharedPrefHelper.saveLoggedInStatus(true)
                             _loginState.value = LoginState.NavigateToHome(resource.data)
                         }
                     }

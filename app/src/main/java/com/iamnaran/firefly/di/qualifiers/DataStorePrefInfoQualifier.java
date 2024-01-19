@@ -16,6 +16,6 @@ import javax.inject.Qualifier;
 
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PreferenceInfoQualifier {
+public @interface DataStorePrefInfoQualifier {
 
 }

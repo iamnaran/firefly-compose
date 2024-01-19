@@ -2,7 +2,6 @@ package com.iamnaran.firefly.ui.dashboard.home
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.domain.usecase.GetLoginStatusUseCase
 import com.iamnaran.firefly.domain.usecase.GetProductUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getProductUseCase: GetProductUseCase,
-    private val getLoginStatusUseCase: GetLoginStatusUseCase
 ) : BaseViewModel() {
 
 
@@ -27,19 +25,9 @@ class HomeViewModel @Inject constructor(
     val loginStatus: StateFlow<Boolean> = _loginStatus
 
     init {
-        getLoggedInStatus()
+        getProducts()
     }
 
-    private fun getLoggedInStatus() {
-        viewModelScope.launch {
-            getLoginStatusUseCase().onEach {
-                _loginStatus.value = it;
-                if (it){
-                    getProducts()
-                }
-            }.launchIn(this)
-        }
-    }
 
     private fun getProducts() {
 

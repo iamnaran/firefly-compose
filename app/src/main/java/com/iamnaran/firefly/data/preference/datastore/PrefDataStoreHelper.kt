@@ -1,12 +1,14 @@
-package com.iamnaran.firefly.data.preference
+package com.iamnaran.firefly.data.preference.datastore
 
 import kotlinx.coroutines.flow.Flow
 
-interface PreferenceHelper {
+interface PrefDataStoreHelper {
 
 
-    suspend fun saveLoggedInStatus(status: Boolean)
+    suspend fun saveLoggedInStatus()
     fun getLoggedInStatus(): Flow<Boolean>
+
+    suspend fun isLoggedIn(): Boolean
 
     /**
      * returns user name flow

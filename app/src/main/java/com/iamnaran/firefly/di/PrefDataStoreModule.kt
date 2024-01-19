@@ -7,11 +7,10 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.iamnaran.firefly.data.preference.PrefKeys
-import com.iamnaran.firefly.data.preference.PreferenceHelper
-import com.iamnaran.firefly.data.preference.PreferenceHelperImpl
-import com.iamnaran.firefly.di.qualifiers.PreferenceInfoQualifier
-import dagger.Binds
+import com.iamnaran.firefly.data.preference.datastore.PrefKeys
+import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelper
+import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelperImpl
+import com.iamnaran.firefly.di.qualifiers.DataStorePrefInfoQualifier
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,14 +23,14 @@ import javax.inject.Singleton
 object PrefDataStoreModule {
 
     @Provides
-    @PreferenceInfoQualifier
-    fun providePreferenceName(): String {
+    @DataStorePrefInfoQualifier
+    fun providePrefDatastoreName(): String {
         return PrefKeys.PREF_FILE_NAME
     }
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context, @PreferenceInfoQualifier prefName: String) : DataStore<Preferences> {
+    fun provideDataStore(@ApplicationContext context: Context, @DataStorePrefInfoQualifier prefName: String) : DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
                 produceNewData = { emptyPreferences() }
@@ -43,7 +42,7 @@ object PrefDataStoreModule {
 
     @Provides
     @Singleton
-    fun providePreferencesHelper(preferenceHelper: PreferenceHelperImpl): PreferenceHelper {
-        return preferenceHelper
+    fun providePrefDataStoreHelper(prefDataStoreHelper: PrefDataStoreHelperImpl): PrefDataStoreHelper {
+        return prefDataStoreHelper
     }
 }

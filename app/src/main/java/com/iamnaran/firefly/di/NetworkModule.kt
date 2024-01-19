@@ -1,11 +1,12 @@
 package com.iamnaran.firefly.di
 
 import com.iamnaran.firefly.BuildConfig
-import com.iamnaran.firefly.data.preference.PreferenceHelper
+import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelper
 import com.iamnaran.firefly.data.remote.SupportAuthenticator
 import com.iamnaran.firefly.data.remote.SupportInterceptor
-import com.iamnaran.firefly.data.remote.endpoint.LoginApi
-import com.iamnaran.firefly.data.remote.endpoint.ProductApi
+import com.iamnaran.firefly.data.remote.service.AuthApi
+import com.iamnaran.firefly.data.remote.service.LoginApi
+import com.iamnaran.firefly.data.remote.service.ProductApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,8 +44,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUnAuthorizedInterceptor(preferenceHelper: PreferenceHelper): SupportAuthenticator {
-        return SupportAuthenticator(preferenceHelper)
+    fun provideUnAuthorizedInterceptor(prefDataStoreHelper: PrefDataStoreHelper): SupportAuthenticator {
+        return SupportAuthenticator(prefDataStoreHelper)
     }
 
 
@@ -92,5 +93,10 @@ object NetworkModule {
     @Provides
     fun provideProductApiService(retrofit: Retrofit): ProductApi =
         retrofit.create(ProductApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideAuthApiService(retrofit: Retrofit): AuthApi =
+        retrofit.create(AuthApi::class.java)
 
 }

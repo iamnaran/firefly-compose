@@ -5,10 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun RootNavGraph(loginStatus: Boolean, navHostController: NavHostController) {
+fun RootNavGraph(isLoggedIn: Boolean, navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = if (loginStatus) AppScreen.Main.route else AppScreen.Auth.route
+        startDestination =  if(isLoggedIn) AppScreen.Main.route else AppScreen.Auth.route
     ) {
 
         authNavGraph(navHostController)

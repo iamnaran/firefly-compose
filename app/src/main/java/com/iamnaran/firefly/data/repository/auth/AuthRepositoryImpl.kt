@@ -2,8 +2,9 @@ package com.iamnaran.firefly.data.repository.auth
 
 import com.iamnaran.firefly.data.remote.BaseApiResponse
 import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.data.remote.service.AuthApi
 import com.iamnaran.firefly.domain.dto.User
-import com.iamnaran.firefly.data.remote.endpoint.LoginApi
+import com.iamnaran.firefly.data.remote.service.LoginApi
 import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
 import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi,
+    private val authApi: AuthApi,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val externalScope: CoroutineScope,
@@ -24,5 +26,9 @@ class AuthRepositoryImpl @Inject constructor(
         return flow {
             emit(safeApiCall { loginApi.serverLogin(username,password) })
         }.flowOn(ioDispatcher)
+    }
+
+    override  fun doLogin(username: String, password: String): Flow<User> {
+        return authApi.authApi(username,password)
     }
 }
