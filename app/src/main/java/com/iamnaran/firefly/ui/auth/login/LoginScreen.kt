@@ -38,7 +38,7 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
 @Composable
-fun Login(
+fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
@@ -176,7 +176,7 @@ fun LoginContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        Login(
+        LoginScreen(
             navigateToHome = {},
             navigateToSignUp = {})
     }

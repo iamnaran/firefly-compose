@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.ui.dashboard.home.components.ProductLazyList
 
 @Composable
-fun Home(
+fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToLogin: () -> Unit,
 ) {

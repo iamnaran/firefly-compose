@@ -1,12 +1,11 @@
-package com.iamnaran.firefly.navgraph
+package com.iamnaran.firefly.ui.navigation
 
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.iamnaran.firefly.ui.auth.login.Login
-import com.iamnaran.firefly.ui.auth.signup.SignUp
+import com.iamnaran.firefly.ui.auth.login.LoginScreen
+import com.iamnaran.firefly.ui.auth.signup.SignUpScreen
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
@@ -18,7 +17,7 @@ fun NavGraphBuilder.authNavGraph(
         composable(
             route = AppScreen.Auth.Login.route
         ) {
-            Login(
+            LoginScreen(
                 navigateToHome = {
                     navController.navigate(AppScreen.Main.route)
                 },
@@ -31,7 +30,7 @@ fun NavGraphBuilder.authNavGraph(
         composable(
             route = AppScreen.Auth.Register.route
         ) {
-            SignUp(onNavigateBack = {
+            SignUpScreen(onNavigateBack = {
                 navController.navigateUp()
             })
         }

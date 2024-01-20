@@ -9,8 +9,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.iamnaran.firefly.navgraph.RootNavGraph
-import com.iamnaran.firefly.ui.auth.login.Login
+import com.iamnaran.firefly.ui.navigation.NavGraph
+import com.iamnaran.firefly.ui.auth.login.LoginScreen
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FireflyComposeTheme {
                 navController = rememberNavController()
-                RootNavGraph(mainViewModel.isUserAuthenticated(),navHostController = navController)
+                NavGraph(mainViewModel.isUserAuthenticated(),navHostController = navController)
             }
         }
     }
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     FireflyComposeTheme {
-        Login(
+        LoginScreen(
             navigateToHome = {},
             navigateToSignUp = {})
     }
