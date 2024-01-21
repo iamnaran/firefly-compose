@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.iamnaran.firefly.ui.navigation.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,13 +32,13 @@ fun BottomBar(
 
     NavigationBar {
 
-        var selectedItemIndex by rememberSaveable {
-            mutableIntStateOf(0)
-        }
-        navigationScreen.forEachIndexed { index, item ->
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        var currentRoute = navBackStackEntry?.destination?.route
+
+        navigationScreen.forEach { item ->
 
             NavigationBarItem(
-                selected = selectedItemIndex == index,
+                selected = currentRoute == item.route,
 
                 label = {
                     Text(text = stringResource(id = item.title!!))
@@ -54,13 +55,13 @@ fun BottomBar(
 
                     }
                     Icon(
-                        imageVector = (if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon)!!,
+                        imageVector = (if (item.route == currentRoute) item.selectedIcon else item.unselectedIcon)!!,
                         contentDescription = stringResource(id = item.title!!)
                     )
                 },
 
                 onClick = {
-                    selectedItemIndex = index
+                    currentRoute = item.route
                     navController.navigate(item.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
