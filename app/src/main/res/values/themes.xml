@@ -3,10 +3,9 @@
     <style name="Theme.FireflyCompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-
     </style>
 
-
+    <!-- Splash application light theme. -->
     <style name="Theme.FireflyCompose.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/splash_background_light</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>

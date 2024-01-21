@@ -1,9 +1,10 @@
-package com.iamnaran.firefly.ui.dashboard.home
+package com.iamnaran.firefly.ui.main.home
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.domain.usecase.GetProductUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
+import com.iamnaran.firefly.ui.main.home.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,6 +35,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProductUseCase().onEach { productResource ->
                 when (productResource) {
+                    is Resource.Loading ->{
+                        _homeState.value = HomeState(productResource.data!!)
+                    }
                     is Resource.Success -> {
                         _homeState.value = HomeState(productResource.data!!)
                     }

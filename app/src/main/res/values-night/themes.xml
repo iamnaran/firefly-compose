@@ -5,6 +5,7 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!-- Splash application dark theme. -->
     <style name="Theme.FireflyCompose.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/splash_background_dark</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
