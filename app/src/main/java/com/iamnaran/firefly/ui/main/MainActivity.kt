@@ -51,14 +51,17 @@ class MainActivity : ComponentActivity() {
                         bottomBarState.value = true
                         topBarState.value = true
                     }
+
                     AppScreen.Main.Profile.route -> {
                         bottomBarState.value = true
                         topBarState.value = true
                     }
+
                     AppScreen.Main.Notification.route -> {
                         bottomBarState.value = true
                         topBarState.value = true
                     }
+
                     else -> {
                         bottomBarState.value = false
                         topBarState.value = false
@@ -66,12 +69,17 @@ class MainActivity : ComponentActivity() {
                 }
                 Scaffold(
                     bottomBar = {
-                        BottomBar(navController = navController, bottomBarState)
+                        if (bottomBarState.value) {
+                            BottomBar(navController = navController)
+                        }
                     }) { paddingValues ->
                     Box(
                         modifier = Modifier.padding(paddingValues)
                     ) {
-                        NavGraph(mainViewModel.isUserAuthenticated(),navHostController = navController)
+                        NavGraph(
+                            mainViewModel.isUserAuthenticated(),
+                            navHostController = navController
+                        )
                     }
                 }
 

@@ -24,62 +24,54 @@ import com.iamnaran.firefly.ui.navigation.AppScreen
 @Composable
 fun BottomBar(
     navController: NavHostController,
-    bottomBarState: MutableState<Boolean>
 ) {
     val navigationScreen = listOf(
         AppScreen.Main.Home, AppScreen.Main.Notification, AppScreen.Main.Profile
     )
 
-    AnimatedVisibility(
-        visible = bottomBarState.value,
-        enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { it }),
-        content = {
-            NavigationBar {
+    NavigationBar {
 
-                var selectedItemIndex by rememberSaveable {
-                    mutableIntStateOf(0)
-                }
-                navigationScreen.forEachIndexed { index, item ->
+        var selectedItemIndex by rememberSaveable {
+            mutableIntStateOf(0)
+        }
+        navigationScreen.forEachIndexed { index, item ->
 
-                    NavigationBarItem(
-                        selected = selectedItemIndex == index,
+            NavigationBarItem(
+                selected = selectedItemIndex == index,
 
-                        label = {
-                            Text(text = stringResource(id = item.title!!))
-                        },
-                        icon = {
-                            BadgedBox(badge = {
+                label = {
+                    Text(text = stringResource(id = item.title!!))
+                },
+                icon = {
+                    BadgedBox(badge = {
 //                        if (item.badgeCount){
 //                            Badge {
 //                                Text(text = item.badgeCount.toString())
 //                            }
 //                        }else{
 //                        }
-                            }) {
+                    }) {
 
-                            }
-                            Icon(
-                                imageVector = (if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon)!!,
-                                contentDescription = stringResource(id = item.title!!)
-                            )
-                        },
-
-                        onClick = {
-                            selectedItemIndex = index
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
+                    }
+                    Icon(
+                        imageVector = (if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon)!!,
+                        contentDescription = stringResource(id = item.title!!)
                     )
-                }
-            }
+                },
+
+                onClick = {
+                    selectedItemIndex = index
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+            )
         }
-    )
+    }
 
 
 }
