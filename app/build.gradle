@@ -93,6 +93,7 @@ dependencies {
 
     // DI Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.5.4'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
 

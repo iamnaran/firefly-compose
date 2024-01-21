@@ -28,21 +28,24 @@ sealed class AppScreen(val route: String) {
         object Home : BottomNavigationScreen(
             route = AppRoute.HOME,
             title = R.string.home,
-            icon = AppIcons.Home
+            selectedIcon = AppIcons.HomeFilled,
+            unselectedIcon = AppIcons.HomeOutlined,
         )
 
         object Profile :
             BottomNavigationScreen(
                 route = AppRoute.PROFILE,
                 title = R.string.profile,
-                icon = AppIcons.Profile
+                selectedIcon = AppIcons.ProfileFilled,
+                unselectedIcon = AppIcons.ProfileOutlined,
             )
 
         object Notification : BottomNavigationScreen(
             route = AppRoute.NOTIFICATION,
             title = R.string.notification,
-            icon = AppIcons.Notification
-        )
+            selectedIcon = AppIcons.NotificationFilled,
+            unselectedIcon = AppIcons.NotificationOutlined,
+            )
     }
 
 }
@@ -50,5 +53,6 @@ sealed class AppScreen(val route: String) {
 sealed class BottomNavigationScreen(
     val route: String,
     val title: Int? = null,
-    val icon: ImageVector? = null
+    val selectedIcon: ImageVector? = null,
+    val unselectedIcon: ImageVector? = null
 )

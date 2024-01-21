@@ -9,6 +9,9 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Person
 
 object AppIcons {
     // Material Icons
@@ -17,8 +20,11 @@ object AppIcons {
     val PasswordEyeVisible = Icons.Default.Visibility
     val PasswordEyeInvisible = Icons.Default.VisibilityOff
 
-    val Home = Icons.Default.Home
-    val Profile = Icons.Default.Person
-    val Notification = Icons.Default.Notifications
+    val HomeFilled = Icons.Filled.Home
+    val HomeOutlined = Icons.Outlined.Home
+    val ProfileFilled = Icons.Filled.Person
+    val ProfileOutlined = Icons.Outlined.Person
+    val NotificationFilled = Icons.Filled.Notifications
+    val NotificationOutlined = Icons.Outlined.Notifications
 
 }
