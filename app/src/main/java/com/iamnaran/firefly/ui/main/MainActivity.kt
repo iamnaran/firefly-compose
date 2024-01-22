@@ -98,3 +98,5 @@ fun MainActivityPreview() {
             navigateToSignUp = {})
     }
 }
+
+//https://gist.github.com/stevdza-san/5743a32dc1ec2d8eaf62c29d9bab1c43

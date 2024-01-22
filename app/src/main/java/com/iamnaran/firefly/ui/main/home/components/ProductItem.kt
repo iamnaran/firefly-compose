@@ -6,37 +6,33 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.iamnaran.firefly.data.local.entities.Product
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
-import com.iamnaran.firefly.ui.theme.appLightSecondary
-import com.iamnaran.firefly.ui.theme.appTextPrimary
-import com.iamnaran.firefly.ui.theme.appTextSecondary
 import com.iamnaran.firefly.ui.theme.appTypography
+import com.iamnaran.firefly.ui.theme.dimens
 
 @Composable
 fun ProductItem(product: Product) {
 
     Card(
         modifier = Modifier
-            .background(Color.LightGray)
-            .padding(15.dp)
+            .padding(MaterialTheme.dimens.medium)
             .shadow(
                 elevation = 5.dp,
-                spotColor = appLightSecondary,
-                shape = RoundedCornerShape(8.dp)
+                spotColor = MaterialTheme.colorScheme.secondaryContainer,
+                shape = MaterialTheme.shapes.medium
             ),
-        shape = RoundedCornerShape(8.dp)
+        shape = MaterialTheme.shapes.medium
     ) {
         Column(
             Modifier
@@ -46,7 +42,7 @@ fun ProductItem(product: Product) {
                 model = product.thumbnail,
                 contentDescription = product.title,
                 modifier = Modifier
-                    .background(appLightSecondary)
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
                     .fillMaxWidth()
                     .height(150.dp),
                 contentScale = ContentScale.Crop,
@@ -58,8 +54,8 @@ fun ProductItem(product: Product) {
             ) {
                 Text(
                     text = product.category.uppercase(),
-                    style = appTypography.labelMedium,
-                    color = appTextSecondary,
+                    style = appTypography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
 
@@ -67,7 +63,7 @@ fun ProductItem(product: Product) {
                     text = product.title,
                     style = appTypography.titleLarge,
                     maxLines = 2,
-                    color = appTextPrimary,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
 
@@ -75,12 +71,11 @@ fun ProductItem(product: Product) {
                     text = product.description,
                     style = appTypography.bodySmall,
                     maxLines = 3,
-                    color = appTextSecondary,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-
 
             }
         }
