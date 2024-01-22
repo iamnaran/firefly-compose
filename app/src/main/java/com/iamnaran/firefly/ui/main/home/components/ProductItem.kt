@@ -57,7 +57,7 @@ fun ProductItem(product: Product) {
                     .padding(10.dp),
             ) {
                 Text(
-                    text = product.category,
+                    text = product.category.uppercase(),
                     style = appTypography.labelMedium,
                     color = appTextSecondary,
                     modifier = Modifier.padding(8.dp)
@@ -79,7 +79,7 @@ fun ProductItem(product: Product) {
                     modifier = Modifier.padding(8.dp)
                 )
 
-                Spacer(modifier = Modifier.height(2.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
 
             }
