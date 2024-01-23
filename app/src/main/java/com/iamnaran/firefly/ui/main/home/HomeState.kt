@@ -1,8 +1,7 @@
 package com.iamnaran.firefly.ui.main.home
 
-import com.iamnaran.firefly.data.local.entities.Product
-import com.iamnaran.firefly.domain.dto.User
+import com.iamnaran.firefly.data.local.entities.ProductEntity
 
 data class HomeState(
-    val allProducts: List<Product> = emptyList()
+    val allProductEntities: List<ProductEntity> = emptyList()
 )

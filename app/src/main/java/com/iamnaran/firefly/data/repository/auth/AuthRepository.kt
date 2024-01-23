@@ -1,14 +1,19 @@
 package com.iamnaran.firefly.data.repository.auth
 
+import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.domain.dto.User
+import com.iamnaran.firefly.domain.dto.UserResponse
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
-    suspend fun postLogin(username: String,password: String): Flow<Resource<User>>
+    suspend fun postLogin(username: String,password: String): Flow<Resource<UserResponse>>
 
-     fun doLogin(username: String,password: String): Flow<User>
+     fun doLogin(username: String,password: String): Flow<UserResponse>
+
+     suspend fun storeLoggedInUser(user: UserEntity)
+
+     suspend fun getUserById(userId: Long): Flow<UserEntity>
 
 
 }

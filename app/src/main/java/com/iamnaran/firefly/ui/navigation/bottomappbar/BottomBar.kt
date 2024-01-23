@@ -3,6 +3,7 @@ package com.iamnaran.firefly.ui.navigation.bottomappbar
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -34,7 +35,7 @@ fun BottomBar(
                 selected = currentRoute == item.route,
 
                 label = {
-                    Text(text = stringResource(id = item.title!!))
+                    Text(text = stringResource(id = item.title!!), style = MaterialTheme.typography.displaySmall)
                 },
                 icon = {
                     BadgedBox(badge = {

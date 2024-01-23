@@ -4,14 +4,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.iamnaran.firefly.data.local.entities.Product
+import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
 @Composable
-fun ProductLazyList(allProducts: List<Product>) {
+fun ProductLazyList(allProductEntities: List<ProductEntity>) {
     LazyColumn(){
-        items(items =allProducts){product ->
+        items(items =allProductEntities){ product ->
             ProductItem(product)
         }
     }

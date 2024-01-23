@@ -32,7 +32,7 @@ class ProductRepositoryImpl @Inject constructor(
         },
         saveFetchResult = { products ->
             appDatabase.withTransaction {
-                productDao.insertAllProducts(products.body()!!.products)
+                productDao.insertAllProducts(products.body()!!.productEntities)
             }
         }
 

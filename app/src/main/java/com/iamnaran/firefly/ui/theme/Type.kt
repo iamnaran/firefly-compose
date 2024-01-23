@@ -95,7 +95,14 @@ val appTypography = Typography(
     displaySmall = TextStyle(
         fontWeight = FontWeight.Light,
         fontFamily = fireFlyFonts,
-        fontSize = 11.sp,
+        fontSize = 10.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
+    ),
+    displayMedium = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontFamily = fireFlyFonts,
+        fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     ),

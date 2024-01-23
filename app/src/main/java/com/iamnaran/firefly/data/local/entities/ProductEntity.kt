@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity("product")
 @Immutable
-data class Product(
+data class ProductEntity(
     @PrimaryKey
     @ColumnInfo("id")
     @SerializedName("id")

@@ -1,12 +1,9 @@
 package com.iamnaran.firefly.ui.main.profile.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,13 +21,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.iamnaran.firefly.data.local.entities.User
+import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 
 @Composable
-fun ProfileCard(user: User) {
+fun ProfileCard(userEntity: UserEntity) {
 
     Card(
         modifier = Modifier
@@ -45,26 +42,23 @@ fun ProfileCard(user: User) {
         Column(
             Modifier
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight(4f)
-            ) {
-
+            Box {
                 AsyncImage(
-                    model = user.profileImage,
-                    contentDescription = user.fullName,
+                    model = userEntity.profileImage,
+                    contentDescription = userEntity.fullName,
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
-                        .padding(MaterialTheme.dimens.large)
+                        .padding(MaterialTheme.dimens.extraLarge)
                         .width(150.dp)
                         .height(150.dp)
                         .clip(CircleShape)
-                        .border(MaterialTheme.dimens.medium, MaterialTheme.colorScheme.primary, CircleShape)
-                    ,
+                        .border(
+                            MaterialTheme.dimens.extraSmall,
+                            MaterialTheme.colorScheme.primary,
+                            CircleShape
+                        ),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -73,24 +67,19 @@ fun ProfileCard(user: User) {
             Column(
                 Modifier
                     .padding(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = user.fullName.uppercase(),
-                    style = appTypography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSecondary,
-                    modifier = Modifier.padding(MaterialTheme.dimens.medium)
-                )
 
                 Text(
-                    text = user.email,
+                    text = userEntity.fullName,
                     style = appTypography.titleLarge,
                     color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier.padding(MaterialTheme.dimens.medium)
                 )
 
                 Text(
-                    text = user.contact,
-                    style = appTypography.bodySmall,
+                    text = userEntity.email.lowercase(),
+                    style = appTypography.labelSmall,
                     color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier.padding(MaterialTheme.dimens.medium)
                 )
@@ -110,7 +99,7 @@ fun ProfileCard(user: User) {
 fun DefaultPreview() {
     FireflyComposeTheme {
         ProfileCard(
-            User(
+            UserEntity(
                 12,
                 "Full Name",
                 "nrn.panthi@gmail.com",

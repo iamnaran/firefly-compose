@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import com.iamnaran.firefly.ui.appcomponent.AppIcons
 import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
+import com.iamnaran.firefly.ui.theme.dimens
 
 
 @Composable
@@ -89,7 +91,7 @@ fun LoginContent(
 
     Column(
         Modifier
-            .padding(30.dp)
+            .padding(MaterialTheme.dimens.extraLarge)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -99,7 +101,7 @@ fun LoginContent(
         Box(
             modifier = Modifier
                 .weight(2f)
-                .padding(10.dp), contentAlignment = Alignment.Center
+                .padding(MaterialTheme.dimens.medium), contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_google_logo),

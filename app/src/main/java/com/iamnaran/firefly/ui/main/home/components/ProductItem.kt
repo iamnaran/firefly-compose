@@ -16,13 +16,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.iamnaran.firefly.data.local.entities.Product
+import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(productEntity: ProductEntity) {
 
     Card(
         modifier = Modifier
@@ -36,11 +36,12 @@ fun ProductItem(product: Product) {
     ) {
         Column(
             Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+            ,
         ) {
             AsyncImage(
-                model = product.thumbnail,
-                contentDescription = product.title,
+                model = productEntity.thumbnail,
+                contentDescription = productEntity.title,
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondaryContainer)
                     .fillMaxWidth()
@@ -53,14 +54,14 @@ fun ProductItem(product: Product) {
                     .padding(10.dp),
             ) {
                 Text(
-                    text = product.category.uppercase(),
+                    text = productEntity.category.uppercase(),
                     style = appTypography.labelSmall,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
 
                 Text(
-                    text = product.title,
+                    text = productEntity.title,
                     style = appTypography.titleLarge,
                     maxLines = 2,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -68,7 +69,7 @@ fun ProductItem(product: Product) {
                 )
 
                 Text(
-                    text = product.description,
+                    text = productEntity.description,
                     style = appTypography.bodySmall,
                     maxLines = 3,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -89,7 +90,7 @@ fun ProductItem(product: Product) {
 fun DefaultPreview() {
     FireflyComposeTheme {
         ProductItem(
-            Product(
+            ProductEntity(
                 12,
                 "Iphone 15 Pro Design Methods of the society is great of Iphone 15 Pro Design",
                 "It seems that you are trying to fill up the rounded edges of a CardView in Jetpack Compose with an image or ripple animation.",

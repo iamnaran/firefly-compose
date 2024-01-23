@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.data.remote.service
 
-import com.iamnaran.firefly.domain.dto.User
+import com.iamnaran.firefly.domain.dto.UserResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -13,6 +13,6 @@ interface AuthApi {
     fun authApi(
         @Field("username") username: String,
         @Field("password") password: String
-    ): Flow<User>
+    ): Flow<UserResponse>
 
 }

@@ -1,7 +1,7 @@
 package com.iamnaran.firefly.di
 
 import com.iamnaran.firefly.BuildConfig
-import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelper
+import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.SupportAuthenticator
 import com.iamnaran.firefly.data.remote.SupportInterceptor
 import com.iamnaran.firefly.data.remote.service.AuthApi
@@ -18,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,8 +45,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUnAuthorizedInterceptor(prefDataStoreHelper: PrefDataStoreHelper): SupportAuthenticator {
-        return SupportAuthenticator(prefDataStoreHelper)
+    fun provideUnAuthorizedInterceptor(preferenceHelper: PreferenceHelper): SupportAuthenticator {
+        return SupportAuthenticator(preferenceHelper)
     }
 
 

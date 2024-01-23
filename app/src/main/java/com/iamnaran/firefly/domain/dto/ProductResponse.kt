@@ -1,14 +1,14 @@
 package com.iamnaran.firefly.domain.dto
 
 import com.google.gson.annotations.SerializedName
-import com.iamnaran.firefly.data.local.entities.Product
+import com.iamnaran.firefly.data.local.entities.ProductEntity
 
 
-data class AllProduct(
+data class ProductResponse(
     @SerializedName("limit")
     val limit: Int,
     @SerializedName("products")
-    val products: List<Product>,
+    val productEntities: List<ProductEntity>,
     @SerializedName("skip")
     val skip: Int,
     @SerializedName("total")

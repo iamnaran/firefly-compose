@@ -29,7 +29,7 @@ fun HomeScreen(
 fun HomeContent(homeState: HomeState, onLogoutClick: () -> Unit) {
 
     Column {
-        ProductLazyList(homeState.allProducts)
+        ProductLazyList(homeState.allProductEntities)
     }
 
 }

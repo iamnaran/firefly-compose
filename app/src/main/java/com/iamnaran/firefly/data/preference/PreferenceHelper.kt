@@ -1,6 +1,6 @@
-package com.iamnaran.firefly.data.preference.sharedpref
+package com.iamnaran.firefly.data.preference
 
-interface SharedPrefHelper {
+interface PreferenceHelper {
 
     suspend fun saveLoggedInUserId(userId: String)
     fun getLoggedInUserId(): String?
@@ -8,7 +8,8 @@ interface SharedPrefHelper {
     suspend fun saveAccessToken(accessToken: String)
     fun getAccessToken(): String?
 
-
     suspend fun saveLoggedInStatus(status: Boolean)
     fun getLoggedInStatus(): Boolean
+
+    suspend fun saveLoggedInUserDetails(userId: String, accessToken: String, loginStatus: Boolean)
 }

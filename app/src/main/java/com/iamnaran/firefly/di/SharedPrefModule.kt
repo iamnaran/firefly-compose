@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.iamnaran.firefly.data.preference.sharedpref.PrefConstants
-import com.iamnaran.firefly.data.preference.sharedpref.SharedPrefHelper
-import com.iamnaran.firefly.data.preference.sharedpref.SharedPrefHelperImpl
+import com.iamnaran.firefly.data.preference.PrefConstants
+import com.iamnaran.firefly.data.preference.PreferenceHelper
+import com.iamnaran.firefly.data.preference.PreferenceHelperImpl
 import com.iamnaran.firefly.di.qualifiers.SharedPrefInfoQualifier
 import dagger.Module
 import dagger.Provides
@@ -60,7 +60,7 @@ object SharedPrefModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferencesHelper(sharedPrefHelper: SharedPrefHelperImpl): SharedPrefHelper {
+    fun provideSharedPreferencesHelper(sharedPrefHelper: PreferenceHelperImpl): PreferenceHelper {
         return sharedPrefHelper
     }
 }

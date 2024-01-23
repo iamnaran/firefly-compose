@@ -2,6 +2,7 @@ package com.iamnaran.firefly.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -12,6 +13,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import com.iamnaran.firefly.utils.extension.FireflyRippleTheme
 
 
 private val LightColors = lightColorScheme(
@@ -105,7 +107,10 @@ fun FireflyComposeTheme(
     }
 
     // Local Composition
-    CompositionLocalProvider(LocalDimens provides Dimens()) {
+    CompositionLocalProvider(
+        LocalDimens provides Dimens(),
+        LocalRippleTheme provides FireflyRippleTheme
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = appTypography,

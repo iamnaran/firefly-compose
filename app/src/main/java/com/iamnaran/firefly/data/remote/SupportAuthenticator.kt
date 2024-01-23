@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.data.remote
 
-import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelper
+import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.utils.AppLog
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -10,7 +10,7 @@ import okhttp3.internal.ignoreIoExceptions
 import javax.inject.Inject
 
 class SupportAuthenticator @Inject constructor(
-    private val preferencesHelper: PrefDataStoreHelper
+    private val preferenceHelper: PreferenceHelper
 ) :
     Authenticator {
 
@@ -21,9 +21,7 @@ class SupportAuthenticator @Inject constructor(
         val requestBuilder: Request.Builder = response.request.newBuilder()
         requestBuilder.addHeader("Accept", "Accept: application/json")
         try {
-            preferencesHelper.getAccessToken().let {
-                requestBuilder.addHeader("Authorization", it.toString())
-            }
+            requestBuilder.addHeader("Authorization", preferenceHelper.getAccessToken().toString())
             return requestBuilder.build()
         } catch (ex: Exception) {
             ignoreIoExceptions {

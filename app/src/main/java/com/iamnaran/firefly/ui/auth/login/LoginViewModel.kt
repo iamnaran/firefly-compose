@@ -1,10 +1,11 @@
 package com.iamnaran.firefly.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.data.preference.datastore.PrefDataStoreHelper
-import com.iamnaran.firefly.data.preference.sharedpref.SharedPrefHelper
-import com.iamnaran.firefly.domain.usecase.ServerLoginUseCase
+import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
+import com.iamnaran.firefly.domain.usecase.auth.SetLoggedInUserUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val serverLoginUseCase: ServerLoginUseCase,
-    private val sharedPrefHelper: SharedPrefHelper
+    private val postServerLoginUseCase: PostServerLoginUseCase,
+    private val setLoggedInUserUseCase: SetLoggedInUserUseCase,
+    private val preferenceHelper: PreferenceHelper,
+    private val gson: Gson
 ) :
     BaseViewModel() {
 
@@ -43,19 +46,22 @@ class LoginViewModel @Inject constructor(
     val loginState: StateFlow<LoginState> = _loginState
 
 
-
     fun login() {
         viewModelScope.launch {
-            serverLoginUseCase(_emailState.value, _passwordState.value).onEach { resource ->
+            postServerLoginUseCase(_emailState.value, _passwordState.value).onEach { resource ->
                 when (resource) {
                     is Resource.Loading -> {
                         _loginState.value = LoginState.Loading
                     }
 
                     is Resource.Success -> {
-                        if (resource.data != null){
-                            sharedPrefHelper.saveAccessToken(resource.data.token)
-                            sharedPrefHelper.saveLoggedInStatus(true)
+                        if (resource.data != null) {
+                            preferenceHelper.saveLoggedInUserDetails(
+                                resource.data.id.toString(),
+                                resource.data.token,
+                                true
+                            )
+                            setLoggedInUserUseCase(resource.data)
                             _loginState.value = LoginState.NavigateToHome(resource.data)
                         }
                     }
