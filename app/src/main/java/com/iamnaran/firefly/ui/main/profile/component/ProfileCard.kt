@@ -47,7 +47,7 @@ fun ProfileCard(userEntity: UserEntity) {
 
             Box {
                 AsyncImage(
-                    model = userEntity.profileImage,
+                    model = userEntity.image,
                     contentDescription = userEntity.fullName,
                     modifier = Modifier
                         .padding(MaterialTheme.dimens.extraLarge)
@@ -103,6 +103,7 @@ fun DefaultPreview() {
                 12,
                 "Full Name",
                 "nrn.panthi@gmail.com",
+                "121211212",
                 "121211212",
                 "Hello World"
             )
