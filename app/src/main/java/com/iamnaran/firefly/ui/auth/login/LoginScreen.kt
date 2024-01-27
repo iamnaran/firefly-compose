@@ -15,11 +15,17 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
@@ -37,6 +43,14 @@ import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.dimens
+import com.iamnaran.firefly.utils.AppLog
+import com.iamnaran.firefly.utils.effects.AppCircularProgressBar
+import com.iamnaran.firefly.utils.effects.ProgressType
+import com.iamnaran.firefly.utils.effects.bounceAnimator
+import com.iamnaran.firefly.utils.effects.disableMutipleTouchEvents
+import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -45,33 +59,58 @@ fun LoginScreen(
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
-    val emailState = viewModel.emailState.collectAsState()
-    val passwordState = viewModel.passwordState.collectAsState()
+    val emailState = viewModel.emailState.collectAsStateLifecycleAware()
+    val passwordState = viewModel.passwordState.collectAsStateLifecycleAware()
+    val loginState by viewModel.loginUiState.collectAsStateLifecycleAware()
 
-    val loginState by viewModel.loginState.collectAsState()
+    var isLoading by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+
+
 
     when (loginState) {
-        is LoginState.Loading -> {
-            // Show loading UI
-            // You can use a CircularProgressIndicator or any other loading indicator
+        is LoginUiState.Initial -> {
+            isLoading = false
+        }
+        is LoginUiState.Loading -> {
+            isLoading = true
         }
 
-        is LoginState.NavigateToHome -> {
+        is LoginUiState.NavigateToHome -> {
+            isLoading = false
             navigateToHome()
         }
 
+        is LoginUiState.Error -> {
+            isLoading = false
+
+        }
+
         else -> {
+            isLoading = false
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }) { paddingValues ->
+        Box(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            LoginContent(
+                email = emailState.value,
+                password = passwordState.value,
+                onEmailChange = { viewModel.setEmail(it) },
+                onPasswordChange = { viewModel.setPassword(it) },
+                onLoginClick = viewModel::login,
+                onSignUpClick = navigateToSignUp,
+                isLoginProgress = isLoading
+            )
 
         }
     }
-    LoginContent(
-        emailState.value,
-        passwordState.value,
-        onEmailChange = { viewModel.setEmail(it) },
-        onPasswordChange = { viewModel.setPassword(it) },
-        { viewModel.login() },
-        navigateToSignUp
-    )
 
 
 }
@@ -83,11 +122,11 @@ fun LoginContent(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
+    isLoginProgress: Boolean
 ) {
     val passwordFocusRequester = FocusRequester()
     val focusManager: FocusManager = LocalFocusManager.current
-
 
     Column(
         Modifier
@@ -104,7 +143,7 @@ fun LoginContent(
                 .padding(MaterialTheme.dimens.medium), contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_google_logo),
+                painter = painterResource(id = R.drawable.ic_app_logo),
                 contentDescription = "logo",
                 Modifier.padding(10.dp)
             )
@@ -137,10 +176,24 @@ fun LoginContent(
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                Button(onClick = {
-                    onLoginClick()
-                }, Modifier.fillMaxWidth()) {
-                    Text(text = "Sign In", Modifier.padding(vertical = 8.dp))
+                Button(
+                    onClick = {
+                        onLoginClick()
+                    },
+                    Modifier
+                        .fillMaxWidth()
+                        .disableMutipleTouchEvents()
+                ) {
+                    Box {
+                        if (isLoginProgress) {
+                            AppCircularProgressBar(progressType = ProgressType.SMALL)
+                        } else {
+                            Text(text = "Sign In", Modifier.padding(8.dp))
+
+                        }
+
+
+                    }
                 }
             }
         }

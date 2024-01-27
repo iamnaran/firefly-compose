@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
-    suspend fun postLogin(username: String,password: String): Flow<Resource<UserResponse>>
+     fun postLogin(username: String,password: String): Flow<Resource<UserResponse>>
 
      fun doLogin(username: String,password: String): Flow<UserResponse>
 

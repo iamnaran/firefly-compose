@@ -6,7 +6,7 @@ import com.iamnaran.firefly.data.remote.BaseApiResponse
 import com.iamnaran.firefly.data.remote.service.ProductApi
 import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
 import com.iamnaran.firefly.di.qualifiers.IoDispatcher
-import com.iamnaran.firefly.utils.networkBoundResource
+import com.iamnaran.firefly.utils.helper.networkBoundResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject

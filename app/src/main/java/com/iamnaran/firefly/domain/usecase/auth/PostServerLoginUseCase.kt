@@ -6,7 +6,7 @@ import javax.inject.Inject
 class PostServerLoginUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(username: String, password: String) =
+    operator fun invoke(username: String, password: String) =
         authRepository.postLogin(username, password)
 
 

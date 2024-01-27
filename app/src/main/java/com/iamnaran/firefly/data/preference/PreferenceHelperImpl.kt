@@ -49,5 +49,10 @@ class PreferenceHelperImpl @Inject constructor(
         saveLoggedInStatus(loginStatus)
     }
 
+    override suspend fun clearPreference() {
+        val preference = sharedPreferences.edit();
+        preference.clear().apply()
+    }
+
 
 }

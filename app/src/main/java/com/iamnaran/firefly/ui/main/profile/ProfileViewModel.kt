@@ -40,5 +40,11 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun doLogout() {
+        viewModelScope.launch {
+            preferenceHelper.clearPreference()
+        }
+    }
+
 
 }

@@ -13,7 +13,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import com.iamnaran.firefly.utils.extension.FireflyRippleTheme
+import com.iamnaran.firefly.utils.helper.FireflyRippleTheme
 
 
 private val LightColors = lightColorScheme(

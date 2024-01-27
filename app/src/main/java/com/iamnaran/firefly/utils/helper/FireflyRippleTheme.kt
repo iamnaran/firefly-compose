@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.utils.extension
+package com.iamnaran.firefly.utils.helper
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ripple.RippleAlpha

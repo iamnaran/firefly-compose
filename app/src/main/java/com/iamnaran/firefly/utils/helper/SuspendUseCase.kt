@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.utils.extension
+package com.iamnaran.firefly.utils.helper
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

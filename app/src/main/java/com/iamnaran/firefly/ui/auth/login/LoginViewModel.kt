@@ -11,6 +11,7 @@ import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -42,18 +43,15 @@ class LoginViewModel @Inject constructor(
     }
 
     // State for tracking login status
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
-    val loginState: StateFlow<LoginState> = _loginState
+    private val _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Initial)
+    val loginUiState: StateFlow<LoginUiState> = _loginUiState
 
 
     fun login() {
         viewModelScope.launch {
-            postServerLoginUseCase(_emailState.value, _passwordState.value).onEach { resource ->
+            _loginUiState.value = LoginUiState.Loading
+            postServerLoginUseCase(_emailState.value, _passwordState.value).collect { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
-                        _loginState.value = LoginState.Loading
-                    }
-
                     is Resource.Success -> {
                         if (resource.data != null) {
                             preferenceHelper.saveLoggedInUserDetails(
@@ -62,17 +60,17 @@ class LoginViewModel @Inject constructor(
                                 true
                             )
                             setLoggedInUserUseCase(resource.data)
-                            _loginState.value = LoginState.NavigateToHome(resource.data)
+                            _loginUiState.value = LoginUiState.NavigateToHome(resource.data)
                         }
                     }
 
                     else -> {
-                        _loginState.value =
-                            LoginState.ShowErrorMessage(resource.message.toString())
+                        _loginUiState.value =
+                            LoginUiState.ShowErrorMessage(resource.message.toString())
 
                     }
                 }
-            }.launchIn(this)
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.utils
+package com.iamnaran.firefly.utils.helper
 
 import android.content.Context
 import android.net.Uri

@@ -1,5 +1,6 @@
 package com.iamnaran.firefly.ui.main.profile.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
+import com.iamnaran.firefly.utils.effects.bounceClick
 
 @Composable
 fun ProfileCard(userEntity: UserEntity) {
@@ -32,15 +34,14 @@ fun ProfileCard(userEntity: UserEntity) {
     Card(
         modifier = Modifier
             .padding(MaterialTheme.dimens.large)
-            .shadow(
-                elevation = 5.dp,
-                spotColor = MaterialTheme.colorScheme.secondaryContainer,
-                shape = MaterialTheme.shapes.medium
-            ),
+            .bounceClick{
+
+            },
         shape = MaterialTheme.shapes.medium
     ) {
         Column(
             Modifier
+                .background(MaterialTheme.colorScheme.primary)
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -51,12 +52,12 @@ fun ProfileCard(userEntity: UserEntity) {
                     contentDescription = userEntity.fullName,
                     modifier = Modifier
                         .padding(MaterialTheme.dimens.extraLarge)
-                        .width(150.dp)
-                        .height(150.dp)
+                        .width(100.dp)
+                        .height(100.dp)
                         .clip(CircleShape)
                         .border(
                             MaterialTheme.dimens.extraSmall,
-                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.onPrimary,
                             CircleShape
                         ),
                     contentScale = ContentScale.Crop,
@@ -73,14 +74,14 @@ fun ProfileCard(userEntity: UserEntity) {
                 Text(
                     text = userEntity.fullName,
                     style = appTypography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(MaterialTheme.dimens.medium)
                 )
 
                 Text(
                     text = userEntity.email.lowercase(),
                     style = appTypography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(MaterialTheme.dimens.medium)
                 )
 

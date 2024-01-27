@@ -6,7 +6,7 @@ import com.iamnaran.firefly.data.repository.auth.AuthRepository
 import com.iamnaran.firefly.di.qualifiers.MainDispatcher
 import com.iamnaran.firefly.domain.dto.UserResponse
 import com.iamnaran.firefly.utils.exception.FireflyException
-import com.iamnaran.firefly.utils.extension.FlowUseCase
+import com.iamnaran.firefly.utils.helper.FlowUseCase
 import com.iamnaran.firefly.utils.extension.asFlow
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher

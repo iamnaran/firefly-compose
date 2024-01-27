@@ -25,7 +25,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val externalScope: CoroutineScope,
 ) : AuthRepository, BaseApiResponse() {
 
-    override suspend fun postLogin(
+    override fun postLogin(
         username: String,
         password: String
     ): Flow<Resource<UserResponse>> {

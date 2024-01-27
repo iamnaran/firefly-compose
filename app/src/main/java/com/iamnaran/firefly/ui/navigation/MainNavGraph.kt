@@ -32,7 +32,13 @@ fun NavGraphBuilder.mainNavGraph(
         }
 
         composable(route = AppScreen.Main.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(navigateToLogin = {
+                navController.navigate(AppScreen.Auth.route) {
+                    popUpTo(AppScreen.Main.route) {
+                        inclusive = true
+                    }
+                }
+            })
         }
 
     }

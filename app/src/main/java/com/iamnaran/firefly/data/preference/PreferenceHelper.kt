@@ -12,4 +12,7 @@ interface PreferenceHelper {
     fun getLoggedInStatus(): Boolean
 
     suspend fun saveLoggedInUserDetails(userId: String, accessToken: String, loginStatus: Boolean)
+
+    suspend fun clearPreference()
+
 }

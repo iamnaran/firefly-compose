@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.utils
+package com.iamnaran.firefly.utils.helper
 
 import com.iamnaran.firefly.data.remote.Resource
 import kotlinx.coroutines.flow.Flow
