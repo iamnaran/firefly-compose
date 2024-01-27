@@ -10,19 +10,23 @@ import com.iamnaran.firefly.utils.AppLog
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
-){
+) {
     AppLog.showLog("Auth NavGraph Setup")
 
     navigation(
         startDestination = AppScreen.Auth.Login.route,
         route = AppScreen.Auth.route
-    ){
+    ) {
         composable(
             route = AppScreen.Auth.Login.route
         ) {
             LoginScreen(
                 navigateToHome = {
-                    navController.navigate(AppScreen.Main.route)
+                    navController.navigate(AppScreen.Main.route) {
+                        popUpTo(AppScreen.Auth.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 navigateToSignUp = {
                     navController.navigate(AppScreen.Auth.Register.route)

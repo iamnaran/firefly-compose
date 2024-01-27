@@ -61,7 +61,7 @@ fun LoginScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = loginState.isLoginSuccessful) {
         if (loginState.isLoginSuccessful) {
             navigateToHome()
         }
