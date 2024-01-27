@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.ui.main.home.components.ProductLazyList
+import com.iamnaran.firefly.utils.AppLog
 
 @Composable
 fun HomeScreen(
@@ -17,6 +18,7 @@ fun HomeScreen(
 
     val loginStatus by viewModel.loginStatus.collectAsState()
 
+    AppLog.showLog("Home Screen Setup")
 
     HomeContent(homeState) {
         navigateToLogin()
@@ -27,6 +29,7 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(homeState: HomeState, onLogoutClick: () -> Unit) {
+    AppLog.showLog("Home Screen Content")
 
     Column {
         ProductLazyList(homeState.allProductEntities)

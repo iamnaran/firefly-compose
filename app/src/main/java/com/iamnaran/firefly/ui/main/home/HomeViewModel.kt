@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
     private fun getProducts() {
 
         viewModelScope.launch {
-            getProductUseCase().onEach { productResource ->
+            getProductUseCase().collect { productResource ->
                 when (productResource) {
                     is Resource.Loading ->{
                         _homeState.value = HomeState(productResource.data!!)
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
                     else -> {
                     }
                 }
-            }.launchIn(this)
+            }
         }
     }
 

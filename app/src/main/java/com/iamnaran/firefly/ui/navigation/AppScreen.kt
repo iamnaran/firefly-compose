@@ -11,7 +11,6 @@ private object AppRoute {
     const val REGISTER = "SIGNUP"
 
     const val MAIN = "MAIN"
-
     const val HOME = "HOME"
     const val PROFILE = "PROFILE"
     const val NOTIFICATION = "NOTIFICATION"

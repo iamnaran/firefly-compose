@@ -16,16 +16,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
@@ -43,12 +44,9 @@ import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.dimens
-import com.iamnaran.firefly.utils.AppLog
 import com.iamnaran.firefly.utils.effects.AppCircularProgressBar
 import com.iamnaran.firefly.utils.effects.ProgressType
-import com.iamnaran.firefly.utils.effects.bounceAnimator
 import com.iamnaran.firefly.utils.effects.disableMutipleTouchEvents
-import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -59,38 +57,27 @@ fun LoginScreen(
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
-    val emailState = viewModel.emailState.collectAsStateLifecycleAware()
-    val passwordState = viewModel.passwordState.collectAsStateLifecycleAware()
-    val loginState by viewModel.loginUiState.collectAsStateLifecycleAware()
-
-    var isLoading by remember { mutableStateOf(false) }
+    val loginState by viewModel.loginState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
-
-
-    when (loginState) {
-        is LoginUiState.Initial -> {
-            isLoading = false
-        }
-        is LoginUiState.Loading -> {
-            isLoading = true
-        }
-
-        is LoginUiState.NavigateToHome -> {
-            isLoading = false
+    LaunchedEffect(key1 = Unit) {
+        if (loginState.isLoginSuccessful) {
             navigateToHome()
         }
+    }
 
-        is LoginUiState.Error -> {
-            isLoading = false
-
-        }
-
-        else -> {
-            isLoading = false
+    LaunchedEffect(key1 = loginState.loginErrorState.serverErrorState.hasError) {
+        if (loginState.loginErrorState.serverErrorState.serverErrorMsg.isNotEmpty()) {
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(
+                    message = loginState.loginErrorState.serverErrorState.serverErrorMsg,
+                    duration = SnackbarDuration.Short
+                )
+            }
         }
     }
+
 
     Scaffold(
         snackbarHost = {
@@ -100,13 +87,19 @@ fun LoginScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             LoginContent(
-                email = emailState.value,
-                password = passwordState.value,
-                onEmailChange = { viewModel.setEmail(it) },
-                onPasswordChange = { viewModel.setPassword(it) },
-                onLoginClick = viewModel::login,
+                email = loginState.email,
+                password = loginState.password,
+                onEmailChange = {
+                    viewModel.handleLoginEvent(LoginUIEvent.EmailChanged(it))
+                },
+                onPasswordChange = {
+                    viewModel.handleLoginEvent(LoginUIEvent.PasswordChanged(it))
+                },
+                onLoginClick = {
+                    viewModel.handleLoginEvent(LoginUIEvent.OnSubmit)
+                },
                 onSignUpClick = navigateToSignUp,
-                isLoginProgress = isLoading
+                isLoginProgress = loginState.isLoading
             )
 
         }

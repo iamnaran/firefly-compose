@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -27,7 +28,7 @@ fun BottomBar(
     NavigationBar {
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        var currentRoute = navBackStackEntry?.destination?.route
+        val currentRoute = navBackStackEntry?.destination?.route
 
         navigationScreen.forEach { item ->
 
@@ -38,16 +39,16 @@ fun BottomBar(
                     Text(text = stringResource(id = item.title!!), style = MaterialTheme.typography.displaySmall)
                 },
                 icon = {
-                    BadgedBox(badge = {
+//                    BadgedBox(badge = {
 //                        if (item.badgeCount){
 //                            Badge {
 //                                Text(text = item.badgeCount.toString())
 //                            }
 //                        }else{
 //                        }
-                    }) {
-
-                    }
+//                    }) {
+//
+//                    }
                     Icon(
                         imageVector = (if (item.route == currentRoute) item.selectedIcon else item.unselectedIcon)!!,
                         contentDescription = stringResource(id = item.title!!)
@@ -55,7 +56,6 @@ fun BottomBar(
                 },
 
                 onClick = {
-                    currentRoute = item.route
                     navController.navigate(item.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true

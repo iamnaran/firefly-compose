@@ -64,4 +64,5 @@
     <string name="tab_groups">Groups</string>
     <string name="share_text">Share</string>
     <string name="unable_to_login">Unable to login, Please check your credentials</string>
+    <string name="empty_string" />
 </resources>

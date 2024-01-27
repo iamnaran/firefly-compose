@@ -1,5 +1,6 @@
 package com.iamnaran.firefly.data.remote
 
+import com.iamnaran.firefly.data.remote.Resource.Success
 import retrofit2.Response
 
 abstract class BaseApiResponse {
@@ -9,7 +10,7 @@ abstract class BaseApiResponse {
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
-                    return Resource.Success(body)
+                    return Success(body)
                 }
             }
             return error("${response.code()} ${response.message()}")

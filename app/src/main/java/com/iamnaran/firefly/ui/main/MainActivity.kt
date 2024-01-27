@@ -36,10 +36,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
     private val mainViewModel: MainViewModel by viewModels()
 
+    private var isAuthenticated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+        isAuthenticated = mainViewModel.isUserAuthenticated()
         setContent {
             FireflyComposeTheme {
                 navController = rememberNavController()
@@ -87,7 +89,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(paddingValues)
                     ) {
                         NavGraph(
-                            mainViewModel.isUserAuthenticated(),
+                            isAuthenticated,
                             navHostController = navController
                         )
                     }

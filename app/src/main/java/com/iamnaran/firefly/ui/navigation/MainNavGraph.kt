@@ -7,10 +7,12 @@ import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
+import com.iamnaran.firefly.utils.AppLog
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController
 ) {
+    AppLog.showLog("Main NavGraph Setup")
     navigation(
         startDestination = AppScreen.Main.Home.route,
         route = AppScreen.Main.route

@@ -3,6 +3,7 @@ package com.iamnaran.firefly.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.iamnaran.firefly.utils.AppLog
 
 @Composable
 fun NavGraph(isLoggedIn: Boolean, navHostController: NavHostController) {
@@ -10,6 +11,7 @@ fun NavGraph(isLoggedIn: Boolean, navHostController: NavHostController) {
         navController = navHostController,
         startDestination =  if(isLoggedIn) AppScreen.Main.route else AppScreen.Auth.route
     ) {
+        AppLog.showLog("Nav Graph Setup")
 
         authNavGraph(navHostController)
         mainNavGraph(navHostController)
