@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.home.components
+package com.iamnaran.firefly.ui.main.home.productdetail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 

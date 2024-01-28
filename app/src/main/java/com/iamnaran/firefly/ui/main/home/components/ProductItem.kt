@@ -20,9 +20,10 @@ import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
+import com.iamnaran.firefly.utils.effects.bounceClick
 
 @Composable
-fun ProductItem(productEntity: ProductEntity) {
+fun ProductItem(productEntity: ProductEntity, onProductItemClick: () -> Unit) {
 
     Card(
         modifier = Modifier
@@ -37,7 +38,9 @@ fun ProductItem(productEntity: ProductEntity) {
         Column(
             Modifier
                 .fillMaxWidth()
-            ,
+                .bounceClick {
+                    onProductItemClick()
+                },
         ) {
             AsyncImage(
                 model = productEntity.thumbnail,
@@ -101,6 +104,8 @@ fun DefaultPreview() {
                 12,
                 "asas"
             )
-        )
+        ){
+
+        }
     }
 }

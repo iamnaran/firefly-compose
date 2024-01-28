@@ -1,6 +1,7 @@
-package com.iamnaran.firefly.ui.main.home
+package com.iamnaran.firefly.ui.main.home.productdetail
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -9,32 +10,32 @@ import com.iamnaran.firefly.ui.main.home.components.ProductLazyList
 import com.iamnaran.firefly.utils.AppLog
 
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    onProductClick: () -> Unit,
+fun ProductScreen(
+    viewModel: ProductViewModel = hiltViewModel(),
+    navigateToLogin: () -> Unit,
 ) {
 
-    val homeState by viewModel.homeState.collectAsState()
+    val productState by viewModel.productState.collectAsState()
 
     val loginStatus by viewModel.loginStatus.collectAsState()
 
     AppLog.showLog("Home Screen Setup")
 
-    HomeContent(homeState) {
-        onProductClick()
+    ProductContent(productState){
+
     }
 
 
 }
 
 @Composable
-fun HomeContent(homeState: HomeState, onProductClick: () -> Unit) {
+fun ProductContent(productState: ProductState, onBackPressed: () -> Unit) {
     AppLog.showLog("Home Screen Content")
 
     Column {
-        ProductLazyList(homeState.allProductEntities){
-            onProductClick()
-        }
+
+        Text(text = "Details")
+
     }
 
 }

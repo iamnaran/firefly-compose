@@ -15,6 +15,9 @@ private object AppRoute {
     const val PROFILE = "PROFILE"
     const val NOTIFICATION = "NOTIFICATION"
 
+    // details
+    const val PRODUCT = "PRODUCT"
+
 }
 
 sealed class AppScreen(val route: String) {
@@ -23,8 +26,9 @@ sealed class AppScreen(val route: String) {
         object Register : AppScreen(AppRoute.REGISTER)
     }
 
-    object Main : BottomNavigationScreen(AppRoute.MAIN) {
-        object Home : BottomNavigationScreen(
+
+    object Main : TopLevelDestination(AppRoute.MAIN) {
+        object Home : TopLevelDestination(
             route = AppRoute.HOME,
             title = R.string.home,
             selectedIcon = AppIcons.HomeFilled,
@@ -32,24 +36,28 @@ sealed class AppScreen(val route: String) {
         )
 
         object Profile :
-            BottomNavigationScreen(
+            TopLevelDestination(
                 route = AppRoute.PROFILE,
                 title = R.string.profile,
                 selectedIcon = AppIcons.ProfileFilled,
                 unselectedIcon = AppIcons.ProfileOutlined,
             )
 
-        object Notification : BottomNavigationScreen(
+        object Notification : TopLevelDestination(
             route = AppRoute.NOTIFICATION,
             title = R.string.notification,
             selectedIcon = AppIcons.NotificationFilled,
             unselectedIcon = AppIcons.NotificationOutlined,
             )
+
+
+        object Product : TopLevelDestination(AppRoute.PRODUCT)
+
     }
 
 }
 
-sealed class BottomNavigationScreen(
+sealed class TopLevelDestination(
     val route: String,
     val title: Int? = null,
     val selectedIcon: ImageVector? = null,

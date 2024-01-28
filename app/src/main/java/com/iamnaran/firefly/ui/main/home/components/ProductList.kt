@@ -9,10 +9,12 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
 @Composable
-fun ProductLazyList(allProductEntities: List<ProductEntity>) {
+fun ProductLazyList(allProductEntities: List<ProductEntity>, onProductClick: () -> Unit) {
     LazyColumn(){
         items(items =allProductEntities){ product ->
-            ProductItem(product)
+            ProductItem(product){
+                onProductClick()
+            }
         }
     }
 }
@@ -22,7 +24,9 @@ fun ProductLazyList(allProductEntities: List<ProductEntity>) {
 @Composable
 fun DefaultHomePreview() {
     FireflyComposeTheme {
-        ProductLazyList(emptyList())
+        ProductLazyList(emptyList()){
+
+        }
     }
 }
 
