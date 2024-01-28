@@ -23,7 +23,7 @@ import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.effects.bounceClick
 
 @Composable
-fun ProductItem(productEntity: ProductEntity, onProductItemClick: () -> Unit) {
+fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Unit) {
 
     Card(
         modifier = Modifier
@@ -39,7 +39,7 @@ fun ProductItem(productEntity: ProductEntity, onProductItemClick: () -> Unit) {
             Modifier
                 .fillMaxWidth()
                 .bounceClick {
-                    onProductItemClick()
+                    onProductItemClick(productEntity.id.toString())
                 },
         ) {
             AsyncImage(

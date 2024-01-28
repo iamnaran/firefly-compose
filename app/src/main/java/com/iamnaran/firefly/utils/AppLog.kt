@@ -20,7 +20,7 @@ class AppLog private constructor() {
         }
 
         fun showLog(message: String) {
-            Timber.d("showlog show log--->$message")
+            Timber.e("showlog show log--->$message")
         }
 
         fun showError(tag: String, message: String) {

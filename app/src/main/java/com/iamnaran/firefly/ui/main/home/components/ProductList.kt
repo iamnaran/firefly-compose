@@ -9,11 +9,11 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
 @Composable
-fun ProductLazyList(allProductEntities: List<ProductEntity>, onProductClick: () -> Unit) {
+fun ProductLazyList(allProductEntities: List<ProductEntity>, onProductClick: (String) -> Unit) {
     LazyColumn(){
         items(items =allProductEntities){ product ->
             ProductItem(product){
-                onProductClick()
+                onProductClick(product.id.toString())
             }
         }
     }

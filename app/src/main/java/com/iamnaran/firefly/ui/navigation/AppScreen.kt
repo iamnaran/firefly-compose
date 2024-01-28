@@ -1,6 +1,9 @@
 package com.iamnaran.firefly.ui.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.appcomponent.AppIcons
 
@@ -20,6 +23,13 @@ private object AppRoute {
 
 }
 
+private object AppArgument {
+
+    const val ARG_PRODUCT_ID = "productId"
+
+
+}
+
 sealed class AppScreen(val route: String) {
     object Auth : AppScreen(AppRoute.AUTH) {
         object Login : AppScreen(AppRoute.LOGIN)
@@ -33,7 +43,9 @@ sealed class AppScreen(val route: String) {
             title = R.string.home,
             selectedIcon = AppIcons.HomeFilled,
             unselectedIcon = AppIcons.HomeOutlined,
-        )
+        ) {
+
+        }
 
         object Profile :
             TopLevelDestination(
@@ -48,10 +60,17 @@ sealed class AppScreen(val route: String) {
             title = R.string.notification,
             selectedIcon = AppIcons.NotificationFilled,
             unselectedIcon = AppIcons.NotificationOutlined,
-            )
+        )
 
 
-        object Product : TopLevelDestination(AppRoute.PRODUCT)
+        object Product : TopLevelDestination(
+            AppRoute.PRODUCT + "/{productId}",
+            navArguments = listOf(navArgument("productId") {
+                type = NavType.StringType
+            })
+        ) {
+            fun createRoute(productId: String) = AppRoute.PRODUCT + "/${productId}"
+        }
 
     }
 
@@ -61,5 +80,6 @@ sealed class TopLevelDestination(
     val route: String,
     val title: Int? = null,
     val selectedIcon: ImageVector? = null,
-    val unselectedIcon: ImageVector? = null
+    val unselectedIcon: ImageVector? = null,
+    val navArguments: List<NamedNavArgument> = emptyList()
 )

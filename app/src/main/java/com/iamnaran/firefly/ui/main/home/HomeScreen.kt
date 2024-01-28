@@ -11,7 +11,7 @@ import com.iamnaran.firefly.utils.AppLog
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    onProductClick: () -> Unit,
+    onProductClick: (String) -> Unit,
 ) {
 
     val homeState by viewModel.homeState.collectAsState()
@@ -21,19 +21,19 @@ fun HomeScreen(
     AppLog.showLog("Home Screen Setup")
 
     HomeContent(homeState) {
-        onProductClick()
+        onProductClick(it)
     }
 
 
 }
 
 @Composable
-fun HomeContent(homeState: HomeState, onProductClick: () -> Unit) {
+fun HomeContent(homeState: HomeState, onProductClick: (String) -> Unit) {
     AppLog.showLog("Home Screen Content")
 
     Column {
-        ProductLazyList(homeState.allProductEntities){
-            onProductClick()
+        ProductLazyList(homeState.allProductEntities) {
+            onProductClick(it)
         }
     }
 

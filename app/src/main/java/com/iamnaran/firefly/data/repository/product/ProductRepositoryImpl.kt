@@ -19,7 +19,6 @@ class ProductRepositoryImpl @Inject constructor(
     private val externalScope: CoroutineScope,
 ) : ProductRepository, BaseApiResponse() {
 
-
     private val productDao = appDatabase.productDao()
 
 
@@ -28,11 +27,26 @@ class ProductRepositoryImpl @Inject constructor(
             productDao.getAllProducts()
         },
         fetch = {
-            productApi.getRemoteAllProducts()
+            productApi.getAllProducts()
         },
         saveFetchResult = { products ->
             appDatabase.withTransaction {
                 productDao.insertAllProducts(products.body()!!.productEntities)
+            }
+        }
+
+    )
+
+    override suspend fun getProductsById(productId: String) = networkBoundResource(
+        query = {
+            productDao.getProductById(productId.toInt())
+        },
+        fetch = {
+            productApi.getProductById(productId)
+        },
+        saveFetchResult = { product ->
+            appDatabase.withTransaction {
+                productDao.insertProduct(product.body()!!)
             }
         }
 
