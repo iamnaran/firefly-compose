@@ -42,7 +42,7 @@ fun NavGraphBuilder.mainNavGraph(
             })
         }
 
-        composable(route = AppScreen.Main.Product.route, enterTransition = fadeIn(), exitTransition = expandIn()) {
+        composable(route = AppScreen.Main.Product.route) {
             ProductScreen(){
 
             }
