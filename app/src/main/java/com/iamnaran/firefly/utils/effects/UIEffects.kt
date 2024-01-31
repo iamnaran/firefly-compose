@@ -1,5 +1,6 @@
 package com.iamnaran.firefly.utils.effects
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.LocalIndication
@@ -117,6 +118,7 @@ fun Modifier.customClick(
 }
 
 
+@SuppressLint("ModifierFactoryUnreferencedReceiver")
 fun Modifier.disableMutipleTouchEvents() =
     pointerInput(Unit) {
         coroutineScope {

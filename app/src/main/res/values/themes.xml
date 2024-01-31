@@ -3,6 +3,7 @@
     <style name="Theme.FireflyCompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:dialogTheme">@style/Theme.DialogFullScreen</item>
     </style>
 
     <!-- Splash application light theme. -->
@@ -10,6 +11,19 @@
         <item name="windowSplashScreenBackground">@color/splash_background_light</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="postSplashScreenTheme">@style/Theme.FireflyCompose</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+        <item name="android:dialogTheme">@style/Theme.DialogFullScreen</item>
+    </style>
+
+
+    <style name="Theme.DialogFullScreen" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>

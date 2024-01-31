@@ -1,16 +1,16 @@
 package com.iamnaran.firefly.ui.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.main.home.HomeScreen
-import com.iamnaran.firefly.ui.main.home.productdetail.ProductScreen
+import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetail
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
 import com.iamnaran.firefly.utils.AppLog
@@ -27,28 +27,39 @@ fun NavGraphBuilder.mainNavGraph(
             route = AppScreen.Main.Home.route,
             enterTransition = {
                 return@composable fadeIn(tween(1000))
-            }, exitTransition = {
+            },
+            exitTransition = {
                 return@composable fadeOut(tween(700))
-            }, popEnterTransition = {
-                return@composable slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
-                )
-            }
+            },
         ) {
             HomeScreen(onProductClick = {
-                navController.navigate(
-                    AppScreen.Main.Product.createRoute(
-                        productId = it
-                    )
-                )
+                val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
+                AppLog.showLog("Router---> $route")
+                navController.navigate(route)
             })
         }
 
-        composable(route = AppScreen.Main.Notification.route) {
+        composable(
+            route = AppScreen.Main.Notification.route,
+            enterTransition = {
+                return@composable fadeIn(tween(1000))
+            },
+            exitTransition = {
+                return@composable fadeOut(tween(700))
+            },
+        ) {
             NotificationScreen()
         }
 
-        composable(route = AppScreen.Main.Profile.route) {
+        composable(
+            route = AppScreen.Main.Profile.route,
+            enterTransition = {
+                return@composable fadeIn(tween(1000))
+            },
+            exitTransition = {
+                return@composable fadeOut(tween(700))
+            },
+        ) {
             ProfileScreen(navigateToLogin = {
                 navController.navigate(AppScreen.Auth.route) {
                     popUpTo(AppScreen.Main.route) {
@@ -58,23 +69,13 @@ fun NavGraphBuilder.mainNavGraph(
             })
         }
 
-        composable(
-            route = AppScreen.Main.Product.route,
-            enterTransition = {
-                return@composable slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
-                )
-            },
-            popExitTransition = {
-                return@composable slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
-                )
-            },
+        dialog(
+            route = AppScreen.Main.ProductDetail.route
         ) {
-             // val productId = backStackEntry.arguments?.getString("productId")
+            // val productId = backStackEntry.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
-            ProductScreen() {
-
+            ProductDetail() {
+                navController.navigateUp()
             }
         }
 

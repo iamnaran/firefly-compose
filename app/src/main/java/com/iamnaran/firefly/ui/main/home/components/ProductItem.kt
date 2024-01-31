@@ -1,6 +1,7 @@
 package com.iamnaran.firefly.ui.main.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.effects.bounceClick
+import com.iamnaran.firefly.utils.effects.customClick
 
 @Composable
 fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Unit) {
@@ -32,15 +34,15 @@ fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
                 elevation = 5.dp,
                 spotColor = MaterialTheme.colorScheme.secondaryContainer,
                 shape = MaterialTheme.shapes.medium
-            ),
+            )
+            .clickable {
+                onProductItemClick(productEntity.id.toString())
+            },
         shape = MaterialTheme.shapes.medium
     ) {
         Column(
             Modifier
-                .fillMaxWidth()
-                .bounceClick {
-                    onProductItemClick(productEntity.id.toString())
-                },
+                .fillMaxWidth(),
         ) {
             AsyncImage(
                 model = productEntity.thumbnail,
@@ -104,7 +106,7 @@ fun DefaultPreview() {
                 12,
                 "asas"
             )
-        ){
+        ) {
 
         }
     }

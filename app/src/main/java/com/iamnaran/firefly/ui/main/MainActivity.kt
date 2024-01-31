@@ -21,7 +21,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.iamnaran.firefly.ui.navigation.NavGraph
+import com.iamnaran.firefly.ui.navigation.RootNavGraph
 import com.iamnaran.firefly.ui.auth.login.LoginScreen
 import com.iamnaran.firefly.ui.navigation.AppScreen
 import com.iamnaran.firefly.ui.navigation.bottomappbar.BottomBar
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                     Box(
                         modifier = Modifier.padding(paddingValues)
                     ) {
-                        NavGraph(
+                        RootNavGraph(
                             isAuthenticated,
                             navHostController = navController
                         )

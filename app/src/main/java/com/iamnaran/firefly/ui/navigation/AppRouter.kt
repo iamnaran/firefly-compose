@@ -7,39 +7,39 @@ import androidx.navigation.navArgument
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.appcomponent.AppIcons
 
-private object AppRoute {
+private object Routes {
 
-    const val AUTH = "AUTH"
-    const val LOGIN = "LOGIN"
-    const val REGISTER = "SIGNUP"
+    const val AUTH = "auth"
+    const val LOGIN = "login"
+    const val REGISTER = "signup"
 
-    const val MAIN = "MAIN"
-    const val HOME = "HOME"
-    const val PROFILE = "PROFILE"
-    const val NOTIFICATION = "NOTIFICATION"
+    const val MAIN = "main"
+    const val HOME = "home"
+    const val PROFILE = "profile"
+    const val NOTIFICATION = "notification"
 
     // details
-    const val PRODUCT = "PRODUCT"
+    const val PRODUCT_DETAIL = "productDetail/{${ArgParams.PRODUCT_ID}}"
 
 }
 
-private object AppArgument {
+private object ArgParams {
 
-    const val ARG_PRODUCT_ID = "productId"
-
+    const val PRODUCT_ID = "productId"
+    fun toPath(param: String) = "{${param}}"
 
 }
 
 sealed class AppScreen(val route: String) {
-    object Auth : AppScreen(AppRoute.AUTH) {
-        object Login : AppScreen(AppRoute.LOGIN)
-        object Register : AppScreen(AppRoute.REGISTER)
+    object Auth : AppScreen(Routes.AUTH) {
+        object Login : AppScreen(Routes.LOGIN)
+        object Register : AppScreen(Routes.REGISTER)
     }
 
 
-    object Main : TopLevelDestination(AppRoute.MAIN) {
+    object Main : TopLevelDestination(Routes.MAIN) {
         object Home : TopLevelDestination(
-            route = AppRoute.HOME,
+            route = Routes.HOME,
             title = R.string.home,
             selectedIcon = AppIcons.HomeFilled,
             unselectedIcon = AppIcons.HomeOutlined,
@@ -49,27 +49,30 @@ sealed class AppScreen(val route: String) {
 
         object Profile :
             TopLevelDestination(
-                route = AppRoute.PROFILE,
+                route = Routes.PROFILE,
                 title = R.string.profile,
                 selectedIcon = AppIcons.ProfileFilled,
                 unselectedIcon = AppIcons.ProfileOutlined,
             )
 
         object Notification : TopLevelDestination(
-            route = AppRoute.NOTIFICATION,
+            route = Routes.NOTIFICATION,
             title = R.string.notification,
             selectedIcon = AppIcons.NotificationFilled,
             unselectedIcon = AppIcons.NotificationOutlined,
         )
 
 
-        object Product : TopLevelDestination(
-            AppRoute.PRODUCT + "/{productId}",
-            navArguments = listOf(navArgument("productId") {
-                type = NavType.StringType
+        object ProductDetail : TopLevelDestination(
+            Routes.PRODUCT_DETAIL,
+            navArguments = listOf(navArgument(ArgParams.PRODUCT_ID) {
+                type = NavType.Companion.StringType
             })
         ) {
-            fun createRoute(productId: String) = AppRoute.PRODUCT + "/${productId}"
+            fun createRoute(productId: String) =
+                Routes.PRODUCT_DETAIL
+                    .replace(ArgParams.toPath(ArgParams.PRODUCT_ID), productId
+            )
         }
 
     }

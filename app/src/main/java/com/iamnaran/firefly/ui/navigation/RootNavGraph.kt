@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.iamnaran.firefly.utils.AppLog
 
 @Composable
-fun NavGraph(isLoggedIn: Boolean, navHostController: NavHostController) {
+fun RootNavGraph(isLoggedIn: Boolean, navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
         startDestination =  if(isLoggedIn) AppScreen.Main.route else AppScreen.Auth.route
