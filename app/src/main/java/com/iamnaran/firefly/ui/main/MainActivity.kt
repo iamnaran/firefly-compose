@@ -21,10 +21,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.iamnaran.firefly.ui.navigation.RootNavGraph
+import com.iamnaran.firefly.ui.navigation.RootNavHost
 import com.iamnaran.firefly.ui.auth.login.LoginScreen
 import com.iamnaran.firefly.ui.navigation.AppScreen
 import com.iamnaran.firefly.ui.navigation.bottomappbar.BottomBar
+import com.iamnaran.firefly.ui.navigation.multiplebackstack.RootMultipleBackStackNavHost
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,9 +89,18 @@ class MainActivity : ComponentActivity() {
                     Box(
                         modifier = Modifier.padding(paddingValues)
                     ) {
-                        RootNavGraph(
+
+                        /*
+                        todo For normal back stack nav host
+                        RootNavHost(
                             isAuthenticated,
                             navHostController = navController
+                        )*/
+
+                        // For multiple back stack nav host
+                        RootMultipleBackStackNavHost(
+                            isAuthenticated,
+                            rootNavHostController = navController
                         )
                     }
                 }

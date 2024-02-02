@@ -64,7 +64,7 @@ sealed class AppScreen(val route: String) {
 
 
         object ProductDetail : TopLevelDestination(
-            Routes.PRODUCT_DETAIL,
+            route = Routes.PRODUCT_DETAIL,
             navArguments = listOf(navArgument(ArgParams.PRODUCT_ID) {
                 type = NavType.Companion.StringType
             })

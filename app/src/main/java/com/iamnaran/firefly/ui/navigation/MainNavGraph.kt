@@ -19,6 +19,7 @@ fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController
 ) {
     AppLog.showLog("Main NavGraph Setup")
+
     navigation(
         startDestination = AppScreen.Main.Home.route,
         route = AppScreen.Main.route
@@ -72,6 +73,7 @@ fun NavGraphBuilder.mainNavGraph(
         dialog(
             route = AppScreen.Main.ProductDetail.route
         ) {
+
             // val productId = backStackEntry.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
             ProductDetail() {

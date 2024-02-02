@@ -11,8 +11,6 @@ import com.iamnaran.firefly.utils.AppLog
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
 ) {
-    AppLog.showLog("Auth NavGraph Setup")
-
     navigation(
         startDestination = AppScreen.Auth.Login.route,
         route = AppScreen.Auth.route

@@ -16,7 +16,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.iamnaran.firefly.ui.navigation.AppScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomBar(
     navController: NavHostController,
@@ -67,6 +66,4 @@ fun BottomBar(
             )
         }
     }
-
-
 }
