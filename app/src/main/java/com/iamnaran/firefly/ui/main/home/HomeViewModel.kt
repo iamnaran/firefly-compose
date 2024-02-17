@@ -7,6 +7,7 @@ import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,7 +31,7 @@ class HomeViewModel @Inject constructor(
     private fun getProducts() {
 
         viewModelScope.launch {
-            getProductUseCase().collect { productResource ->
+            getProductUseCase().collectLatest { productResource ->
                 when (productResource) {
                     is Resource.Loading ->{
                         _homeState.value = HomeState(productResource.data!!)

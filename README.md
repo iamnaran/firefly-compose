@@ -3,12 +3,11 @@
 A production-ready template app to kickstart your Android development journey with Jetpack Compose.
 
 ![App Preview](firefly.png)
-## UPDATE
-**Kotlin Multiplatform App**
- [jellyfish](https://github.com/iamnaran/jellyfish), is currently in the development phase.
-The latest update introduces support for Kotlin Multiplatform, allowing for cross-platform development. 
-Stay tuned for further updates!
 
+## ALERT
+**Kotlin Multiplatform App**
+This same app in KMP/KMP is currently in the development phase. [jellyfish](https://github.com/iamnaran/jellyfish),
+Stay tuned for further updates!
 
 ## Features
 
@@ -26,7 +25,8 @@ Stay tuned for further updates!
 - **Kotlin Coroutine NetworkResourceBound**: Efficient network-bound resource handling with coroutines.
 - **Product Listing with Offline First**: Dynamic product listing rendered in Lazy Column with offline functionality.
 
-## WIP
+## INFO
+- If you are here from article - the finish code is available at branch ->  **final-article**
 
 ## TODO
 - Minor optimization
