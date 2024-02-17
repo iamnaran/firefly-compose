@@ -4,11 +4,6 @@ A production-ready template app to kickstart your Android development journey wi
 
 ![App Preview](firefly.png)
 
-## ALERT
-**Kotlin Multiplatform App**
-Clone of this App "[jellyfish](https://github.com/iamnaran/jellyfish)" is currently in the development phase.
-Stay tuned for further updates!
-
 ## Features
 
 - **Jetpack Compose**: Modern Android UI toolkit for building native UI.
@@ -25,14 +20,15 @@ Stay tuned for further updates!
 - **Kotlin Coroutine NetworkResourceBound**: Efficient network-bound resource handling with coroutines.
 - **Product Listing with Offline First**: Dynamic product listing rendered in Lazy Column with offline functionality.
 
-## INFO
-- If you are here from article - the finish code is available at branch ->  **final-article**
-
 ## TODO
 - Minor optimization
 - Bluetooth Low Energy Implementation in Jetpack Compose
 - Connect this firefly app with [beetle](https://github.com/iamnaran/beetle) wear os app
 
+## INFO
+**Kotlin Multiplatform App**
+Clone of this App "[jellyfish](https://github.com/iamnaran/jellyfish)" is currently in the development phase.
+Stay tuned for further updates!
 
 
 ## Getting Started
