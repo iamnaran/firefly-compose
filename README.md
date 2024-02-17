@@ -6,7 +6,7 @@ A production-ready template app to kickstart your Android development journey wi
 
 ## ALERT
 **Kotlin Multiplatform App**
-This same app in KMP/KMP is currently in the development phase. [jellyfish](https://github.com/iamnaran/jellyfish),
+This same app in KMP/KMP is currently in the development phase. Link -> [jellyfish](https://github.com/iamnaran/jellyfish),
 Stay tuned for further updates!
 
 ## Features
@@ -16,7 +16,7 @@ Stay tuned for further updates!
 - **Navigation Graph**: Efficient app navigation with Jetpack Navigation.
 - **Nested Navigation Graph**: Organized navigation for a seamless user experience.
 - **Splash Screen API**: Attractive splash screen for a captivating app launch.
-- **Clean Architecture**: Structured architecture with Repository, Usecase, Domain, and SOC principles.
+- **Clean Architecture**: Structured architecture with Repository
 - **Kotlin Flow**: Asynchronous programming with Kotlin's powerful Flow.
 - **Room**: Local data persistence for efficient data storage.
 - **Retrofit**: Networking library for handling API calls.

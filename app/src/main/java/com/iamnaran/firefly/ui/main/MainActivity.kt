@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -30,18 +31,17 @@ import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity(){
+class MainActivity : ComponentActivity() {
 
     private val TAG: String = AppLog.tagFor(this.javaClass)
     private lateinit var navController: NavHostController
     private val mainViewModel: MainViewModel by viewModels()
+
     private var isAuthenticated = false
-    override fun onStop() {
-        super.onStop()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         isAuthenticated = mainViewModel.isUserAuthenticated()
         setContent {
             FireflyComposeTheme {
@@ -84,6 +84,8 @@ class MainActivity : ComponentActivity(){
             }
         }
     }
+
+
 }
 
 @Composable
