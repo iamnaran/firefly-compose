@@ -6,7 +6,7 @@ A production-ready template app to kickstart your Android development journey wi
 
 ## ALERT
 **Kotlin Multiplatform App**
-This same app in KMP/KMP is currently in the development phase. Link -> [jellyfish](https://github.com/iamnaran/jellyfish),
+Clone of this App "[jellyfish](https://github.com/iamnaran/jellyfish)" is currently in the development phase.
 Stay tuned for further updates!
 
 ## Features
