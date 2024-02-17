@@ -49,7 +49,9 @@ fun NavGraphBuilder.mainNavGraph(
                 return@composable fadeOut(tween(700))
             },
         ) {
-            NotificationScreen()
+            NotificationScreen(){
+
+            }
         }
 
         composable(

@@ -3,9 +3,6 @@ package com.iamnaran.firefly.utils
 import timber.log.Timber
 
 class AppLog private constructor() {
-
-
-
     companion object {
 
         fun init() {

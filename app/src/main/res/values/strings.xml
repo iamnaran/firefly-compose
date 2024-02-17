@@ -65,4 +65,13 @@
     <string name="share_text">Share</string>
     <string name="unable_to_login">Unable to login, Please check your credentials</string>
     <string name="empty_string" />
+
+
+    <string name="char_uuid_missed_connection">Your Missed Connection UUID</string>
+    <string name="char_uuid_emergency">Your Emergency Service UUID</string>
+    <string name="char_uuid_emergency_call">Your Emergency Call UUID</string>
+    <string name="char_uuid_catch">Your Catch UUID</string>
+    <string name="char_uuid_catch_all">Your Catch All UUID</string>
+    <string name="char_uuid_missed_calls">Your Missed call UUID</string>
+
 </resources>

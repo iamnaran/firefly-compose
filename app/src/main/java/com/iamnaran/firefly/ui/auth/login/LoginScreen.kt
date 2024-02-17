@@ -90,13 +90,13 @@ fun LoginScreen(
                 email = loginState.email,
                 password = loginState.password,
                 onEmailChange = {
-                    viewModel.handleLoginEvent(LoginUIEvent.EmailChanged(it))
+                    viewModel.handleLoginUIEvent(LoginUIEvent.EmailChanged(it))
                 },
                 onPasswordChange = {
-                    viewModel.handleLoginEvent(LoginUIEvent.PasswordChanged(it))
+                    viewModel.handleLoginUIEvent(LoginUIEvent.PasswordChanged(it))
                 },
                 onLoginClick = {
-                    viewModel.handleLoginEvent(LoginUIEvent.OnSubmit)
+                    viewModel.handleLoginUIEvent(LoginUIEvent.OnSubmit)
                 },
                 onSignUpClick = navigateToSignUp,
                 isLoginProgress = loginState.isLoading

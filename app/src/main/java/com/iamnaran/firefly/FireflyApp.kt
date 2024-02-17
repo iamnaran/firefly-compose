@@ -1,11 +1,11 @@
 package com.iamnaran.firefly
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class FireflyApp : Application() {
+class FireflyApp : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         AppLog.init()

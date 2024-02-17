@@ -18,6 +18,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        multiDexEnabled true
+
     }
 
     buildTypes {
@@ -129,6 +131,10 @@ dependencies {
 
     // Splash
     implementation 'androidx.core:core-splashscreen:1.0.1'
+
+    // Multidex
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
 
 
 }

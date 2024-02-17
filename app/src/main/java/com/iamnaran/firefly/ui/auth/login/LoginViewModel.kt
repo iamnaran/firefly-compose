@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
     val loginState = _loginState.asStateFlow()
 
 
-    fun handleLoginEvent(loginUiEvents: LoginUIEvent) {
+    fun handleLoginUIEvent(loginUiEvents: LoginUIEvent) {
 
         when (loginUiEvents) {
 
