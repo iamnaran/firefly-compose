@@ -4,6 +4,7 @@ import com.iamnaran.firefly.data.remote.Resource.Success
 import retrofit2.Response
 
 abstract class BaseApiResponse {
+
     suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Resource<T> {
         try {
             val response = apiCall()

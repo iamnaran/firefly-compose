@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.iamnaran.firefly.ui.main.notification.herocard.HeroScreen
 
 @Composable
 fun NotificationScreen() {
@@ -19,8 +20,9 @@ fun NotificationScreen() {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Notification Screen")
-        Spacer(modifier = Modifier.padding(20.dp))
+
+        HeroScreen()
+
     }
 
 
