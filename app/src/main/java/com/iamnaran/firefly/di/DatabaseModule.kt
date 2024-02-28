@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.iamnaran.firefly.data.local.AppDatabase
 import com.iamnaran.firefly.data.local.dao.ProductDao
+import com.iamnaran.firefly.data.local.dao.RecipeDao
 import com.iamnaran.firefly.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -40,4 +41,9 @@ object DatabaseModule {
         return appDatabase.productDao()
     }
 
+    @Provides
+    @Singleton
+    fun provideRecipeDao(appDatabase: AppDatabase): RecipeDao {
+        return appDatabase.recipeDao()
+    }
 }

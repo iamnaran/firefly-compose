@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import com.iamnaran.firefly.ui.main.notification.NotificationState
 import com.iamnaran.firefly.ui.main.notification.core.SensorMetaData
 import com.iamnaran.firefly.ui.main.notification.core.SensorMetaManager
 import kotlinx.coroutines.flow.collect
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 @Composable
-fun HeroScreen() {
+fun RecipeHeroScreen(notificationState: NotificationState, onRecipeClick: (String) -> Unit) {
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -42,8 +43,7 @@ fun HeroScreen() {
         }
     }
 
-
-    HeroCard(data= data)
+    RecipeList(data,notificationState.allRecipeList,onRecipeClick)
 
 
 

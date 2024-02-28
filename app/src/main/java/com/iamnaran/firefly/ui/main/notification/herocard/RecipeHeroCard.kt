@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,7 +31,7 @@ import com.iamnaran.firefly.ui.main.notification.core.SensorMetaData
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun HeroCard(
+fun RecipeHeroCard(
     biasConstant: Int = 20,
     dpValue: Float = 0.9f,
     data: SensorMetaData?

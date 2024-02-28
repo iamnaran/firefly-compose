@@ -13,17 +13,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onProductClick: (String) -> Unit,
 ) {
-
     val homeState by viewModel.homeState.collectAsState()
-
     val loginStatus by viewModel.loginStatus.collectAsState()
-
-    AppLog.showLog("Home Screen Setup")
 
     HomeContent(homeState) {
         onProductClick(it)
     }
-
 
 }
 

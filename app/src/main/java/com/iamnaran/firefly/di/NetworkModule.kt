@@ -7,6 +7,7 @@ import com.iamnaran.firefly.data.remote.SupportInterceptor
 import com.iamnaran.firefly.data.remote.service.AuthApi
 import com.iamnaran.firefly.data.remote.service.LoginApi
 import com.iamnaran.firefly.data.remote.service.ProductApi
+import com.iamnaran.firefly.data.remote.service.RecipeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -94,6 +95,11 @@ object NetworkModule {
     @Provides
     fun provideProductApiService(retrofit: Retrofit): ProductApi =
         retrofit.create(ProductApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideRecipeApi(retrofit: Retrofit): RecipeApi =
+        retrofit.create(RecipeApi::class.java)
 
     @Singleton
     @Provides
