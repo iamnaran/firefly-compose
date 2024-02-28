@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.notification.herocard
+package com.iamnaran.firefly.ui.main.notification.recipe
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image

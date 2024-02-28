@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.notification.herocard
+package com.iamnaran.firefly.ui.main.notification.recipe
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,16 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.iamnaran.firefly.data.local.entities.RecipeEntity
-import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 
 @Composable
-fun EasyRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> Unit) {
+fun DifficultRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> Unit) {
 
     Card(
         modifier = Modifier
@@ -57,24 +55,16 @@ fun EasyRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> Unit) 
                     .padding(10.dp),
             ) {
                 Text(
-                    text = recipeEntity.name,
+                    text = recipeEntity.difficulty,
                     style = appTypography.labelSmall,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
 
                 Text(
-                    text = recipeEntity.difficulty,
+                    text = recipeEntity.name,
                     style = appTypography.titleLarge,
                     maxLines = 2,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    modifier = Modifier.padding(8.dp)
-                )
-
-                Text(
-                    text = recipeEntity.cuisine,
-                    style = appTypography.bodySmall,
-                    maxLines = 3,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -86,12 +76,4 @@ fun EasyRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> Unit) 
     }
 
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun EasyRecipeDefaultPreview() {
-    FireflyComposeTheme {
-
-    }
 }

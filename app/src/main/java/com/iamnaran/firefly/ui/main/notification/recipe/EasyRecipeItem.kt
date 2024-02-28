@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.notification.herocard
+package com.iamnaran.firefly.ui.main.notification.recipe
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +23,7 @@ import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 
 @Composable
-fun DifficultRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> Unit) {
+fun EasyRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> Unit) {
 
     Card(
         modifier = Modifier
@@ -57,16 +57,24 @@ fun DifficultRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> U
                     .padding(10.dp),
             ) {
                 Text(
-                    text = recipeEntity.name,
+                    text = recipeEntity.difficulty,
                     style = appTypography.labelSmall,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
 
                 Text(
-                    text = recipeEntity.difficulty,
+                    text = recipeEntity.name,
                     style = appTypography.titleLarge,
                     maxLines = 2,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                Text(
+                    text = recipeEntity.cuisine,
+                    style = appTypography.bodySmall,
+                    maxLines = 3,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -78,4 +86,12 @@ fun DifficultRecipeItem(recipeEntity: RecipeEntity, onRecipeClick: (String) -> U
     }
 
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EasyRecipeDefaultPreview() {
+    FireflyComposeTheme {
+
+    }
 }

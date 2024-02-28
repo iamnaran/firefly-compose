@@ -21,7 +21,9 @@ fun NotificationNavHost() {
         composable(
             route = AppScreen.Main.Notification.route
         ) {
-            NotificationScreen()
+            NotificationScreen(){
+
+            }
         }
 
     }

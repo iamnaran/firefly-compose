@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.notification.herocard
+package com.iamnaran.firefly.ui.main.notification.recipe
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed

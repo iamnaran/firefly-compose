@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.notification.herocard
+package com.iamnaran.firefly.ui.main.notification.recipe
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 @Composable
-fun RecipeHeroScreen(notificationState: NotificationState, onRecipeClick: (String) -> Unit) {
+fun RecipeScreen(notificationState: NotificationState, onRecipeClick: (String) -> Unit) {
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()

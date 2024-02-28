@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.main.profile.component.ProfileCard
 import com.iamnaran.firefly.ui.theme.dimens
+import com.iamnaran.firefly.utils.AppLog
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
 
 @Composable
@@ -21,6 +22,8 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     navigateToLogin: () -> Unit,
 ) {
+
+    AppLog.showLog("Profile called")
 
     val user = profileViewModel.profileState.collectAsStateLifecycleAware()
     user.value.userEntityDetails?.let {

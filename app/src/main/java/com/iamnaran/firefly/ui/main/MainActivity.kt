@@ -110,13 +110,14 @@ private fun MainScreenContent(
         ) {
 
             /*
-            todo For normal back stack nav host
+            For normal back stack uncomment this and comment RootMultipleBackStackNavHost below nav host
             RootNavHost(
                 isAuthenticated,
                 navHostController = navController
             )*/
 
             // For multiple back stack nav host
+            // Comment this if you need No Nested Nav Host
             RootMultipleBackStackNavHost(
                 isAuthenticated,
                 rootNavHostController = navController

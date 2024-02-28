@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.iamnaran.firefly.ui.main.notification.herocard.RecipeHeroScreen
+import com.iamnaran.firefly.ui.main.notification.recipe.RecipeScreen
 
 @Composable
 fun NotificationScreen(
@@ -25,8 +25,7 @@ fun NotificationScreen(
 
     Column(
         Modifier
-            .background(Color.White)
-            .padding(30.dp)
+            .padding(start = 8.dp, end = 8.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -43,7 +42,7 @@ fun NotificationScreenContent(
     onRecipeClick: (String) -> Unit
 ) {
 
-    RecipeHeroScreen(notificationState = notificationState, onRecipeClick = onRecipeClick)
+    RecipeScreen(notificationState = notificationState, onRecipeClick = onRecipeClick)
 
 }
 

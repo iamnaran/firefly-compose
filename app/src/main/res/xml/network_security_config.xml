@@ -5,11 +5,10 @@
     <base-config cleartextTrafficPermitted="false" />
 
     <!-- Specify domains that are allowed or denied -->
-<!--    <domain-config cleartextTrafficPermitted="false">-->
-<!--        <domain includeSubdomains="true">example.com</domain>-->
-<!--        <domain includeSubdomains="true">api.example.com</domain>-->
-<!--        &lt;!&ndash; You can add more domains as needed &ndash;&gt;-->
-<!--    </domain-config>-->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">dummyjson.com</domain>
+        <!-- You can add more domains as needed -->
+    </domain-config>
 
     <!--
     <trust-anchors>

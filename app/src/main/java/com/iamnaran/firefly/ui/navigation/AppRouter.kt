@@ -47,20 +47,25 @@ sealed class AppScreen(val route: String) {
 
         }
 
-        object Profile :
-            TopLevelDestination(
-                route = Routes.PROFILE,
-                title = R.string.profile,
-                selectedIcon = AppIcons.ProfileFilled,
-                unselectedIcon = AppIcons.ProfileOutlined,
-            )
 
         object Notification : TopLevelDestination(
             route = Routes.NOTIFICATION,
             title = R.string.notification,
             selectedIcon = AppIcons.NotificationFilled,
             unselectedIcon = AppIcons.NotificationOutlined,
-        )
+        ){
+
+        }
+
+        object Profile :
+            TopLevelDestination(
+                route = Routes.PROFILE,
+                title = R.string.profile,
+                selectedIcon = AppIcons.ProfileFilled,
+                unselectedIcon = AppIcons.ProfileOutlined,
+            ){
+
+        }
 
 
         object ProductDetail : TopLevelDestination(
