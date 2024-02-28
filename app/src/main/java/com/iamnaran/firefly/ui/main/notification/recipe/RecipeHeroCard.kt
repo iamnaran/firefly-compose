@@ -32,7 +32,7 @@ import com.iamnaran.firefly.ui.main.notification.core.SensorMetaData
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun RecipeHeroCard(
-    biasConstant: Int = 20,
+    biasConstant: Int = 10,
     dpValue: Float = 0.9f,
     data: SensorMetaData?
 ) {
@@ -57,8 +57,8 @@ fun RecipeHeroCard(
         Card(modifier = Modifier
             .offset {
                 IntOffset(
-                    x = (yRoll * 0.9).dp.roundToPx(),
-                    y = -(xPitch * 0.9).dp.roundToPx()
+                    x = (yRoll * 0.4).dp.roundToPx(),
+                    y = -(xPitch * 0.6).dp.roundToPx()
                 )
             }
             .fillMaxWidth()
