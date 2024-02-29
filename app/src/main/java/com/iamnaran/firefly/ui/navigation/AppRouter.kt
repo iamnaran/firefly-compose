@@ -5,7 +5,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.ui.appcomponent.AppIcons
+import com.iamnaran.firefly.ui.theme.AppIcons
 
 private object Routes {
 

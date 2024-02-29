@@ -21,15 +21,13 @@ import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
-import com.iamnaran.firefly.utils.effects.bounceClick
-import com.iamnaran.firefly.utils.effects.customClick
 
 @Composable
 fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Unit) {
 
     Card(
         modifier = Modifier
-            .padding(MaterialTheme.dimens.medium)
+            .padding(MaterialTheme.dimens.regular)
             .shadow(
                 elevation = 5.dp,
                 spotColor = MaterialTheme.colorScheme.secondaryContainer,

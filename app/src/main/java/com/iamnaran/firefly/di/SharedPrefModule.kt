@@ -39,23 +39,28 @@ object SharedPrefModule {
         @ApplicationContext context: Context,
         @SharedPrefInfoQualifier fileName: String
     ): SharedPreferences {
-        val sharedPreferences: SharedPreferences = try {
-            val masterKey: MasterKey = MasterKey.Builder(context)
+        try {
+            val masterKeyAlias = MasterKey.Builder(context)
                 .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                 .build()
-            EncryptedSharedPreferences.create(
+
+            return EncryptedSharedPreferences.create(
                 context,
                 fileName,
-                masterKey,
+                masterKeyAlias,
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
         } catch (e: GeneralSecurityException) {
-            context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
+            // Handle cryptographic exception
+            e.printStackTrace()
         } catch (e: IOException) {
-            context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
+            // Handle IO exception
+            e.printStackTrace()
         }
-        return sharedPreferences
+
+        // If an exception occurs, fallback to using regular SharedPreferences
+        return context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
     }
 
     @Provides

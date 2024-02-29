@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.iamnaran.firefly.ui.appcomponent.AppIcons
+import com.iamnaran.firefly.ui.theme.AppIcons
 import com.iamnaran.firefly.ui.theme.Shapes
 
 @Composable

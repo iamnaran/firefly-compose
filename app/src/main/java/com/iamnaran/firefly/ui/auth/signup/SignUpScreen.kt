@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.ui.appcomponent.AppIcons
+import com.iamnaran.firefly.ui.theme.AppIcons
 import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme

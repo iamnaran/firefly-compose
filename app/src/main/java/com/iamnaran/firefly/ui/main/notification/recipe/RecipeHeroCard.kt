@@ -48,7 +48,7 @@ fun RecipeHeroCard(
 
     Column(
         Modifier
-            .padding(start = 10.dp, top = 30.dp, end = 10.dp, bottom = 30.dp)
+            .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally

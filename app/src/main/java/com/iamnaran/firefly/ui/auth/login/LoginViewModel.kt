@@ -63,91 +63,68 @@ class LoginViewModel @Inject constructor(
                         )
                     )
                 )
-                viewModelScope.launch {
-                    postServerLoginUseCase(
-                        _loginState.value.email,
-                        _loginState.value.password
-                    )
-                        .onStart {
-
-                        }
-                        .onCompletion {
-
-                        }
-                        .collectLatest { resource ->
-                        when (resource) {
-                            is Resource.Success -> {
-                                if (resource.data != null) {
-                                    AppLog.showLog("----------LOGIN SUCCESS----------")
-                                    preferenceHelper.saveLoggedInUserDetails(
-                                        resource.data.id.toString(),
-                                        resource.data.token,
-                                        true,
-                                    )
-                                    setLoggedInUserUseCase(resource.data)
-                                    _loginState.value = _loginState.value.copy(
-                                        isLoginSuccessful = true,
-                                        isLoading = false
-                                    )
-
-                                }
-                            }
-
-                            is Resource.Loading -> {
-                                _loginState.value = _loginState.value.copy(
-                                    isLoading = true
-                                )
-                            }
-
-                            else -> {
-                                _loginState.value = _loginState.value.copy(
-                                    isLoginSuccessful = false,
-                                    isLoading = false
-                                )
-
-                                _loginState.value = _loginState.value.copy(
-                                    loginErrorState = LoginErrorState(
-                                        serverErrorState = ErrorState(
-                                            true,
-                                            serverErrorMsg = resource.message.toString()
-                                        )
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
+                doLoginWork()
 
             }
 
         }
-
     }
 
+    private fun doLoginWork() {
 
-//    private fun validateInputs(): Boolean {
-//        val emailOrMobileString = _emailState.value.trim()
-//        val passwordString = _passwordState.value.trim()
-//        return when {
-//
-//            // Email/Mobile empty
-//            emailOrMobileString.isEmpty() -> {
-//
-//                false
-//            }
-//
-//            //Password Empty
-//            passwordString.isEmpty() -> {
-//
-//                false
-//            }
-//
-//            // No errors
-//            else -> {
-//                // Set default error state
-//                true
-//            }
-//        }
-//    }
+        viewModelScope.launch {
+            postServerLoginUseCase(
+                _loginState.value.email,
+                _loginState.value.password
+            )
+                .onStart {
 
+                }
+                .onCompletion {
+
+                }
+                .collectLatest { resource ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            if (resource.data != null) {
+                                AppLog.showLog("----------LOGIN SUCCESS----------")
+                                preferenceHelper.saveLoggedInUserDetails(
+                                    resource.data.id.toString(),
+                                    resource.data.token,
+                                    true,
+                                )
+                                setLoggedInUserUseCase(resource.data)
+                                _loginState.value = _loginState.value.copy(
+                                    isLoginSuccessful = true,
+                                    isLoading = false
+                                )
+
+                            }
+                        }
+
+                        is Resource.Loading -> {
+                            _loginState.value = _loginState.value.copy(
+                                isLoading = true
+                            )
+                        }
+
+                        else -> {
+                            _loginState.value = _loginState.value.copy(
+                                isLoginSuccessful = false,
+                                isLoading = false
+                            )
+
+                            _loginState.value = _loginState.value.copy(
+                                loginErrorState = LoginErrorState(
+                                    serverErrorState = ErrorState(
+                                        true,
+                                        serverErrorMsg = resource.message.toString()
+                                    )
+                                )
+                            )
+                        }
+                    }
+                }
+        }
+    }
 }
