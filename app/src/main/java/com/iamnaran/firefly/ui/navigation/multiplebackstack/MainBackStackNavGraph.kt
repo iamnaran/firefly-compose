@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.iamnaran.firefly.ui.arcamera.ArCameraScreen
 import com.iamnaran.firefly.ui.navigation.AppScreen
 import com.iamnaran.firefly.utils.AppLog
 
@@ -31,6 +32,12 @@ fun NavGraphBuilder.mainBackStackNavGraph(
             route = AppScreen.Main.Profile.route
         ) {
             ProfileNavHost(rootNavController)
+        }
+
+        composable(
+            route = AppScreen.Main.ArCamera.route
+        ) {
+            ArCameraScreen()
         }
 
     }

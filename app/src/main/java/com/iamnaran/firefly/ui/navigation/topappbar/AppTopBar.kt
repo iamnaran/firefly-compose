@@ -15,7 +15,7 @@ import com.iamnaran.firefly.ui.theme.AppIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(toolbarTitle: String, barScrollBehavior: TopAppBarScrollBehavior) {
+fun AppTopBar(toolbarTitle: String, barScrollBehavior: TopAppBarScrollBehavior, onActionCameraClick: () -> Unit) {
 
 
     CenterAlignedTopAppBar(
@@ -28,7 +28,8 @@ fun AppTopBar(toolbarTitle: String, barScrollBehavior: TopAppBarScrollBehavior) 
             }
         },
         navigationIcon = {
-            IconButton({}) {
+            IconButton(onClick = {
+            }) {
                 Icon(
                     imageVector = AppIcons.Menu,
                     contentDescription = "menu items"
@@ -36,7 +37,9 @@ fun AppTopBar(toolbarTitle: String, barScrollBehavior: TopAppBarScrollBehavior) 
             }
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+                onActionCameraClick()
+            }) {
                 Icon(
                     imageVector = AppIcons.Camera,
                     contentDescription = "video call",

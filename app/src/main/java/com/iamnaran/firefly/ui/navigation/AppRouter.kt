@@ -14,6 +14,7 @@ private object Routes {
     const val REGISTER = "signup"
 
     const val MAIN = "main"
+    const val ARCAMERA = "arcamera"
     const val HOME = "home"
     const val PROFILE = "profile"
     const val NOTIFICATION = "notification"
@@ -47,7 +48,6 @@ sealed class AppScreen(val route: String) {
 
         }
 
-
         object Notification : TopLevelDestination(
             route = Routes.NOTIFICATION,
             title = R.string.notification,
@@ -66,6 +66,10 @@ sealed class AppScreen(val route: String) {
             ){
 
         }
+
+        object ArCamera : AppScreen(Routes.ARCAMERA)
+
+
 
 
         object ProductDetail : TopLevelDestination(
