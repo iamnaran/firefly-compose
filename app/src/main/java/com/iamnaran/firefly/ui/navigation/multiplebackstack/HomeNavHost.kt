@@ -5,7 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.ui.main.home.HomeScreen
-import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetail
+import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
 import com.iamnaran.firefly.ui.navigation.AppScreen
 import com.iamnaran.firefly.utils.AppLog
 
@@ -30,7 +30,7 @@ fun HomeNavHost() {
 
             // val productId = backStackEntry.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
-            ProductDetail() {
+            ProductDetailScreen() {
                 homeNavController.navigateUp()
             }
         }

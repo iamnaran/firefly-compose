@@ -26,8 +26,6 @@ class ProductViewModel @Inject constructor(
 
 
     init {
-        AppLog.showLog("----Called ViewModel----$productId")
-
         getProductById(productId)
     }
 

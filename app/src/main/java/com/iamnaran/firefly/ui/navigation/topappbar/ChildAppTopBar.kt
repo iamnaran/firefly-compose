@@ -9,6 +9,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
 import com.iamnaran.firefly.ui.theme.AppIcons
 
@@ -16,17 +17,21 @@ import com.iamnaran.firefly.ui.theme.AppIcons
 @Composable
 fun ChildAppTopBar(
     toolbarTitle: String,
-    navController: NavHostController,
-    barScrollBehavior: TopAppBarScrollBehavior
+    barScrollBehavior: TopAppBarScrollBehavior,
+    onBackPressed: () -> Unit
 ) {
     TopAppBar(
         scrollBehavior = barScrollBehavior,
         title = {
-            Text(toolbarTitle, style = MaterialTheme.typography.titleMedium)
+            Text(toolbarTitle,
+                maxLines = 1,
+                style = MaterialTheme.typography.titleMedium,
+                overflow = TextOverflow.Ellipsis
+                )
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigateUp()
+                onBackPressed()
             }) {
                 Icon(
                     imageVector = AppIcons.BackArrow,

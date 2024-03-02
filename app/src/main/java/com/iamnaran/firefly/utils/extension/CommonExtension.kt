@@ -21,5 +21,7 @@ fun Context.shareToOthers(sharedMessage: String) {
 }
 
 
+
+
 val LazyListState.isScrolled: Boolean
     get() = derivedStateOf { firstVisibleItemIndex > 0 || firstVisibleItemScrollOffset > 0 }.value
