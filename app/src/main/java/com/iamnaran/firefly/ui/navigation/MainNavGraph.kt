@@ -77,7 +77,7 @@ fun NavGraphBuilder.mainNavGraph(
 
             // val productId = backStackEntry.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
-            ProductDetailScreen() {
+            ProductDetailScreen(productId = "2") {
                 navController.navigateUp()
             }
         }

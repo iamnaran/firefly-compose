@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.home.productdetail
+package com.iamnaran.firefly.ui.main.notification.recipe.recipedetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,27 +26,29 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.iamnaran.firefly.data.local.entities.ProductEntity
+import com.iamnaran.firefly.data.local.entities.RecipeEntity
+import com.iamnaran.firefly.ui.main.home.components.ProductItem
 import com.iamnaran.firefly.ui.navigation.topappbar.ChildAppTopBar
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.utils.extension.getFirstTwoWords
 
 @Composable
-fun ProductDetailScreen(
-    viewModel: ProductViewModel = hiltViewModel(),
-    productId: String?,
+fun RecipeDetailScreen(
+    viewModel: RecipeViewModel = hiltViewModel(),
+    recipeId: String?,
     onBackPressed: () -> Unit,
 ) {
-    val productState by viewModel.productState.collectAsState()
+    val recipeState by viewModel.productState.collectAsState()
 
     LaunchedEffect(Unit){
-        if (productId != null){
-            viewModel.getProductById(productId)
+        if (recipeId != null){
+            viewModel.getRecipeById(recipeId)
         }
     }
 
-    if (productState.productEntity != null) {
-        ProductContent(productState.productEntity!!) {
+    if (recipeState.recipeEntity != null) {
+        RecipeContent(recipeState.recipeEntity!!) {
             onBackPressed()
         }
     }
@@ -54,8 +58,8 @@ fun ProductDetailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductContent(
-    productEntity: ProductEntity, onBackPressed: () -> Unit
+fun RecipeContent(
+    recipeEntity: RecipeEntity, onBackPressed: () -> Unit
 ) {
     val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -63,7 +67,7 @@ fun ProductContent(
     Scaffold(
         topBar = {
             ChildAppTopBar(
-                toolbarTitle = productEntity.title.getFirstTwoWords(),
+                toolbarTitle = recipeEntity.name.getFirstTwoWords(),
                 barScrollBehavior = barScrollBehavior,
                 onBackPressed
             )
@@ -76,8 +80,8 @@ fun ProductContent(
         ) {
             Column {
                 AsyncImage(
-                    model = productEntity.thumbnail,
-                    contentDescription = productEntity.title,
+                    model = recipeEntity.image,
+                    contentDescription = recipeEntity.name,
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(.5f)
@@ -88,25 +92,30 @@ fun ProductContent(
                         .padding(10.dp),
                 ) {
                     Text(
-                        text = productEntity.category.uppercase(),
+                        text = recipeEntity.difficulty.uppercase(),
                         style = appTypography.labelSmall,
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         modifier = Modifier.padding(8.dp)
                     )
 
                     Text(
-                        text = productEntity.title,
+                        text = recipeEntity.name,
                         style = appTypography.titleLarge,
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
                         modifier = Modifier.padding(8.dp)
                     )
 
-                    Text(
-                        text = productEntity.description,
-                        style = appTypography.bodySmall,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                    LazyColumn {
+                        items(items = recipeEntity.instructions) { instruction ->
+                            Text(
+                                text = instruction,
+                                style = appTypography.bodySmall,
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
+
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -125,21 +134,7 @@ fun ProductContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        ProductContent(
-            ProductEntity(
-                12,
-                "Iphone 15 Pro Design Methods of the society is great of Iphone 15 Pro Design",
-                "It seems that you are trying to fill up the rounded edges of a CardView in Jetpack Compose with an image or ripple animation.",
-                "sas",
-                "Category",
-                12,
-                "asa",
-                12,
-                "asas"
-            )
-        ) {
-
-        }
+       
     }
 }
 

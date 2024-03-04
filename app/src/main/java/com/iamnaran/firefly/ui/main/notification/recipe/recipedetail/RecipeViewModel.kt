@@ -1,10 +1,10 @@
-package com.iamnaran.firefly.ui.main.home.productdetail
+package com.iamnaran.firefly.ui.main.notification.recipe.recipedetail
 
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.domain.usecase.product.GetProductByIdUseCase
+import com.iamnaran.firefly.domain.usecase.recipe.GetRecipeByIdUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
-import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,25 +13,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductViewModel @Inject constructor(
-    private val productByIdUseCase: GetProductByIdUseCase,
+class RecipeViewModel @Inject constructor(
+    private val recipeByIdUseCase: GetRecipeByIdUseCase,
 ) : BaseViewModel() {
 
-    private val _productState = MutableStateFlow(ProductState(null))
-    val productState = _productState.asStateFlow()
+    private val _recipeState = MutableStateFlow(RecipeState(null))
+    val productState = _recipeState.asStateFlow()
 
-    public fun getProductById(productId: String) {
+    public fun getRecipeById(recipeId: String) {
 
         viewModelScope.launch {
-            productByIdUseCase(productId).collectLatest { productResource ->
+            recipeByIdUseCase(recipeId).collectLatest { recipeResource ->
 
-                when (productResource) {
+                when (recipeResource) {
                     is Resource.Loading -> {
-                        _productState.value = ProductState(productResource.data!!)
+                        _recipeState.value = RecipeState(recipeResource.data!!)
                     }
 
                     is Resource.Success -> {
-                        _productState.value = ProductState(productResource.data!!)
+                        _recipeState.value = RecipeState(recipeResource.data!!)
                     }
 
                     else -> {

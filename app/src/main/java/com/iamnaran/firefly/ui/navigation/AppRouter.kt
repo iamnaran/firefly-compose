@@ -21,12 +21,14 @@ private object Routes {
 
     // details
     const val PRODUCT_DETAIL = "productDetail/{${ArgParams.PRODUCT_ID}}"
+    const val RECIPE_DETAIL = "recipeDetail/{${ArgParams.RECIPE_ID}}"
 
 }
 
 private object ArgParams {
 
     const val PRODUCT_ID = "productId"
+    const val RECIPE_ID = "recipeId"
     fun toPath(param: String) = "{${param}}"
 
 }
@@ -87,7 +89,25 @@ sealed class AppScreen(val route: String) {
             fun isProductDetailRoute(route: String): Boolean {
                 // Define a regex pattern to match the productDetail
                 val pattern = "productDetail.*".toRegex()
+                return pattern.matches(route)
+            }
+        }
 
+
+        object RecipeDetail : TopLevelDestination(
+            route = Routes.RECIPE_DETAIL,
+            navArguments = listOf(navArgument(ArgParams.RECIPE_ID) {
+                type = NavType.Companion.StringType
+            })
+        ) {
+            fun createRoute(recipeId: String) =
+                Routes.RECIPE_DETAIL
+                    .replace(ArgParams.toPath(ArgParams.RECIPE_ID), recipeId
+                    )
+
+            fun isRecipeDetailRoute(route: String): Boolean {
+                // Define a regex pattern to match the productDetail
+                val pattern = "recipeDetail.*".toRegex()
                 return pattern.matches(route)
             }
         }

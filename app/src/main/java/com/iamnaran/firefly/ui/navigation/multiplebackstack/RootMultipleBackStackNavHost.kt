@@ -1,5 +1,7 @@
 package com.iamnaran.firefly.ui.navigation.multiplebackstack
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -52,35 +54,38 @@ fun RootMultipleBackStackNavHost(
     val notificationCurrentRoute = notificationNavBackStackEntry?.destination?.route
 
     // Control TopBar and BottomBar
-    when (rootCurrentRoute) {
-        AppScreen.Main.Home.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
+    rootCurrentRoute?.let {
+        when (rootCurrentRoute) {
+            AppScreen.Main.Home.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
 
+            }
+
+            AppScreen.Main.Profile.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
+
+            }
+
+            AppScreen.Main.Notification.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
+            }
+
+            else -> {
+                showBottomBarState.value = false
+                showTopBarState.value = false
+            }
         }
 
-        AppScreen.Main.Profile.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
-
-        }
-
-        AppScreen.Main.Notification.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
-        }
-
-        else -> {
-            showBottomBarState.value = false
-            showTopBarState.value = false
-        }
     }
 
     homeCurrentRoute?.let {
-        if (AppScreen.Main.ProductDetail.isProductDetailRoute(it)){
+        if (AppScreen.Main.ProductDetail.isProductDetailRoute(it)) {
             showTopBarState.value = false
             showBottomBarState.value = true
         }
@@ -119,14 +124,22 @@ fun RootMultipleBackStackNavHost(
         ) {
             NavHost(
                 navController = rootNavHostController,
-                startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route
+                startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
+                enterTransition = {
+                    // you can change whatever you want transition
+                    EnterTransition.None
+                },
+                exitTransition = {
+                    // you can change whatever you want transition
+                    ExitTransition.None
+                }
             ) {
 
                 authNavGraph(rootNavHostController)
                 mainBackStackNavGraph(
                     rootNavHostController,
                     homeNavHostController,
-                    notificationNavHostController
+                    notificationNavHostController,
                 )
             }
         }

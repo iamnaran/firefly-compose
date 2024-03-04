@@ -1,26 +1,38 @@
 package com.iamnaran.firefly.ui.navigation.multiplebackstack
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
 import com.iamnaran.firefly.ui.navigation.AppScreen
-import com.iamnaran.firefly.utils.AppLog
 
 @Composable
 fun HomeNavHost(homeNavHostController: NavHostController) {
 
-    NavHost(navController = homeNavHostController, startDestination = AppScreen.Main.Home.route){
+    val homeNavBackStackEntry by homeNavHostController.currentBackStackEntryAsState()
+
+
+    NavHost(navController = homeNavHostController,
+        startDestination = AppScreen.Main.Home.route,
+        enterTransition = {
+            // you can change whatever you want transition
+            EnterTransition.None
+        },
+        exitTransition = {
+            // you can change whatever you want transition
+            ExitTransition.None
+        }
+        ){
 
         composable(
-            route = AppScreen.Main.Home.route) {
+            route = AppScreen.Main.Home.route
+        ) {
             HomeScreen(onProductClick = {
                 val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
                 homeNavHostController.navigate(route)
@@ -28,36 +40,12 @@ fun HomeNavHost(homeNavHostController: NavHostController) {
         }
 
         composable(
-            route = AppScreen.Main.ProductDetail.route,
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(700)
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(700)
-                )
-            },
-            popEnterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(700)
-                )
-            },
-            popExitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(700)
-                )
-            }
+            route = AppScreen.Main.ProductDetail.route
         ) {
 
-            // val productId = backStackEntry.arguments?.getString("productId")
+             val productId = homeNavBackStackEntry?.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
-            ProductDetailScreen() {
+            ProductDetailScreen(productId = productId) {
                 homeNavHostController.navigateUp()
             }
         }

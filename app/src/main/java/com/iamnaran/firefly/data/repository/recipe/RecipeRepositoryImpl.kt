@@ -42,9 +42,9 @@ class RecipeRepositoryImpl  @Inject constructor(
         fetch = {
             recipeApi.getRecipeById(recipeId)
         },
-        saveFetchResult = { product ->
+        saveFetchResult = { recipe ->
             appDatabase.withTransaction {
-                recipeDao.insertRecipe(product.body()!!)
+                recipeDao.insertRecipe(recipe.body()!!)
             }
         }
 
