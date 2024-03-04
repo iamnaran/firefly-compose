@@ -18,11 +18,10 @@
     </style>
 
 
-    <style name="Theme.DialogFullScreen" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
+    <style name="Theme.DialogFullScreen" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowBackground">@color/white</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>

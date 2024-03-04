@@ -3,6 +3,7 @@ package com.iamnaran.firefly.ui.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -76,7 +77,9 @@ fun NavGraphBuilder.mainNavGraph(
         }
 
         dialog(
-            route = AppScreen.Main.ProductDetail.route
+            route = AppScreen.Main.ProductDetail.route,
+            dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+
         ) {
 
             // value also can be  retrieve directly from responsible view-model
@@ -89,7 +92,9 @@ fun NavGraphBuilder.mainNavGraph(
         }
 
         dialog(
-            route = AppScreen.Main.RecipeDetail.route
+            route = AppScreen.Main.RecipeDetail.route,
+            dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+
         ) {
 
             val recipeId = rootNavBackStackEntry?.arguments?.getString("recipeId")

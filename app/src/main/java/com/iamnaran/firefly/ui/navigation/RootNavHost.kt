@@ -63,6 +63,15 @@ fun RootNavHost(isAuthenticated: Boolean) {
             topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
         }
 
+        AppScreen.Main.ProductDetail.route -> {
+            showBottomBarState.value = true
+            showTopBarState.value = true
+        }
+        AppScreen.Main.RecipeDetail.route -> {
+            showBottomBarState.value = true
+            showTopBarState.value = true
+        }
+
         else -> {
             showBottomBarState.value = false
             showTopBarState.value = false
