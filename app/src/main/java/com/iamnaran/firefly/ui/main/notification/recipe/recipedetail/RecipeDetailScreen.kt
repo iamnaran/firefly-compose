@@ -78,56 +78,50 @@ fun RecipeContent(
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
+            LazyColumn() {
+                item {
+                    AsyncImage(
+                        model = recipeEntity.image,
+                        contentDescription = recipeEntity.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(.5f)
+                    )
+                }
+                item {
+                    Text(
+                        text = recipeEntity.difficulty.uppercase(),
+                        style = appTypography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
 
-            Column(Modifier.padding(10.dp)) {
+                item {
+                    Text(
+                        text = recipeEntity.name,
+                        style = appTypography.titleLarge,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
 
-                LazyColumn() {
-                    item {
-                        AsyncImage(
-                            model = recipeEntity.image,
-                            contentDescription = recipeEntity.name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(.5f)
-                        )
-                    }
-                    item {
-                        Text(
-                            text = recipeEntity.difficulty.uppercase(),
-                            style = appTypography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
+                item {
 
-                    item {
-                        Text(
-                            text = recipeEntity.name,
-                            style = appTypography.titleLarge,
-                            color = MaterialTheme.colorScheme.onTertiaryContainer,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
-
-                    item {
-                        LazyColumn {
-                            items(items = recipeEntity.instructions) { instruction ->
-                                Text(
-                                    text = instruction,
-                                    style = appTypography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                    modifier = Modifier.padding(8.dp)
-                                )
-                            }
-                        }
-                    }
+                    Text(
+                        text = recipeEntity.instructions.joinToString(),
+                        style = appTypography.bodySmall,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.padding(8.dp)
+                    )
 
                 }
 
+                item {
+                    Spacer(modifier = Modifier.height(8.dp))
 
+                }
 
-
-                Spacer(modifier = Modifier.height(8.dp))
 
             }
 
