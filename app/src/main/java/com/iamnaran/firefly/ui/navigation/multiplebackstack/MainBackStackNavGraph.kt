@@ -6,26 +6,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.arcamera.ArCameraScreen
 import com.iamnaran.firefly.ui.navigation.AppScreen
-import com.iamnaran.firefly.utils.AppLog
 
 fun NavGraphBuilder.mainBackStackNavGraph(
-    rootNavController: NavHostController
+    rootNavController: NavHostController,
+    homeNavHostController: NavHostController,
+    notificationNavHostController: NavHostController
 ) {
-    AppLog.showLog("Multiple BackStack Main NavGraph Setup")
-
     navigation(
         route = AppScreen.Main.route,
         startDestination = AppScreen.Main.Home.route
     ) {
 
         composable(route = AppScreen.Main.Home.route) {
-            HomeNavHost()
+            HomeNavHost(homeNavHostController)
         }
 
         composable(
             route = AppScreen.Main.Notification.route
         ) {
-            NotificationNavHost()
+            NotificationNavHost(notificationNavHostController)
         }
 
         composable(

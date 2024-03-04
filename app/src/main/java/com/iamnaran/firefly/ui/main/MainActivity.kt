@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.ui.navigation.AppScreen
@@ -51,45 +52,7 @@ class MainActivity : ComponentActivity() {
 private fun MainScreenContent(
     isAuthenticated: Boolean
 ) {
-    val topAppbarTitle = remember { mutableStateOf("") }
-    val topAppBarState = rememberTopAppBarState()
-    val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topAppBarState)
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
-    val topBarState = rememberSaveable { (mutableStateOf(true)) }
 
-    // Control TopBar and BottomBar
-    when (navBackStackEntry?.destination?.route) {
-        AppScreen.Main.Home.route -> {
-            bottomBarState.value = true
-            topBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
-
-        }
-
-        AppScreen.Main.Profile.route -> {
-            bottomBarState.value = true
-            topBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
-
-        }
-
-        AppScreen.Main.Notification.route -> {
-            bottomBarState.value = true
-            topBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
-
-        }
-
-        else -> {
-            bottomBarState.value = false
-            topBarState.value = false
-        }
-    }
     /*
       For normal back stack uncomment this
       RootNavHost(
@@ -98,19 +61,10 @@ private fun MainScreenContent(
       )*/
 
     // For multiple back stack nav host
-    RootMultipleBackStackNavHost(
-        topBarState,
-        bottomBarState,
-        barScrollBehavior,
-        topAppbarTitle,
-        snackbarHostState,
-        isAuthenticated,
-        rootNavHostController = navController
-    )
+    RootMultipleBackStackNavHost(isAuthenticated)
 
 
 }
-
 
 @Preview(showBackground = true)
 @Composable

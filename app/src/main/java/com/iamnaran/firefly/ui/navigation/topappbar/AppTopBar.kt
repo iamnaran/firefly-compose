@@ -10,14 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import com.iamnaran.firefly.ui.theme.AppIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(toolbarTitle: String, barScrollBehavior: TopAppBarScrollBehavior, onActionCameraClick: () -> Unit) {
-
-
+fun AppTopBar(
+    toolbarTitle: String,
+    barScrollBehavior: TopAppBarScrollBehavior,
+    onActionCameraClick: () -> Unit
+) {
     CenterAlignedTopAppBar(
         scrollBehavior = barScrollBehavior,
         title = {

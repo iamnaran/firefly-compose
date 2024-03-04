@@ -27,8 +27,6 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(homeState: HomeState, onProductClick: (String) -> Unit) {
-    AppLog.showLog("Home Screen Content")
-
     Column {
         ProductLazyList(homeState.allProductEntities) {
             onProductClick(it)

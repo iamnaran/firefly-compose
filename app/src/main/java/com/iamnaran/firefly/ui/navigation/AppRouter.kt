@@ -46,6 +46,7 @@ sealed class AppScreen(val route: String) {
             unselectedIcon = AppIcons.HomeOutlined,
         ) {
 
+
         }
 
         object Notification : TopLevelDestination(
@@ -82,6 +83,13 @@ sealed class AppScreen(val route: String) {
                 Routes.PRODUCT_DETAIL
                     .replace(ArgParams.toPath(ArgParams.PRODUCT_ID), productId
             )
+
+            fun isProductDetailRoute(route: String): Boolean {
+                // Define a regex pattern to match the productDetail
+                val pattern = "productDetail.*".toRegex()
+
+                return pattern.matches(route)
+            }
         }
 
     }
