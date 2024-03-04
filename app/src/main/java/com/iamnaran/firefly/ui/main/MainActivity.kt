@@ -21,6 +21,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.iamnaran.firefly.ui.navigation.AppScreen
+import com.iamnaran.firefly.ui.navigation.RootNavHost
 import com.iamnaran.firefly.ui.navigation.multiplebackstack.RootMultipleBackStackNavHost
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.utils.AppLog
@@ -53,15 +54,14 @@ private fun MainScreenContent(
     isAuthenticated: Boolean
 ) {
 
-    /*
-      For normal back stack uncomment this
-      RootNavHost(
-          isAuthenticated,
-          navHostController = navController
-      )*/
+    RootNavHost(isAuthenticated)
 
-    // For multiple back stack nav host
+ /* For multiple back stack nav host
+    todo --> commented due to some on going issue in google issue tracker
+    Folder navigation-> multiple backstack -> not in used for now
     RootMultipleBackStackNavHost(isAuthenticated)
+ */
+
 
 
 }

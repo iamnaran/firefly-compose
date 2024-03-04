@@ -3,6 +3,7 @@ package com.iamnaran.firefly.ui.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,13 +12,14 @@ import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
+import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeDetailScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
 import com.iamnaran.firefly.utils.AppLog
 
 fun NavGraphBuilder.mainNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    rootNavBackStackEntry: NavBackStackEntry?
 ) {
-    AppLog.showLog("Main NavGraph Setup")
 
     navigation(
         startDestination = AppScreen.Main.Home.route,
@@ -39,6 +41,7 @@ fun NavGraphBuilder.mainNavGraph(
             })
         }
 
+
         composable(
             route = AppScreen.Main.Notification.route,
             enterTransition = {
@@ -48,8 +51,9 @@ fun NavGraphBuilder.mainNavGraph(
                 return@composable fadeOut(tween(700))
             },
         ) {
-            NotificationScreen(){
-
+            NotificationScreen() {
+                val route = AppScreen.Main.RecipeDetail.createRoute(recipeId = it)
+                navController.navigate(route)
             }
         }
 
@@ -75,11 +79,27 @@ fun NavGraphBuilder.mainNavGraph(
             route = AppScreen.Main.ProductDetail.route
         ) {
 
-            // val productId = backStackEntry.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
-            ProductDetailScreen(productId = "2") {
-                navController.navigateUp()
+            val productId = rootNavBackStackEntry?.arguments?.getString("productId")
+            if (productId != null){
+                ProductDetailScreen(productId = productId) {
+                    navController.navigateUp()
+                }
             }
+        }
+
+        dialog(
+            route = AppScreen.Main.RecipeDetail.route
+        ) {
+
+            val recipeId = rootNavBackStackEntry?.arguments?.getString("recipeId")
+            if (recipeId != null){
+                RecipeDetailScreen(recipeId = recipeId) {
+                    navController.navigateUp()
+                }
+            }
+
+
         }
 
     }
