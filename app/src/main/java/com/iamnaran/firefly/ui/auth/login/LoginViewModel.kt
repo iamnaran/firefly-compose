@@ -1,11 +1,14 @@
 package com.iamnaran.firefly.ui.auth.login
 
+import android.content.Intent
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
 import com.iamnaran.firefly.domain.usecase.auth.SetLoggedInUserUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
+import com.iamnaran.firefly.ui.auth.core.GoogleAuthClient
+import com.iamnaran.firefly.ui.auth.core.SignInResult
 import com.iamnaran.firefly.utils.AppLog
 import com.iamnaran.firefly.utils.common.ErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +25,7 @@ class LoginViewModel @Inject constructor(
     private val postServerLoginUseCase: PostServerLoginUseCase,
     private val setLoggedInUserUseCase: SetLoggedInUserUseCase,
     private val preferenceHelper: PreferenceHelper,
+    private val googleAuthClient: GoogleAuthClient,
 ) :
     BaseViewModel() {
 
@@ -127,4 +131,15 @@ class LoginViewModel @Inject constructor(
                 }
         }
     }
+
+    suspend fun googleSignIn(intent: Intent) {
+        googleAuthClient.signInWithIntent(intent)
+    }
+    suspend fun signInIntentSender() = googleAuthClient.signIn()
+
+    suspend fun onSignInResult(intent: Intent?) {
+        googleAuthClient.signInWithIntent(intent!!)
+    }
+
+
 }

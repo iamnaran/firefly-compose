@@ -1,5 +1,9 @@
 package com.iamnaran.firefly.ui.auth.login
 
+import android.app.Activity.RESULT_OK
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,13 +43,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.ui.theme.AppIcons
 import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
+import com.iamnaran.firefly.ui.theme.AppIcons
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.dimens
+import com.iamnaran.firefly.utils.AppLog
 import com.iamnaran.firefly.utils.effects.AppCircularProgressBar
 import com.iamnaran.firefly.utils.effects.ProgressType
+import com.iamnaran.firefly.utils.effects.customClick
 import com.iamnaran.firefly.utils.effects.disableMutipleTouchEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -60,6 +66,19 @@ fun LoginScreen(
     val loginState by viewModel.loginState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                coroutineScope.launch {
+                    viewModel.onSignInResult(activityResult.data)
+                }
+            } else {
+                AppLog.showLog("Error SignIn")
+            }
+
+        })
 
     LaunchedEffect(key1 = loginState.isLoginSuccessful) {
         if (loginState.isLoginSuccessful) {
@@ -98,6 +117,15 @@ fun LoginScreen(
                 onLoginClick = {
                     viewModel.handleLoginUIEvent(LoginUIEvent.OnSubmit)
                 },
+                onGoogleLogin = {
+                    coroutineScope.launch {
+                        launcher.launch(
+                            IntentSenderRequest.Builder(
+                                viewModel.signInIntentSender() ?: return@launch
+                            ).build()
+                        )
+                    }
+                },
                 onSignUpClick = navigateToSignUp,
                 isLoginProgress = loginState.isLoading
             )
@@ -115,6 +143,7 @@ fun LoginContent(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
+    onGoogleLogin: () -> Unit,
     onSignUpClick: () -> Unit,
     isLoginProgress: Boolean
 ) {
@@ -184,8 +213,23 @@ fun LoginContent(
                             Text(text = "Sign In", Modifier.padding(8.dp))
 
                         }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
 
 
+
+                Button(
+                    onClick = {
+                        onGoogleLogin()
+                    },
+                    Modifier
+                        .fillMaxWidth()
+                        .disableMutipleTouchEvents()
+                ) {
+                    Box {
+                        Text(text = "SignIn with Google", Modifier.padding(8.dp))
                     }
                 }
             }

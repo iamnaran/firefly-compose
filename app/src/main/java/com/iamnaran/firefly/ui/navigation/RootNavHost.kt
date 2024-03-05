@@ -60,29 +60,6 @@ fun RootNavHost(isAuthenticated: Boolean) {
     val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
 
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    var drawerWidth by remember {
-        mutableFloatStateOf(drawerState.offset.value)
-    }
-    val contentOffset = remember {
-        derivedStateOf {
-            drawerState.offset.value
-        }
-    }
-
-    SideEffect {
-        if (drawerWidth == 0f) {
-            drawerWidth = drawerState.offset.value
-        }
-    }
-
-
-    // State composable used to hold the
-    // value of the current active screen
-    val currentScreen = remember { mutableStateOf(AppScreen.Main.Home.route) }
-
-    val coroutineScope = rememberCoroutineScope()
-
     val rootNavHostController = rememberNavController()
     val rootNavBackStackEntry by rootNavHostController.currentBackStackEntryAsState()
 
@@ -123,88 +100,56 @@ fun RootNavHost(isAuthenticated: Boolean) {
             showTopBarState.value = false
         }
     }
+    
 
-    ModalNavigationDrawer(
-
-        drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier
-                    .width(290.dp)
-                    .fillMaxHeight()
-            ) {
-                Text("Drawer title", modifier = Modifier.padding(16.dp))
-                Divider()
-                NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
-                    selected = false,
-                    onClick = {
-
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(barScrollBehavior.nestedScrollConnection),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        topBar = {
+            AppLog.showLog("TOP-BAR --> " + showTopBarState.value)
+            if (showTopBarState.value) {
+                AppTopBar(topAppbarTitle.value,
+                    barScrollBehavior,
+                    onActionCameraClick = {
+                        rootNavHostController.navigate(AppScreen.Main.ArCamera.route)
                     }
                 )
+            } else {
+                Box {
+
+                }
             }
         },
-        gesturesEnabled = true,
-        drawerState = drawerState
-
-    ) {
-        val xPos = (abs(drawerWidth) - abs(contentOffset.value))
-
-
-
-
-        Scaffold(
+        bottomBar = {
+            if (showBottomBarState.value) {
+                BottomBar(navController = rootNavHostController)
+            }
+        }) { paddingValues ->
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .offset(x = with(LocalDensity.current) {
-                    max(0.dp, xPos.toDp() - 56.dp)
-                })
-                .nestedScroll(barScrollBehavior.nestedScrollConnection),
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState)
-            },
-            topBar = {
-                AppLog.showLog("TOP-BAR --> " + showTopBarState.value)
-                if (showTopBarState.value) {
-                    AppTopBar(topAppbarTitle.value,
-                        barScrollBehavior,
-                        onActionCameraClick = {
-                            rootNavHostController.navigate(AppScreen.Main.ArCamera.route)
-                        }
-                    )
-                } else {
-                    Box {
-
-                    }
+                .padding(paddingValues)
+        ) {
+            NavHost(
+                navController = rootNavHostController,
+                startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
+                enterTransition = {
+                    // you can change whatever you want transition
+                    EnterTransition.None
+                },
+                exitTransition = {
+                    // you can change whatever you want transition
+                    ExitTransition.None
                 }
-            },
-            bottomBar = {
-                if (showBottomBarState.value) {
-                    BottomBar(navController = rootNavHostController)
-                }
-            }) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues)
             ) {
-                NavHost(
-                    navController = rootNavHostController,
-                    startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
-                    enterTransition = {
-                        // you can change whatever you want transition
-                        EnterTransition.None
-                    },
-                    exitTransition = {
-                        // you can change whatever you want transition
-                        ExitTransition.None
-                    }
-                ) {
 
-                    authNavGraph(rootNavHostController)
-                    mainNavGraph(rootNavHostController, rootNavBackStackEntry)
-                }
+                authNavGraph(rootNavHostController)
+                mainNavGraph(rootNavHostController, rootNavBackStackEntry)
             }
         }
-
     }
 
 

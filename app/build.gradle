@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
+
 }
 
 android {
@@ -95,6 +97,7 @@ dependencies {
 
     // DI Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+
     debugImplementation 'androidx.compose.ui:ui-tooling:1.5.4'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
@@ -136,6 +139,14 @@ dependencies {
     implementation "io.github.sceneview:sceneview:2.0.3"
     implementation 'io.github.sceneview:arsceneview:2.0.3'
 
+    // Firebase Authentication
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+
+
+    // Firebase Cloud Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.10.3'
 
     // Multidex
     def multidex_version = "2.0.1"

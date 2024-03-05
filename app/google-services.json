@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "204093542286",
+    "project_id": "delphic-lab-app",
+    "storage_bucket": "delphic-lab-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204093542286:android:3f903e802fc0c9e8fd5edf",
+        "android_client_info": {
+          "package_name": "com.iamnaran.firefly.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204093542286-qkcpvb48eq346odkrh112ptsbfnbk5b2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iamnaran.firefly.dev",
+            "certificate_hash": "90799f3e1c11ce444c0cf2e449cf780348a15a23"
+          }
+        },
+        {
+          "client_id": "204093542286-ih7rkg9391htlsp982p9nu3ep4112ohk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt19OHMkRBXLUWvTTNdMy4_dbwQpu7Ef4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204093542286-ih7rkg9391htlsp982p9nu3ep4112ohk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
