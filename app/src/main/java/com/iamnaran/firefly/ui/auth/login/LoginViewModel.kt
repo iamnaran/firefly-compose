@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.dto.UserResponse
 import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
 import com.iamnaran.firefly.domain.usecase.auth.SetLoggedInUserUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
@@ -132,13 +133,38 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    suspend fun googleSignIn(intent: Intent) {
-        googleAuthClient.signInWithIntent(intent)
-    }
     suspend fun signInIntentSender() = googleAuthClient.signIn()
 
     suspend fun onSignInResult(intent: Intent?) {
-        googleAuthClient.signInWithIntent(intent!!)
+        val signInResult = googleAuthClient.signInWithIntent(intent!!)
+        signInResult.run {
+            if (signInResult.data != null) {
+                val userResponse = UserResponse(
+                    id = Math.random().toInt(),
+                    username = signInResult.data.name,
+                    email = signInResult.data.email,
+                    firstName = signInResult.data.name,
+                    lastName = "",
+                    gender = "",
+                    image = signInResult.data.profilePic.toString(),
+                    token = signInResult.data.userId,
+                )
+
+                preferenceHelper.saveLoggedInUserDetails(
+                    userResponse.id.toString(),
+                    signInResult.data.userId,
+                    true,
+                )
+
+                setLoggedInUserUseCase(userResponse)
+                _loginState.value = _loginState.value.copy(
+                    isLoginSuccessful = true,
+                    isLoading = false
+                )
+            }
+
+        }
+
     }
 
 

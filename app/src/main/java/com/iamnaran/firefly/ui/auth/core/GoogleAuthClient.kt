@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.iamnaran.firefly.R
+import com.iamnaran.firefly.utils.AppLog
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -45,6 +46,7 @@ class GoogleAuthClient @Inject constructor(
                     email = user.email.toString(),
                     profilePic = user.photoUrl?.toString()
                 )
+                AppLog.showLog("Called --> "+ userData.name)
                 SignInResult(userData, "")
             } else {
                 SignInResult(null, "")
