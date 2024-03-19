@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Firefly Compose"
 include ':app'
-include ':baselineprofile'
