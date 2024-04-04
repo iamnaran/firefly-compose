@@ -2,7 +2,6 @@ package com.iamnaran.firefly.ui.auth.login
 
 import com.iamnaran.firefly.utils.common.ErrorState
 
-
 data class LoginState(
     val email: String = "kminchelle",
     val password: String = "0lelplR",

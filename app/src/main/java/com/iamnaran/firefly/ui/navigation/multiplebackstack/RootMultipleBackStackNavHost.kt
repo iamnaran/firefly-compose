@@ -105,7 +105,7 @@ fun RootMultipleBackStackNavHost(
                 AppTopBar(topAppbarTitle.value,
                     barScrollBehavior,
                     onActionCameraClick = {
-                        rootNavHostController.navigate(AppScreen.Main.ArCamera.route)
+
                     }
                 )
             } else {

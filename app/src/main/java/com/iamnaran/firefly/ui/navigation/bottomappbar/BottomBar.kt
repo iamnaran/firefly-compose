@@ -1,7 +1,5 @@
 package com.iamnaran.firefly.ui.navigation.bottomappbar
 
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -10,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,7 +18,10 @@ fun BottomBar(
     navController: NavHostController,
 ) {
     val navigationScreen = listOf(
-        AppScreen.Main.Home, AppScreen.Main.Notification, AppScreen.Main.Profile
+        AppScreen.Main.Home,
+        AppScreen.Main.Notification,
+        AppScreen.Main.Explore,
+        AppScreen.Main.Profile
     )
 
     NavigationBar {
@@ -35,7 +35,10 @@ fun BottomBar(
                 selected = currentRoute == item.route,
 
                 label = {
-                    Text(text = stringResource(id = item.title!!), style = MaterialTheme.typography.displaySmall)
+                    Text(
+                        text = stringResource(id = item.title!!),
+                        style = MaterialTheme.typography.displaySmall
+                    )
                 },
                 icon = {
 //                    BadgedBox(badge = {

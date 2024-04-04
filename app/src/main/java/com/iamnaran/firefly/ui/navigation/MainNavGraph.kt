@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
+import com.iamnaran.firefly.ui.main.explore.ExploreScreen
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
@@ -74,6 +75,20 @@ fun NavGraphBuilder.mainNavGraph(
                     }
                 }
             })
+        }
+
+        composable(
+            route = AppScreen.Main.Explore.route,
+            enterTransition = {
+                return@composable fadeIn(tween(1000))
+            },
+            exitTransition = {
+                return@composable fadeOut(tween(700))
+            },
+        ) {
+            ExploreScreen(){
+
+            }
         }
 
         dialog(

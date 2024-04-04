@@ -24,12 +24,6 @@ fun RecipeList(
             } else {
                 when (data.difficulty) {
 
-                    "Easy" -> {
-                        EasyRecipeItem(data) {
-                            onRecipeClick(data.id.toString())
-                        }
-                    }
-
                     "Difficult" -> {
                         DifficultRecipeItem(data) {
                             onRecipeClick(data.id.toString())
@@ -37,7 +31,9 @@ fun RecipeList(
                     }
 
                     else -> {
-
+                        EasyRecipeItem(data) {
+                            onRecipeClick(data.id.toString())
+                        }
                     }
 
                 }

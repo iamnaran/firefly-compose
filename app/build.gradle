@@ -128,9 +128,12 @@ dependencies {
     // Splash
     implementation 'androidx.core:core-splashscreen:1.0.1'
 
-
     // Multidex
     implementation "androidx.multidex:multidex:2.0.1"
+
+    // stream
+    implementation "io.getstream:stream-video-android-core:0.5.3"
+    implementation "io.getstream:stream-video-android-ui-compose:0.5.3"
 
 
 }

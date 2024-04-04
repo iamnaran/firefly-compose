@@ -34,12 +34,6 @@ fun NavGraphBuilder.mainBackStackNavGraph(
             ProfileNavHost(rootNavController)
         }
 
-        composable(
-            route = AppScreen.Main.ArCamera.route
-        ) {
-
-        }
-
     }
 
 }

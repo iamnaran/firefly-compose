@@ -14,7 +14,7 @@ private object Routes {
     const val REGISTER = "signup"
 
     const val MAIN = "main"
-    const val ARCAMERA = "arcamera"
+    const val EXPLORE = "explore"
     const val HOME = "home"
     const val PROFILE = "profile"
     const val NOTIFICATION = "notification"
@@ -70,7 +70,12 @@ sealed class AppScreen(val route: String) {
 
         }
 
-        object ArCamera : AppScreen(Routes.ARCAMERA)
+        object Explore :  TopLevelDestination(
+            route = Routes.EXPLORE,
+            title = R.string.explore,
+            selectedIcon = AppIcons.ExploredFilled,
+            unselectedIcon = AppIcons.ExploredOutlined,
+        )
 
 
 
