@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.iamnaran.firefly.ui.main.home.components.ProductLazyList
+import com.iamnaran.firefly.ui.main.explore.components.ExploreList
 
 @Composable
 fun ExploreScreen(
@@ -23,7 +23,7 @@ fun ExploreScreen(
 @Composable
 fun ExploreContent(exploreState: ExploreState, onProductClick: (String) -> Unit) {
     Column {
-        ProductLazyList(exploreState.allProductEntities) {
+        ExploreList(exploreState.allProductEntities) {
             onProductClick(it)
         }
     }
