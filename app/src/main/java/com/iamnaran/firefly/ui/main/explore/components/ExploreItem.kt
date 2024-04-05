@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,7 +37,8 @@ fun ExploreItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
     Card(
         modifier = Modifier
             .padding(MaterialTheme.dimens.regular)
-            .width(300.dp)
+            .width(250.dp)
+            .fillMaxHeight()
             .shadow(
                 elevation = 5.dp,
                 spotColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -77,7 +79,8 @@ fun ExploreItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
                 Text(
                     text = productEntity.description,
                     style = appTypography.bodySmall,
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 2,
+                    minLines = 2,
+                    maxLines = 2,
                     overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(8.dp)

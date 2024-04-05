@@ -1,11 +1,15 @@
 package com.iamnaran.firefly.ui.auth.login
 
+import android.content.Intent
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.dto.UserResponse
 import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
 import com.iamnaran.firefly.domain.usecase.auth.SetLoggedInUserUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
+import com.iamnaran.firefly.ui.auth.core.GoogleAuthClient
+import com.iamnaran.firefly.ui.auth.core.SignInResult
 import com.iamnaran.firefly.utils.AppLog
 import com.iamnaran.firefly.utils.common.ErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +24,7 @@ class LoginViewModel @Inject constructor(
     private val postServerLoginUseCase: PostServerLoginUseCase,
     private val setLoggedInUserUseCase: SetLoggedInUserUseCase,
     private val preferenceHelper: PreferenceHelper,
+    private val googleAuthClient: GoogleAuthClient,
 ) :
     BaseViewModel() {
 
@@ -118,4 +123,40 @@ class LoginViewModel @Inject constructor(
                 }
         }
     }
+
+    suspend fun signInIntentSender() = googleAuthClient.signIn()
+
+    suspend fun onSignInResult(intent: Intent?) {
+        val signInResult = googleAuthClient.signInWithIntent(intent!!)
+        signInResult.run {
+            if (signInResult.data != null) {
+                val userResponse = UserResponse(
+                    id = Math.random().toInt(),
+                    username = signInResult.data.name,
+                    email = signInResult.data.email,
+                    firstName = signInResult.data.name,
+                    lastName = "",
+                    gender = "",
+                    image = signInResult.data.profilePic.toString(),
+                    token = signInResult.data.userId,
+                )
+
+                preferenceHelper.saveLoggedInUserDetails(
+                    userResponse.id.toString(),
+                    signInResult.data.userId,
+                    true,
+                )
+
+                setLoggedInUserUseCase(userResponse)
+                _loginState.value = _loginState.value.copy(
+                    isLoginSuccessful = true,
+                    isLoading = false
+                )
+            }
+
+        }
+
+    }
+
+
 }

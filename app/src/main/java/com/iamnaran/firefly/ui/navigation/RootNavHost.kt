@@ -38,13 +38,11 @@ fun RootNavHost(isAuthenticated: Boolean) {
     val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
 
-
     // State composable used to hold the
     // value of the current active screen
     val currentScreen = remember { mutableStateOf(AppScreen.Main.Home.route) }
 
     val coroutineScope = rememberCoroutineScope()
-
     val rootNavHostController = rememberNavController()
     val rootNavBackStackEntry by rootNavHostController.currentBackStackEntryAsState()
 
@@ -91,7 +89,7 @@ fun RootNavHost(isAuthenticated: Boolean) {
             showTopBarState.value = false
         }
     }
-
+    
 
     Scaffold(
         modifier = Modifier
@@ -106,7 +104,6 @@ fun RootNavHost(isAuthenticated: Boolean) {
                 AppTopBar(topAppbarTitle.value,
                     barScrollBehavior,
                     onActionCameraClick = {
-
                     }
                 )
             } else {
