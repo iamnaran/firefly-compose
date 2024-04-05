@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.ui.main.explore.components.ExploreList
+import com.iamnaran.firefly.ui.main.explore.components.ExploreTest
 
 @Composable
 fun ExploreScreen(
@@ -13,6 +15,8 @@ fun ExploreScreen(
     onProductClick: (String) -> Unit,
 ) {
     val exploreState by viewModel.exploreState.collectAsState()
+
+//    ExploreTestingContent()
 
     ExploreContent(exploreState) {
         onProductClick(it)
@@ -29,4 +33,17 @@ fun ExploreContent(exploreState: ExploreState, onProductClick: (String) -> Unit)
     }
 
 }
+
+@Composable
+fun ExploreTestingContent() {
+    val items = remember {
+        List(10) { "Item $it" }
+    }
+
+    ExploreTest(items)
+
+}
+
+
+
 

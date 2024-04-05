@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,11 +40,6 @@ fun ExploreItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
             .padding(MaterialTheme.dimens.regular)
             .width(250.dp)
             .fillMaxHeight()
-            .shadow(
-                elevation = 5.dp,
-                spotColor = MaterialTheme.colorScheme.secondaryContainer,
-                shape = MaterialTheme.shapes.medium
-            )
             .clickable {
                 onProductItemClick(productEntity.id.toString())
             },

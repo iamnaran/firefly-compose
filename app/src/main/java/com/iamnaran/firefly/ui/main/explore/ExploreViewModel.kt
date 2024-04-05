@@ -34,11 +34,6 @@ class ExploreViewModel @Inject constructor(
             getProductUseCase().collectLatest { productResource ->
 
                 when (productResource) {
-                    is Resource.Loading ->{
-                        val categoriesWithProducts =
-                            getProductsByCategoriesUseCase(productResource.data!!)
-                        _exploreState.value = ExploreState(categoriesWithProducts)
-                    }
                     is Resource.Success -> {
                         val categoriesWithProducts =
                             getProductsByCategoriesUseCase(productResource.data!!)
