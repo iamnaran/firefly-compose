@@ -1,6 +1,7 @@
 package com.iamnaran.firefly.ui.main.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,10 +24,9 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(homeState: HomeState, onProductClick: (String) -> Unit) {
-    Column {
-        ProductLazyList(homeState.allProductEntities) {
-            onProductClick(it)
-        }
+
+    ProductLazyList(homeState.allProductEntities) {
+        onProductClick(it)
     }
 
 }

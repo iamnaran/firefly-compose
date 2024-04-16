@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val preferenceHelper: PreferenceHelper
-    ) :
+) :
     BaseViewModel() {
 
     private val _currentRoute = mutableStateOf<String?>(AppScreen.Auth.route)

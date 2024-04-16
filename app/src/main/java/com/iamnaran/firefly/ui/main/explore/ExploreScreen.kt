@@ -37,7 +37,7 @@ fun ExploreContent(exploreState: ExploreState, onProductClick: (String) -> Unit)
 @Composable
 fun ExploreTestingContent() {
     val items = remember {
-        List(10) { "Item $it" }
+        List(30) { "Item $it" }
     }
 
     ExploreTest(items)

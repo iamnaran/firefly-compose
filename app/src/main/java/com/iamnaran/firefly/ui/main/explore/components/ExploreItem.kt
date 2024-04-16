@@ -38,8 +38,8 @@ fun ExploreItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
     Card(
         modifier = Modifier
             .padding(MaterialTheme.dimens.regular)
-            .width(250.dp)
-            .fillMaxHeight()
+            .fillMaxWidth()
+            .height(200.dp)
             .clickable {
                 onProductItemClick(productEntity.id.toString())
             },
