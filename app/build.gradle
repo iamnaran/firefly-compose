@@ -138,6 +138,10 @@ dependencies {
     // Multidex
     implementation "androidx.multidex:multidex:2.0.1"
 
+    implementation "androidx.paging:paging-runtime-ktx:3.2.1"
+    implementation("androidx.paging:paging-compose:3.2.1")
+
+
     // stream
     implementation "io.getstream:stream-video-android-core:0.5.3"
     implementation "io.getstream:stream-video-android-ui-compose:0.5.3"
