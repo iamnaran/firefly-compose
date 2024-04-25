@@ -15,6 +15,7 @@ private object Routes {
 
     const val MAIN = "main"
     const val EXPLORE = "explore"
+    const val INTEREST = "interest"
     const val HOME = "home"
     const val PROFILE = "profile"
     const val NOTIFICATION = "notification"
@@ -77,7 +78,10 @@ sealed class AppScreen(val route: String) {
             unselectedIcon = AppIcons.ExploredOutlined,
         )
 
-
+        object Interest :  TopLevelDestination(
+            route = Routes.INTEREST,
+            title = R.string.interest
+        )
 
 
         object ProductDetail : TopLevelDestination(
