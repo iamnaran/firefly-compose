@@ -31,7 +31,6 @@ Thanks to the DummyJSON API, you can find the new username and password here: [G
 
 Feel free to explore the codebase, customize components, and integrate additional features based on your project requirements.
 
-## INFO
 **Kotlin Multiplatform App**
 Clone of this App "[jellyfish](https://github.com/iamnaran/jellyfish)" is currently in the development phase.
 Stay tuned for further updates!
