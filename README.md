@@ -6,19 +6,24 @@ A production-ready template app to kickstart your Android development journey wi
 
 ## Features
 
-- **Jetpack Compose**: Modern Android UI toolkit for building native UI.
-- **Dependency Injection - Hilt**: Android's recommended library for dependency injection.
-- **Navigation Graph**: Efficient app navigation with Jetpack Navigation.
-- **Nested Navigation Graph**: Organized navigation for a seamless user experience.
-- **Splash Screen API**: Attractive splash screen for a captivating app launch.
-- **Clean Architecture**: Structured architecture with Repository
-- **Kotlin Flow**: Asynchronous programming with Kotlin's powerful Flow.
-- **Room**: Local data persistence for efficient data storage.
-- **Retrofit**: Networking library for handling API calls.
-- **Data Store Preference**: Modern data storage solution for app preferences.
-- **Login Authentication**: Secure authentication process for user login.
-- **Kotlin Coroutine NetworkResourceBound**: Efficient network-bound resource handling with coroutines.
-- **Product Listing with Offline First**: Dynamic product listing rendered in Lazy Column with offline functionality.
+- **Jetpack Compose**
+- **Dependency Injection - Hilt**
+- **Navigation Graph**: 
+- **Nested Navigation Graph**
+- **Splash Screen API**
+- **Clean Architecture**
+- **Kotlin Flow**
+- **Room**
+- **Retrofit**
+- **Data Store Preference**
+- **Login Authentication**
+- **Kotlin Coroutine NetworkResourceBound**
+- **Product Listing with Offline First**
+
+## API Integration with DummyJSON API
+
+Thanks to the DummyJSON API, you can find the new username and password here: [GitHub - DummyJSON](https://github.com/Ovi/DummyJSON) or [DummyJSON Documentation](https://dummyjson.com/docs/auth).
+
 
 ## TODO
 - Minor optimization
