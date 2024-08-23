@@ -13,6 +13,8 @@ import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.main.explore.ExploreScreen
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
+import com.iamnaran.firefly.ui.main.interest.InterestScreen
+import com.iamnaran.firefly.ui.main.interest.components.InterestItem
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
 import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeDetailScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
@@ -87,6 +89,21 @@ fun NavGraphBuilder.mainNavGraph(
             },
         ) {
             ExploreScreen(){
+
+            }
+        }
+
+
+        composable(
+            route = AppScreen.Main.Interest.route,
+            enterTransition = {
+                return@composable fadeIn(tween(1000))
+            },
+            exitTransition = {
+                return@composable fadeOut(tween(700))
+            },
+        ) {
+            InterestScreen(){
 
             }
         }

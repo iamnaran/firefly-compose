@@ -74,6 +74,13 @@ fun RootNavHost(isAuthenticated: Boolean) {
             topAppbarTitle.value = stringResource(AppScreen.Main.Explore.title!!)
         }
 
+
+        AppScreen.Main.Interest.route -> {
+            showBottomBarState.value = true
+            showTopBarState.value = true
+            topAppbarTitle.value = stringResource(AppScreen.Main.Interest.title!!)
+        }
+
         AppScreen.Main.ProductDetail.route -> {
             showBottomBarState.value = true
             showTopBarState.value = true

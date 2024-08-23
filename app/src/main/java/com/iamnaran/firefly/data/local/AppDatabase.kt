@@ -10,7 +10,7 @@ import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.data.local.entities.RecipeEntity
 import com.iamnaran.firefly.data.local.entities.UserEntity
 
-@Database(entities = [UserEntity::class, ProductEntity::class, RecipeEntity::class], version = 3, exportSchema = false)
+@Database(entities = [UserEntity::class, ProductEntity::class, RecipeEntity::class], version = 7, exportSchema = false)
 @TypeConverters(AppTypeConvertor::class)
 abstract class AppDatabase : RoomDatabase() {
 

@@ -15,8 +15,7 @@ interface AuthRepository {
 
      suspend fun getUserById(userId: Long): Flow<UserEntity>
 
-
-
+     suspend fun getAllUsers(): Flow<List<UserEntity>>
 
 
 }

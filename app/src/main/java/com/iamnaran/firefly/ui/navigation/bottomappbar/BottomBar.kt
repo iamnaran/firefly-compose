@@ -20,7 +20,7 @@ fun BottomBar(
     val navigationScreen = listOf(
         AppScreen.Main.Home,
         AppScreen.Main.Notification,
-        AppScreen.Main.Explore,
+        AppScreen.Main.Interest,
         AppScreen.Main.Profile
     )
 

@@ -21,7 +21,6 @@ class GetProductsByCategoriesUseCase @Inject constructor(
                         id = productEntity.id,
                         title = productEntity.title,
                         description = productEntity.description,
-                        brand = productEntity.brand,
                         price = productEntity.price,
                         rating = productEntity.rating,
                         stock = productEntity.stock,

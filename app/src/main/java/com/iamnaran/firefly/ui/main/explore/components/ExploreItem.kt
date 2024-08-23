@@ -101,12 +101,10 @@ fun DefaultPreview() {
                 "Iphone 15 Pro Design Methods of the society is great of Iphone 15 Pro Design",
                 "It seems that you are trying to fill up the rounded edges of a CardView in Jetpack Compose with an image or ripple animation.",
                 "sas",
-                "Category",
-                12,
-                "asa",
-                12,
-                "asas"
-            )
+                12f,
+                "asas",
+                13,
+                "12")
         ) {
 
         }

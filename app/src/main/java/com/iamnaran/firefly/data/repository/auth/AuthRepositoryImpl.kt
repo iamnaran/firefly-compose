@@ -45,4 +45,8 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun getUserById(userId: Long): Flow<UserEntity> {
         return appDatabase.userDao().getUserById(userId)
     }
+
+    override suspend fun getAllUsers(): Flow<List<UserEntity>> {
+        return appDatabase.userDao().getAllUser()
+    }
 }

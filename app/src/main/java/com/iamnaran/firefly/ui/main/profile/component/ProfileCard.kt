@@ -30,6 +30,8 @@ import com.iamnaran.firefly.utils.effects.bounceClick
 @Composable
 fun ProfileCard(userEntity: UserEntity) {
 
+
+
     Card(
         modifier = Modifier
             .padding(MaterialTheme.dimens.large)

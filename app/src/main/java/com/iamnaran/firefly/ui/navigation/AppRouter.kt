@@ -80,7 +80,9 @@ sealed class AppScreen(val route: String) {
 
         object Interest :  TopLevelDestination(
             route = Routes.INTEREST,
-            title = R.string.interest
+            title = R.string.interest,
+            selectedIcon = AppIcons.InterestFilled,
+            unselectedIcon = AppIcons.InterestOutlined,
         )
 
 

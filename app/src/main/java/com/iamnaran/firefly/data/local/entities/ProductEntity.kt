@@ -22,17 +22,13 @@ data class ProductEntity(
     @SerializedName("description")
     val description: String,
 
-    @ColumnInfo("brand")
-    @SerializedName("brand")
-    val brand: String,
-
     @ColumnInfo("category")
     @SerializedName("category")
     val category: String,
 
     @ColumnInfo("price")
     @SerializedName("price")
-    val price: Int,
+    val price: Float,
 
     @ColumnInfo("rating")
     @SerializedName("rating")

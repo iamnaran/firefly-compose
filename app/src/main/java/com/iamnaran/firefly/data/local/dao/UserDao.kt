@@ -17,4 +17,8 @@ interface  UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(userEntity: UserEntity)
 
+
+    @Query("SELECT * FROM user")
+    fun getAllUser(): Flow<List<UserEntity>>
+
 }
