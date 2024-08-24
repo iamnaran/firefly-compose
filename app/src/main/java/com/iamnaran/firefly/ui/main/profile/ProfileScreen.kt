@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.data.local.entities.UserEntity
-import com.iamnaran.firefly.ui.main.interest.components.CustomAlertDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.CustomAlertDialog
 import com.iamnaran.firefly.ui.main.profile.component.ProfileCard
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware

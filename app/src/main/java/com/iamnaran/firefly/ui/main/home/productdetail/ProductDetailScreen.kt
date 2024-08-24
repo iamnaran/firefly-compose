@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.iamnaran.firefly.data.local.entities.ProductEntity
+import com.iamnaran.firefly.ui.appcomponent.BaseDialog
 import com.iamnaran.firefly.ui.navigation.topappbar.ChildAppTopBar
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
@@ -37,8 +38,8 @@ fun ProductDetailScreen(
 ) {
     val productState by viewModel.productState.collectAsState()
 
-    LaunchedEffect(Unit){
-        if (productId != null){
+    LaunchedEffect(Unit) {
+        if (productId != null) {
             viewModel.getProductById(productId)
         }
     }
@@ -47,6 +48,7 @@ fun ProductDetailScreen(
         ProductContent(productState.productEntity!!) {
             onBackPressed()
         }
+
     }
 
 
@@ -58,7 +60,6 @@ fun ProductContent(
     productEntity: ProductEntity, onBackPressed: () -> Unit
 ) {
     val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
 
     Scaffold(
         topBar = {

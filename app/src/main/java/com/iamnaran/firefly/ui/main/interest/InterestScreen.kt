@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -15,12 +17,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.iamnaran.firefly.R
 import com.iamnaran.firefly.domain.dto.InterestModel
-import com.iamnaran.firefly.ui.main.interest.components.BeautifulAlertDialog
-import com.iamnaran.firefly.ui.main.interest.components.CustomAlertDialog
-import com.iamnaran.firefly.ui.main.interest.components.CustomDialog
-import com.iamnaran.firefly.ui.main.interest.components.SimpleAlertDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.BeautifulAlertDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.CustomAlertDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.FullScreenDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.MinimalAlertDialog
+import com.iamnaran.firefly.ui.main.interest.components.sheet.MyBottomSheetDialog
+import com.iamnaran.firefly.ui.main.interest.components.sheet.MyFullScreenBottomSheetDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.SimpleAlertDialog
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
 
@@ -57,13 +64,22 @@ fun InterestContent(interestState: State<InterestState>, onInterestState: (Inter
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogsContent() {
 
     var showSimpleDialog by remember { mutableStateOf(false) }
+    var minimalDialog by remember { mutableStateOf(false) }
     var showBasicDialog by remember { mutableStateOf(false) }
     var showBeautifulDialog by remember { mutableStateOf(false) }
     var showFullScreenDialog by remember { mutableStateOf(false) }
+
+    var showBottomSheetDialog by remember { mutableStateOf(false) }
+    var showBottomSheetFullScreenDialog by remember { mutableStateOf(false) }
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
 
     Column() {
 
@@ -76,6 +92,19 @@ fun DialogsContent() {
                         showSimpleDialog = false
                     }) {
                     showSimpleDialog = false
+                }
+            }
+        }
+
+        when {
+            minimalDialog -> {
+                MinimalAlertDialog(
+                    dialogTitle = " Aaradhya Tripathee",
+                    dialogSubTitle = "Are you sure you want to logout? All caches data will be cleared.",
+                    onDismissRequest = {
+                        minimalDialog = false
+                    }) {
+                    minimalDialog = false
                 }
             }
         }
@@ -95,26 +124,51 @@ fun DialogsContent() {
 
         when {
             showBeautifulDialog -> {
-//                BeautifulAlertDialog(
-//                    onDismissRequest = {},
-//                    onConfirmation = {},
-//                    painter = "",
-//                    imageDescription = ""
-//                ) {
-//
-//                }
+                BeautifulAlertDialog(
+                    onDismissRequest = { showBeautifulDialog = false },
+                    onConfirmation = {
+                        showBeautifulDialog = false
+                    },
+                    painter = painterResource(id = R.drawable.ai_png),
+                    imageDescription = "Sample Image"
+                )
             }
         }
 
         when {
             showFullScreenDialog -> {
-                CustomDialog(
+                FullScreenDialog(
                     dialogTitle = "Logout Confirmation",
                     dialogSubTitle = "Are you sure you want to logout? All caches data will be cleared.",
                     onDismissRequest = {
-                        showBasicDialog = false
+                        showFullScreenDialog = false
                     }) {
-                    showBasicDialog = false
+                    showFullScreenDialog = false
+                }
+            }
+        }
+
+        when {
+            showBottomSheetDialog -> {
+                MyBottomSheetDialog(
+                    sheetState = sheetState,
+                    onDismissRequest = {
+                        showBottomSheetDialog = false
+
+                    }) {
+                    showBottomSheetDialog = false
+                }
+            }
+        }
+
+        when {
+            showBottomSheetFullScreenDialog -> {
+                MyFullScreenBottomSheetDialog(
+                    sheetState = sheetState,
+                    onDismissRequest = {
+                        showBottomSheetFullScreenDialog = false
+                    }) {
+                    showBottomSheetFullScreenDialog = false
                 }
             }
         }
@@ -125,6 +179,15 @@ fun DialogsContent() {
 
         }) {
             Text(text = "Simple Alert Dialog ")
+
+        }
+
+        TextButton(onClick = {
+
+            minimalDialog = true
+
+        }) {
+            Text(text = "Minimal Alert Dialog ")
 
         }
 
@@ -152,6 +215,23 @@ fun DialogsContent() {
 
         }) {
             Text(text = "Full Screen Alert Dialog")
+        }
+
+
+        TextButton(onClick = {
+
+            showBottomSheetDialog = true
+
+        }) {
+            Text(text = "Show Bottom Sheet Dialog")
+        }
+
+        TextButton(onClick = {
+            showBottomSheetFullScreenDialog = true
+
+
+        }) {
+            Text(text = "Show Full Screen Bottom Sheet Dialog")
         }
 
 

@@ -18,10 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Scale
 import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
@@ -29,7 +32,18 @@ import com.iamnaran.firefly.ui.theme.dimens
 
 @Composable
 fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Unit) {
-    var isExpanded by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    val imageRequest = remember(productEntity.thumbnail) {
+        ImageRequest.Builder(context)
+            .data(productEntity.thumbnail)
+            .size(200, 200)
+            .scale(Scale.FILL)
+            .build()
+    }
+
+    val isExpanded by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -49,7 +63,7 @@ fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
                 .fillMaxWidth(),
         ) {
             AsyncImage(
-                model = productEntity.thumbnail,
+                model = imageRequest,
                 contentDescription = productEntity.title,
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.secondaryContainer)
