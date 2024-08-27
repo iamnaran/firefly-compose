@@ -1,5 +1,11 @@
 package com.iamnaran.firefly.ui.main.interest
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,13 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.domain.dto.InterestModel
+import com.iamnaran.firefly.data.dto.InterestModel
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.BeautifulAlertDialog
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.CustomAlertDialog
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.FullScreenDialog
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.MinimalAlertDialog
-import com.iamnaran.firefly.ui.main.interest.components.sheet.MyBottomSheetDialog
-import com.iamnaran.firefly.ui.main.interest.components.sheet.MyFullScreenBottomSheetDialog
+import com.iamnaran.firefly.ui.main.interest.components.account_sheet.MyBottomSheetDialog
+import com.iamnaran.firefly.ui.main.interest.components.account_sheet.MyFullScreenBottomSheetDialog
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.SimpleAlertDialog
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
@@ -78,7 +84,7 @@ fun DialogsContent() {
     var showBottomSheetFullScreenDialog by remember { mutableStateOf(false) }
 
     val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
+        skipPartiallyExpanded = false,
     )
 
     Column() {
@@ -124,14 +130,27 @@ fun DialogsContent() {
 
         when {
             showBeautifulDialog -> {
-                BeautifulAlertDialog(
-                    onDismissRequest = { showBeautifulDialog = false },
-                    onConfirmation = {
-                        showBeautifulDialog = false
-                    },
-                    painter = painterResource(id = R.drawable.ai_png),
-                    imageDescription = "Sample Image"
-                )
+                AnimatedVisibility(
+                    visible = true,
+                    enter = fadeIn(animationSpec = tween(durationMillis = 300)) + scaleIn(
+                        initialScale = 0.5f,
+                        animationSpec = tween(durationMillis = 300)
+                    ),
+                    exit = fadeOut(animationSpec = tween(durationMillis = 200)) + scaleOut(
+                        targetScale = 0.5f,
+                        animationSpec = tween(durationMillis = 200)
+                    )
+                ) {
+                    BeautifulAlertDialog(
+                        onDismissRequest = { showBeautifulDialog = false },
+                        onConfirmation = {
+                            showBeautifulDialog = false
+                        },
+                        painter = painterResource(id = R.drawable.ai_png),
+                        imageDescription = "Sample Image"
+                    )
+                }
+
             }
         }
 
@@ -174,66 +193,46 @@ fun DialogsContent() {
         }
 
         TextButton(onClick = {
-
             showSimpleDialog = true
-
         }) {
             Text(text = "Simple Alert Dialog ")
-
         }
 
         TextButton(onClick = {
-
             minimalDialog = true
-
         }) {
             Text(text = "Minimal Alert Dialog ")
-
         }
 
-
         TextButton(onClick = {
-
             showBeautifulDialog = true
-
         }) {
             Text(text = "Beautiful Alert Dialog ")
-
         }
 
         TextButton(onClick = {
-
             showBasicDialog = true
-
         }) {
             Text(text = "Basic Alert Dialog")
         }
 
         TextButton(onClick = {
             showFullScreenDialog = true
-
-
         }) {
             Text(text = "Full Screen Alert Dialog")
         }
 
-
         TextButton(onClick = {
-
             showBottomSheetDialog = true
-
         }) {
             Text(text = "Show Bottom Sheet Dialog")
         }
 
         TextButton(onClick = {
             showBottomSheetFullScreenDialog = true
-
-
         }) {
             Text(text = "Show Full Screen Bottom Sheet Dialog")
         }
-
 
     }
 

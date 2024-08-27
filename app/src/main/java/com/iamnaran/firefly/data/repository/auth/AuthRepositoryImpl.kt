@@ -5,7 +5,7 @@ import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.data.remote.BaseApiResponse
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.data.remote.service.AuthApi
-import com.iamnaran.firefly.domain.dto.UserResponse
+import com.iamnaran.firefly.data.dto.UserResponse
 import com.iamnaran.firefly.data.remote.service.LoginApi
 import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
 import com.iamnaran.firefly.di.qualifiers.IoDispatcher

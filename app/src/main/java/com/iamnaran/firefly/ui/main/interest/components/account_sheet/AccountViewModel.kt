@@ -1,11 +1,10 @@
-package com.iamnaran.firefly.ui.main.interest.components.sheet
+package com.iamnaran.firefly.ui.main.interest.components.account_sheet
 
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.iamnaran.firefly.data.dto.AccountModel
 import com.iamnaran.firefly.data.preference.PreferenceHelper
-import com.iamnaran.firefly.domain.dto.InterestModel
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
-import com.iamnaran.firefly.ui.main.interest.InterestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,8 +18,8 @@ class AccountViewModel @Inject constructor(
     private val gson: Gson,
 ) : BaseViewModel() {
 
-    private val _interestState = MutableStateFlow(InterestState())
-    val interestState: StateFlow<InterestState> = _interestState
+    private val _accountState = MutableStateFlow(AccountState())
+    val accountState: StateFlow<AccountState> = _accountState
 
     private var loggedInUserId: String = ""
 
@@ -31,24 +30,24 @@ class AccountViewModel @Inject constructor(
     }
 
     private fun generateInterest() {
-        val dataList = mutableListOf<InterestModel>()
-        for (i in 1..10) {
+        val dataList = mutableListOf<AccountModel>()
+        for (i in 1..2) {
             if (i % 2 == 0) {
-                dataList.add(InterestModel(Random.nextInt(101), "Interest $i", true))
+                dataList.add(AccountModel(Random.nextInt(101), "The Crafter Penguins $i", "crafter_penguins","",true))
             } else {
-                dataList.add(InterestModel(Random.nextInt(101), "Interest $i", false))
+                dataList.add(AccountModel(Random.nextInt(101), "Ruby Personal $i", "ruby_personal","",false))
             }
         }
-        _interestState.value.interests = dataList
+        _accountState.value.accounts = dataList
 
     }
 
-    fun updateTask(interestModel: InterestModel) {
-        val interest = _interestState.value.interests.find { it.id == interestModel.id }
+    fun updateTask(accountModel: AccountModel) {
+        val account = _accountState.value.accounts.find { it.id == accountModel.id }
 
         // If the task is found, toggle its checked state
-        if (interest != null) {
-            interest.isChecked = !interest.isChecked
+        if (account != null) {
+            account.isChecked = !account.isChecked
         }
     }
 

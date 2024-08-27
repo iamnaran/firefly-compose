@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.ui.main.interest
 
-import com.iamnaran.firefly.domain.dto.InterestModel
+import com.iamnaran.firefly.data.dto.InterestModel
 
 
 data class InterestState(

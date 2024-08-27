@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.iamnaran.firefly.domain.dto.CategoryWithProducts
+import com.iamnaran.firefly.data.dto.CategoryWithProducts
 
 
 @Composable

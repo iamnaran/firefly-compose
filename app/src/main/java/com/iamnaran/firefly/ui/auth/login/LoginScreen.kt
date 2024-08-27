@@ -19,17 +19,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,13 +40,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
+import com.iamnaran.firefly.ui.appcomponent.snackbar.SnackEvent
+import com.iamnaran.firefly.ui.appcomponent.snackbar.SnackbarManager
 import com.iamnaran.firefly.ui.theme.AppIcons
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.AppLog
 import com.iamnaran.firefly.utils.effects.AppCircularProgressBar
 import com.iamnaran.firefly.utils.effects.ProgressType
-import com.iamnaran.firefly.utils.effects.customClick
 import com.iamnaran.firefly.utils.effects.disableMutipleTouchEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -64,7 +60,6 @@ fun LoginScreen(
     navigateToSignUp: () -> Unit,
 ) {
     val loginState by viewModel.loginState.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
     val launcher = rememberLauncherForActivityResult(
@@ -86,52 +81,52 @@ fun LoginScreen(
         }
     }
 
+    LaunchedEffect(loginState.loginErrorState.serverErrorState.hasError) {
+        if (loginState.loginErrorState.serverErrorState.hasError) {
+            SnackbarManager.sendEvent(
+                event = SnackEvent(
+                    message = loginState.loginErrorState.serverErrorState.serverErrorMsg
+                )
+            )
+
+        }
+    }
+
+
     LaunchedEffect(key1 = loginState.loginErrorState.serverErrorState.hasError) {
         if (loginState.loginErrorState.serverErrorState.serverErrorMsg.isNotEmpty()) {
             coroutineScope.launch {
-                snackbarHostState.showSnackbar(
-                    message = loginState.loginErrorState.serverErrorState.serverErrorMsg,
-                    duration = SnackbarDuration.Short
+                SnackbarManager.sendEvent(
+                    SnackEvent(loginState.loginErrorState.serverErrorState.serverErrorMsg)
                 )
             }
         }
     }
 
-
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }) { paddingValues ->
-        Box(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            LoginContent(
-                email = loginState.email,
-                password = loginState.password,
-                onEmailChange = {
-                    viewModel.handleLoginUIEvent(LoginUIEvent.EmailChanged(it))
-                },
-                onPasswordChange = {
-                    viewModel.handleLoginUIEvent(LoginUIEvent.PasswordChanged(it))
-                },
-                onLoginClick = {
-                    viewModel.handleLoginUIEvent(LoginUIEvent.OnSubmit)
-                },
-                onGoogleLogin = {
-                    coroutineScope.launch {
-                        launcher.launch(
-                            IntentSenderRequest.Builder(
-                                viewModel.signInIntentSender() ?: return@launch
-                            ).build()
-                        )
-                    }
-                },
-                onSignUpClick = navigateToSignUp,
-                isLoginProgress = loginState.isLoading
-            )
-
-        }
-    }
+    LoginContent(
+        email = loginState.email,
+        password = loginState.password,
+        onEmailChange = {
+            viewModel.handleLoginUIEvent(LoginUIEvent.EmailChanged(it))
+        },
+        onPasswordChange = {
+            viewModel.handleLoginUIEvent(LoginUIEvent.PasswordChanged(it))
+        },
+        onLoginClick = {
+            viewModel.handleLoginUIEvent(LoginUIEvent.OnSubmit)
+        },
+        onGoogleLogin = {
+            coroutineScope.launch {
+                launcher.launch(
+                    IntentSenderRequest.Builder(
+                        viewModel.signInIntentSender() ?: return@launch
+                    ).build()
+                )
+            }
+        },
+        onSignUpClick = navigateToSignUp,
+        isLoginProgress = loginState.isLoading
+    )
 
 
 }

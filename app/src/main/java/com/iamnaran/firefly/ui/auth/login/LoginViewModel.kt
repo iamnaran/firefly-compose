@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.viewModelScope
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.domain.dto.UserResponse
+import com.iamnaran.firefly.data.dto.UserResponse
 import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
 import com.iamnaran.firefly.domain.usecase.auth.SetLoggedInUserUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel

@@ -4,7 +4,7 @@ import android.content.Context
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.data.repository.auth.AuthRepository
 import com.iamnaran.firefly.di.qualifiers.MainDispatcher
-import com.iamnaran.firefly.domain.dto.UserResponse
+import com.iamnaran.firefly.data.dto.UserResponse
 import com.iamnaran.firefly.utils.exception.FireflyException
 import com.iamnaran.firefly.utils.helper.FlowUseCase
 import com.iamnaran.firefly.utils.extension.asFlow

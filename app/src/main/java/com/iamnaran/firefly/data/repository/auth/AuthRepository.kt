@@ -2,7 +2,7 @@ package com.iamnaran.firefly.data.repository.auth
 
 import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.domain.dto.UserResponse
+import com.iamnaran.firefly.data.dto.UserResponse
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

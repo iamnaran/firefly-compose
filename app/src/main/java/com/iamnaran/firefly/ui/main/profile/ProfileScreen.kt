@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.CustomAlertDialog
+import com.iamnaran.firefly.ui.main.interest.components.dialogs.SimpleAlertDialog
 import com.iamnaran.firefly.ui.main.profile.component.ProfileCard
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
@@ -37,12 +38,13 @@ fun ProfileScreen(
 
     when {
         openAlertDialog.value -> {
-            CustomAlertDialog(
+            SimpleAlertDialog(
                 dialogTitle = "Logout Confirmation",
                 dialogSubTitle = "Are you sure you want to logout? All caches data will be cleared.",
                 onDismissRequest = {
                     openAlertDialog.value = false
                 }) {
+                openAlertDialog.value = false
                 navigateToLogin()
                 profileViewModel.doLogout()
             }

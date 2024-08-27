@@ -22,7 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.iamnaran.firefly.data.local.entities.ProductEntity
-import com.iamnaran.firefly.domain.dto.CategoryWithProducts
+import com.iamnaran.firefly.data.dto.CategoryWithProducts
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 

@@ -1,8 +1,8 @@
 package com.iamnaran.firefly.domain.usecase.auth
 
 import com.iamnaran.firefly.data.repository.auth.AuthRepository
-import com.iamnaran.firefly.domain.dto.UserResponse
-import com.iamnaran.firefly.domain.dto.toUserEntity
+import com.iamnaran.firefly.data.dto.UserResponse
+import com.iamnaran.firefly.data.dto.toUserEntity
 import javax.inject.Inject
 
 class SetLoggedInUserUseCase @Inject constructor(

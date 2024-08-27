@@ -2,7 +2,7 @@ package com.iamnaran.firefly.domain.usecase.product
 
 import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.data.repository.product.ProductRepository
-import com.iamnaran.firefly.domain.dto.CategoryWithProducts
+import com.iamnaran.firefly.data.dto.CategoryWithProducts
 import javax.inject.Inject
 
 class GetProductsByCategoriesUseCase @Inject constructor(

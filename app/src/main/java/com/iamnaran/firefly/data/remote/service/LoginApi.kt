@@ -1,6 +1,6 @@
 package com.iamnaran.firefly.data.remote.service
 
-import com.iamnaran.firefly.domain.dto.UserResponse
+import com.iamnaran.firefly.data.dto.UserResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
