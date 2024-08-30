@@ -1,11 +1,16 @@
 package com.iamnaran.firefly.ui.main.home
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.usecase.product.GetProductPaginatedUseCase
 import com.iamnaran.firefly.domain.usecase.product.GetProductUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -15,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getProductUseCase: GetProductUseCase,
+    private val getProductPaginatedUseCase: GetProductPaginatedUseCase
 ) : BaseViewModel() {
 
 
@@ -27,6 +33,9 @@ class HomeViewModel @Inject constructor(
     init {
         getProducts()
     }
+
+    val paginatedProducts: Flow<PagingData<ProductEntity>> = getProductPaginatedUseCase()
+        .cachedIn(viewModelScope)
 
 
     private fun getProducts() {

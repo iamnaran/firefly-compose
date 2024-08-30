@@ -1,16 +1,24 @@
 package com.iamnaran.firefly.data.repository.product
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.room.withTransaction
 import com.iamnaran.firefly.data.local.AppDatabase
+import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.data.remote.BaseApiResponse
+import com.iamnaran.firefly.data.remote.pagination.ProductRemoteMediator
 import com.iamnaran.firefly.data.remote.service.ProductApi
 import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
 import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import com.iamnaran.firefly.utils.helper.networkBoundResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@OptIn(ExperimentalPagingApi::class)
 class ProductRepositoryImpl @Inject constructor(
     private val productApi: ProductApi,
     private val appDatabase: AppDatabase,
@@ -22,7 +30,7 @@ class ProductRepositoryImpl @Inject constructor(
     private val productDao = appDatabase.productDao()
 
 
-     override suspend fun getProducts() = networkBoundResource(
+    override suspend fun getProducts() = networkBoundResource(
         query = {
             productDao.getAllProducts()
         },
@@ -50,5 +58,16 @@ class ProductRepositoryImpl @Inject constructor(
         }
 
     )
+
+    override fun getPaginatedProducts(): Flow<PagingData<ProductEntity>> {
+
+        return Pager(
+            config = PagingConfig(pageSize = 30),
+            remoteMediator = ProductRemoteMediator(productApi, appDatabase)
+        ) {
+            productDao.getPaginatedProducts()
+        }.flow
+    }
+
 
 }

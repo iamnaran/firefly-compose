@@ -1,5 +1,6 @@
 package com.iamnaran.firefly.data.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -24,5 +25,8 @@ interface ProductDao {
 
     @Query("DELETE FROM product")
     suspend fun deleteAllSProduct()
+
+    @Query("SELECT * FROM product")
+    fun getPaginatedProducts(): PagingSource<Int, ProductEntity>
 
 }

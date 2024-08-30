@@ -11,6 +11,14 @@ interface ProductApi {
     @GET("products")
     suspend fun getAllProducts(): Response<ProductResponse>
 
+
+    @GET("products")
+    suspend fun getAllPaginatedProducts(
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): ProductResponse
+
+
     @GET("products")
     suspend fun getAllProductsByPageSize(@Query("limit") page: Int): Response<ProductResponse>
 
