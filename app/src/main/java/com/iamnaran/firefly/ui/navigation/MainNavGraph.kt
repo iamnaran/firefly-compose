@@ -1,5 +1,7 @@
 package com.iamnaran.firefly.ui.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -10,16 +12,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
+import com.iamnaran.firefly.ui.main.LocalSharedTransitionScope
 import com.iamnaran.firefly.ui.main.explore.ExploreScreen
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
 import com.iamnaran.firefly.ui.main.interest.InterestScreen
-import com.iamnaran.firefly.ui.main.interest.components.InterestItem
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
 import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeDetailScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
 import com.iamnaran.firefly.utils.AppLog
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     rootNavBackStackEntry: NavBackStackEntry?
@@ -38,11 +41,15 @@ fun NavGraphBuilder.mainNavGraph(
                 return@composable fadeOut(tween(700))
             },
         ) {
-            HomeScreen(onProductClick = {
-                val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
-                AppLog.showLog("Router---> $route")
-                navController.navigate(route)
-            })
+            val sharedTransitionScope = LocalSharedTransitionScope.current
+
+            HomeScreen(
+                onProductClick = {
+                    val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
+                    AppLog.showLog("Router---> $route")
+                    navController.navigate(route)
+                }, sharedTransitionScope
+            )
         }
 
 
@@ -88,7 +95,7 @@ fun NavGraphBuilder.mainNavGraph(
                 return@composable fadeOut(tween(700))
             },
         ) {
-            ExploreScreen(){
+            ExploreScreen() {
 
             }
         }
@@ -103,21 +110,28 @@ fun NavGraphBuilder.mainNavGraph(
                 return@composable fadeOut(tween(700))
             },
         ) {
-            InterestScreen(){
+            InterestScreen() {
 
             }
         }
 
-        dialog(
+        composable(
             route = AppScreen.Main.ProductDetail.route,
-            dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
-
+            enterTransition = {
+                return@composable fadeIn(tween(1000))
+            },
+            exitTransition = {
+                return@composable fadeOut(tween(700))
+            },
         ) {
 
             // value also can be  retrieve directly from responsible view-model
             val productId = rootNavBackStackEntry?.arguments?.getString("productId")
-            if (productId != null){
-                ProductDetailScreen(productId = productId) {
+            if (productId != null) {
+                ProductDetailScreen(
+                    productId = productId, sharedTransitionScope = sharedTransitionScope,
+                    animatedContentScope = this@composable
+                ) {
                     navController.navigateUp()
                 }
             }
@@ -130,7 +144,7 @@ fun NavGraphBuilder.mainNavGraph(
         ) {
 
             val recipeId = rootNavBackStackEntry?.arguments?.getString("recipeId")
-            if (recipeId != null){
+            if (recipeId != null) {
                 RecipeDetailScreen(recipeId = recipeId) {
                     navController.navigateUp()
                 }

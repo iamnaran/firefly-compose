@@ -1,9 +1,13 @@
 package com.iamnaran.firefly.ui.main.home.components
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,8 +34,14 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Unit) {
+fun ProductItem(
+    productEntity: ProductEntity,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    onProductItemClick: (String) -> Unit
+) {
 
     val context = LocalContext.current
 
@@ -39,7 +49,6 @@ fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
         ImageRequest.Builder(context)
             .data(productEntity.thumbnail)
             .size(200, 200)
-            .scale(Scale.FILL)
             .build()
     }
 
@@ -62,15 +71,22 @@ fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
             Modifier
                 .fillMaxWidth(),
         ) {
-            AsyncImage(
-                model = imageRequest,
-                contentDescription = productEntity.title,
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-                    .fillMaxWidth()
-                    .height(150.dp),
-                contentScale = ContentScale.Crop,
-            )
+            with(sharedTransitionScope) {
+                AsyncImage(
+                    model = imageRequest,
+                    contentDescription = productEntity.title,
+                    modifier = Modifier
+                        .sharedElement(
+                            sharedTransitionScope.rememberSharedContentState(key = "image-${productEntity.id}"),
+                            animatedVisibilityScope = animatedContentScope
+                        )
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop,
+                )
+            }
 
             Column(
                 Modifier
@@ -113,19 +129,6 @@ fun ProductItem(productEntity: ProductEntity, onProductItemClick: (String) -> Un
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        ProductItem(
-            ProductEntity(
-                12,
-                "Iphone 15 Pro Design Methods of the society is great of Iphone 15 Pro Design",
-                "It seems that you are trying to fill up the rounded edges of a CardView in Jetpack Compose with an image or ripple animation.",
-                "sas",
-                12f,
-                "12",
-                13,
-                "asas",
-            )
-        ) {
 
-        }
     }
 }

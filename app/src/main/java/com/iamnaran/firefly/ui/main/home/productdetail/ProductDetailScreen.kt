@@ -1,8 +1,12 @@
 package com.iamnaran.firefly.ui.main.home.productdetail
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,9 +34,12 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.utils.extension.getFirstTwoWords
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ProductDetailScreen(
     viewModel: ProductViewModel = hiltViewModel(),
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     productId: String?,
     onBackPressed: () -> Unit,
 ) {
@@ -45,7 +52,12 @@ fun ProductDetailScreen(
     }
 
     if (productState.productEntity != null) {
-        ProductContent(productState.productEntity!!) {
+        ProductContent(
+            productId,
+            productState.productEntity!!,
+            sharedTransitionScope,
+            animatedContentScope
+        ) {
             onBackPressed()
         }
 
@@ -54,11 +66,16 @@ fun ProductDetailScreen(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun ProductContent(
-    productEntity: ProductEntity, onBackPressed: () -> Unit
-) {
+    productId: String?,
+    productEntity: ProductEntity,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    onBackPressed: () -> Unit,
+
+    ) {
     val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -76,13 +93,21 @@ fun ProductContent(
             modifier = Modifier.padding(paddingValues)
         ) {
             Column {
-                AsyncImage(
-                    model = productEntity.thumbnail,
-                    contentDescription = productEntity.title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(.5f)
-                )
+                with(sharedTransitionScope) {
+
+                    AsyncImage(
+                        model = productEntity.thumbnail,
+                        contentDescription = productEntity.title,
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedTransitionScope.rememberSharedContentState(key = "image-${productId}"),
+                                animatedVisibilityScope = animatedContentScope
+                            )
+                            .aspectRatio(1f)
+                            .height(200.dp)
+                            .fillMaxWidth()
+                    )
+                }
 
                 Column(
                     Modifier
@@ -126,20 +151,7 @@ fun ProductContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        ProductContent(
-            ProductEntity(
-                12,
-                "Iphone 15 Pro Design Methods of the society is great of Iphone 15 Pro Design",
-                "It seems that you are trying to fill up the rounded edges of a CardView in Jetpack Compose with an image or ripple animation.",
-                "Category",
-                12f,
-                "asa",
-                12,
-                "asas"
-            )
-        ) {
 
-        }
     }
 }
 

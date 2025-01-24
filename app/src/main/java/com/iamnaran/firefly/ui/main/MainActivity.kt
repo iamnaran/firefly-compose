@@ -4,8 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.iamnaran.firefly.ui.navigation.RootNavHost
@@ -34,20 +41,35 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
+
+
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun MainScreenContent(
     isAuthenticated: Boolean
 ) {
 
-    RootNavHost(isAuthenticated)
+    SharedTransitionLayout {
+        CompositionLocalProvider(
+            LocalSharedTransitionScope provides this
+        ) {
 
- /* Multiple Backstack
-    Commented due to some on going issue in google issue tracker
-    Check multiple backstack folder -> not in used for now
-    RootMultipleBackStackNavHost(isAuthenticated)
- */
+            RootNavHost(isAuthenticated)
+        }
 
+
+    }
+}
+
+
+/* Multiple Backstack
+   Commented due to some on going issue in google issue tracker
+   Check multiple backstack folder -> not in used for now
+   RootMultipleBackStackNavHost(isAuthenticated)
+*/
 
 
 }

@@ -1,12 +1,12 @@
 package com.iamnaran.firefly.ui.navigation
 
+import androidx.compose.animation.SharedTransitionScope
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.auth.login.LoginScreen
 import com.iamnaran.firefly.ui.auth.signup.SignUpScreen
-import com.iamnaran.firefly.utils.AppLog
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController

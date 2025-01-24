@@ -33,10 +33,10 @@ fun HomeNavHost(homeNavHostController: NavHostController) {
         composable(
             route = AppScreen.Main.Home.route
         ) {
-            HomeScreen(onProductClick = {
-                val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
-                homeNavHostController.navigate(route)
-            })
+//            HomeScreen(onProductClick = {
+//                val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
+//                homeNavHostController.navigate(route)
+//            })
         }
 
         composable(
@@ -45,9 +45,9 @@ fun HomeNavHost(homeNavHostController: NavHostController) {
 
              val productId = homeNavBackStackEntry?.arguments?.getString("productId")
             // value also can be  retrieve directly from responsible view-model
-            ProductDetailScreen(productId = productId) {
-                homeNavHostController.navigateUp()
-            }
+//            ProductDetailScreen(productId = productId) {
+//                homeNavHostController.navigateUp()
+//            }
         }
 
     }

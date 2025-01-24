@@ -2,6 +2,8 @@ package com.iamnaran.firefly.ui.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,145 +34,158 @@ import com.iamnaran.firefly.ui.navigation.topappbar.AppTopBar
 import com.iamnaran.firefly.utils.AppLog
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun RootNavHost(isAuthenticated: Boolean) {
-    val topAppbarTitle = remember { mutableStateOf("") }
-    val topAppBarState = rememberTopAppBarState()
-    val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topAppBarState)
-    val snackbarHostState = remember { SnackbarHostState() }
+    SharedTransitionLayout {
 
-    val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
-    val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
+        val topAppbarTitle = remember { mutableStateOf("") }
+        val topAppBarState = rememberTopAppBarState()
+        val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topAppBarState)
+        val snackbarHostState = remember { SnackbarHostState() }
 
-    // State composable used to hold the
-    // value of the current active screen
-    val currentScreen = remember { mutableStateOf(AppScreen.Main.Home.route) }
+        val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
+        val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
 
-    val coroutineScope = rememberCoroutineScope()
-    val rootNavHostController = rememberNavController()
-    val rootNavBackStackEntry by rootNavHostController.currentBackStackEntryAsState()
+        // State composable used to hold the
+        // value of the current active screen
+        val currentScreen = remember { mutableStateOf(AppScreen.Main.Home.route) }
 
-
-
-    ObserveAsEvents(
-        flow = SnackbarManager.events,
-        snackbarHostState
-    ) { event ->
-        coroutineScope.launch {
-            snackbarHostState.currentSnackbarData?.dismiss()
-
-            val result = snackbarHostState.showSnackbar(
-                message = event.message,
-                actionLabel = event.action?.name,
-                duration = SnackbarDuration.Short
-            )
-
-            if(result == SnackbarResult.ActionPerformed) {
-                event.action?.action?.invoke()
-            }
-        }
-    }
-
-    // Control TopBar and BottomBar
-    when (rootNavBackStackEntry?.destination?.route) {
-        AppScreen.Main.Home.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
-
-        }
-
-        AppScreen.Main.Profile.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
-
-        }
-
-        AppScreen.Main.Notification.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
-        }
-
-        AppScreen.Main.Explore.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Explore.title!!)
-        }
+        val coroutineScope = rememberCoroutineScope()
+        val rootNavHostController = rememberNavController()
+        val rootNavBackStackEntry by rootNavHostController.currentBackStackEntryAsState()
 
 
-        AppScreen.Main.Interest.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-            topAppbarTitle.value = stringResource(AppScreen.Main.Interest.title!!)
-        }
 
-        AppScreen.Main.ProductDetail.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-        }
+        ObserveAsEvents(
+            flow = SnackbarManager.events,
+            snackbarHostState
+        ) { event ->
+            coroutineScope.launch {
+                snackbarHostState.currentSnackbarData?.dismiss()
 
-        AppScreen.Main.RecipeDetail.route -> {
-            showBottomBarState.value = true
-            showTopBarState.value = true
-        }
-
-        else -> {
-            showBottomBarState.value = false
-            showTopBarState.value = false
-        }
-    }
-    
-
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(barScrollBehavior.nestedScrollConnection),
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
-        topBar = {
-            AppLog.showLog("TOP-BAR --> " + showTopBarState.value)
-            if (showTopBarState.value) {
-                AppTopBar(topAppbarTitle.value,
-                    barScrollBehavior,
-                    onActionCameraClick = {
-                    }
+                val result = snackbarHostState.showSnackbar(
+                    message = event.message,
+                    actionLabel = event.action?.name,
+                    duration = SnackbarDuration.Short
                 )
-            } else {
-                Box {
 
+                if (result == SnackbarResult.ActionPerformed) {
+                    event.action?.action?.invoke()
                 }
-            }
-        },
-        bottomBar = {
-            if (showBottomBarState.value) {
-                BottomBar(navController = rootNavHostController)
-            }
-        }) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .padding(paddingValues)
-        ) {
-            NavHost(
-                navController = rootNavHostController,
-                startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
-                enterTransition = {
-                    // you can change whatever you want transition
-                    EnterTransition.None
-                },
-                exitTransition = {
-                    // you can change whatever you want transition
-                    ExitTransition.None
-                }
-            ) {
-
-                authNavGraph(rootNavHostController)
-                mainNavGraph(rootNavHostController, rootNavBackStackEntry)
             }
         }
+
+        // Control TopBar and BottomBar
+        when (rootNavBackStackEntry?.destination?.route) {
+            AppScreen.Main.Home.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
+
+            }
+
+            AppScreen.Main.Profile.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
+
+            }
+
+            AppScreen.Main.Notification.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
+            }
+
+            AppScreen.Main.Explore.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Explore.title!!)
+            }
+
+            AppScreen.Main.ProductDetail.route -> {
+                showBottomBarState.value = false
+                showTopBarState.value = false
+            }
+
+
+            AppScreen.Main.Interest.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(AppScreen.Main.Interest.title!!)
+            }
+
+            AppScreen.Main.ProductDetail.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+            }
+
+            AppScreen.Main.RecipeDetail.route -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+            }
+
+            else -> {
+                showBottomBarState.value = false
+                showTopBarState.value = false
+            }
+        }
+
+
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(barScrollBehavior.nestedScrollConnection),
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
+            topBar = {
+                AppLog.showLog("TOP-BAR --> " + showTopBarState.value)
+                if (showTopBarState.value) {
+                    AppTopBar(topAppbarTitle.value,
+                        barScrollBehavior,
+                        onActionCameraClick = {
+                        }
+                    )
+                } else {
+                    Box {
+
+                    }
+                }
+            },
+            bottomBar = {
+                if (showBottomBarState.value) {
+                    BottomBar(navController = rootNavHostController)
+                }
+            }) { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues)
+            ) {
+                NavHost(
+                    navController = rootNavHostController,
+                    startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
+                    enterTransition = {
+                        // you can change whatever you want transition
+                        EnterTransition.None
+                    },
+                    exitTransition = {
+                        // you can change whatever you want transition
+                        ExitTransition.None
+                    }
+                ) {
+
+                    authNavGraph(
+                        rootNavHostController
+                    )
+                    mainNavGraph(
+                        rootNavHostController, rootNavBackStackEntry
+                    )
+                }
+            }
+        }
+
     }
 
 

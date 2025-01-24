@@ -1,5 +1,8 @@
 package com.iamnaran.firefly.ui.main.home.components
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,13 +21,19 @@ import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun ProductPaginatedLazyList(products: LazyPagingItems<ProductEntity>, onProductClick: (String) -> Unit) {
+fun ProductPaginatedLazyList(
+    products: LazyPagingItems<ProductEntity>,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    onProductClick: (String) -> Unit
+) {
     LazyColumn {
         items(products.itemCount) { index ->
             val product = products[index]
             product?.let {
-                ProductItem(product){
+                ProductItem(product, sharedTransitionScope, animatedContentScope) {
                     onProductClick(product.id.toString())
                 }
             }
@@ -39,18 +48,23 @@ fun ProductPaginatedLazyList(products: LazyPagingItems<ProductEntity>, onProduct
                         CircularProgressIndicator(modifier = Modifier.fillMaxSize())
                     }
                 }
+
                 loadState.append is LoadState.Loading -> {
                     item {
                         // Show a loading indicator at the bottom
-                        CircularProgressIndicator(modifier = Modifier.fillMaxWidth().padding(16.dp))
+                        CircularProgressIndicator(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp))
                     }
                 }
+
                 loadState.refresh is LoadState.Error -> {
                     val e = products.loadState.refresh as LoadState.Error
                     item {
                         Text(text = "Error: ${e.error.localizedMessage}", color = Color.Red)
                     }
                 }
+
                 loadState.append is LoadState.Error -> {
                     val e = products.loadState.append as LoadState.Error
                     item {
