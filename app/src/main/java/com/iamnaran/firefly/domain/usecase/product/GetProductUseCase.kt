@@ -1,6 +1,5 @@
 package com.iamnaran.firefly.domain.usecase.product
 
-import com.iamnaran.firefly.data.repository.auth.AuthRepository
 import com.iamnaran.firefly.data.repository.product.ProductRepository
 import javax.inject.Inject
 

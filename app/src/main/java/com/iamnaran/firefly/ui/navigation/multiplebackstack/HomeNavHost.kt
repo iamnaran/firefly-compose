@@ -43,11 +43,7 @@ fun HomeNavHost(homeNavHostController: NavHostController) {
             route = AppScreen.Main.ProductDetail.route
         ) {
 
-             val productId = homeNavBackStackEntry?.arguments?.getString("productId")
-            // value also can be  retrieve directly from responsible view-model
-//            ProductDetailScreen(productId = productId) {
-//                homeNavHostController.navigateUp()
-//            }
+
         }
 
     }

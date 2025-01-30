@@ -28,9 +28,6 @@ class ProductRemoteMediator(private val productApi: ProductApi,
             }
         }
 
-        AppLog.showLog("SKIP --> $page")
-        AppLog.showLog("LIMIT --> ${state.config.pageSize}")
-
         return try {
             val response = productApi.getAllPaginatedProducts(skip = page.toInt(), limit = state.config.pageSize)
             AppLog.showLog("Called Pagination -> ${response.skip} --> ${response.limit} ---> ${response.productEntities.size}" )

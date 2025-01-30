@@ -33,7 +33,6 @@ class ProductViewModel @Inject constructor(
                     is Resource.Success -> {
                         _productState.value = ProductState(productResource.data!!)
                     }
-
                     else -> {
 
                     }
