@@ -19,8 +19,8 @@ interface ProductApi {
     ): ProductResponse
 
 
-    @GET("products")
-    suspend fun getAllProductsByPageSize(@Query("limit") page: Int): Response<ProductResponse>
+//    @GET("products")
+//    suspend fun getAllProductsByPageSize(@Query("limit") page: Int): Response<ProductResponse>
 
     @GET("products/{id}")
     suspend fun getProductById(@Path("id") productId: String): Response<ProductEntity>
