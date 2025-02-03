@@ -72,8 +72,6 @@ private fun MainScreenContent(
 */
 
 
-}
-
 @Preview(showBackground = true)
 @Composable
 fun MainActivityPreview() {

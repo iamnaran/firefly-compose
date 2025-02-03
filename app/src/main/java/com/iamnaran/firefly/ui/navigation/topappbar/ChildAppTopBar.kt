@@ -10,7 +10,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.navigation.NavHostController
 import com.iamnaran.firefly.ui.theme.AppIcons
 
 @OptIn(ExperimentalMaterial3Api::class)

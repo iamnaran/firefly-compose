@@ -141,7 +141,6 @@ fun RootNavHost(isAuthenticated: Boolean) {
                 SnackbarHost(hostState = snackbarHostState)
             },
             topBar = {
-                AppLog.showLog("TOP-BAR --> " + showTopBarState.value)
                 if (showTopBarState.value) {
                     AppTopBar(topAppbarTitle.value,
                         barScrollBehavior,
