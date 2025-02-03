@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,24 +19,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.iamnaran.firefly.R
 import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.effects.bounceClick
+import com.iamnaran.firefly.utils.helper.appLanguages
 
 @Composable
 fun ProfileCard(userEntity: UserEntity) {
-
-
-
     Card(
         modifier = Modifier
             .padding(MaterialTheme.dimens.large)
-            .bounceClick{
+            .bounceClick {
 
             },
         shape = MaterialTheme.shapes.medium
@@ -68,7 +69,7 @@ fun ProfileCard(userEntity: UserEntity) {
 
             Column(
                 Modifier
-                    .padding(10.dp),
+                    .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -85,9 +86,7 @@ fun ProfileCard(userEntity: UserEntity) {
                     color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(MaterialTheme.dimens.medium)
                 )
-
                 Spacer(modifier = Modifier.height(MaterialTheme.dimens.medium))
-
 
             }
         }

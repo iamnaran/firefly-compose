@@ -46,9 +46,8 @@ fun NavGraphBuilder.mainNavGraph(
             HomeScreen(
                 onProductClick = {
                     val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
-                    AppLog.showLog("Router---> $route")
                     navController.navigate(route)
-                }, sharedTransitionScope
+                }
             )
         }
 
@@ -129,8 +128,7 @@ fun NavGraphBuilder.mainNavGraph(
             val productId = rootNavBackStackEntry?.arguments?.getString("productId")
             if (productId != null) {
                 ProductDetailScreen(
-                    productId = productId, sharedTransitionScope = sharedTransitionScope,
-                    animatedContentScope = this@composable
+                    productId = productId
                 ) {
                     navController.navigateUp()
                 }

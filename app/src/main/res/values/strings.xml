@@ -23,6 +23,11 @@
     <string name="interest">Interest</string>
     <string name="notification">Notification</string>
     <string name="ar_camera">Ar Camera</string>
+
+    <string name="app_language">App language</string>
+    <string name="prompt_logout_title">Logout Confirmation</string>
+    <string name="prompt_logout_description">Are you sure you want to logout? All caches data will be cleared.</string>
+
     <string name="web_client_id">204093542286-ih7rkg9391htlsp982p9nu3ep4112ohk.apps.googleusercontent.com</string>
 
     <string name="lorem_ipsum">

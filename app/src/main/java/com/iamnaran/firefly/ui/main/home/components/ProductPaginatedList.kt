@@ -25,15 +25,13 @@ import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 @Composable
 fun ProductPaginatedLazyList(
     products: LazyPagingItems<ProductEntity>,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     onProductClick: (String) -> Unit
 ) {
     LazyColumn {
         items(products.itemCount) { index ->
             val product = products[index]
             product?.let {
-                ProductItem(product, sharedTransitionScope, animatedContentScope) {
+                ProductItem(product) {
                     onProductClick(product.id.toString())
                 }
             }

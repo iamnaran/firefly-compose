@@ -1,8 +1,6 @@
 package com.iamnaran.firefly.ui.main.home.components
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
@@ -28,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.size.Scale
 import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
@@ -38,8 +34,6 @@ import com.iamnaran.firefly.ui.theme.dimens
 @Composable
 fun ProductItem(
     productEntity: ProductEntity,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     onProductItemClick: (String) -> Unit
 ) {
 
@@ -71,15 +65,14 @@ fun ProductItem(
             Modifier
                 .fillMaxWidth(),
         ) {
-            with(sharedTransitionScope) {
                 AsyncImage(
                     model = imageRequest,
                     contentDescription = productEntity.title,
                     modifier = Modifier
-                        .sharedElement(
-                            sharedTransitionScope.rememberSharedContentState(key = "image-${productEntity.id}"),
-                            animatedVisibilityScope = animatedContentScope
-                        )
+//                        .sharedElement(
+//                            sharedTransitionScope.rememberSharedContentState(key = "image-${productEntity.id}"),
+//                            animatedVisibilityScope = animatedContentScope
+//                        )
                         .background(MaterialTheme.colorScheme.secondaryContainer)
                         .fillMaxWidth()
                         .aspectRatio(1f)
@@ -119,7 +112,7 @@ fun ProductItem(
                 Spacer(modifier = Modifier.height(8.dp))
 
             }
-        }
+
     }
 
 

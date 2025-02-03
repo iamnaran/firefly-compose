@@ -1,13 +1,9 @@
 package com.iamnaran.firefly.ui.main.home.productdetail
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,18 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.iamnaran.firefly.data.local.entities.ProductEntity
-import com.iamnaran.firefly.ui.appcomponent.BaseDialog
 import com.iamnaran.firefly.ui.navigation.topappbar.ChildAppTopBar
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.utils.extension.getFirstTwoWords
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ProductDetailScreen(
     viewModel: ProductViewModel = hiltViewModel(),
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     productId: String?,
     onBackPressed: () -> Unit,
 ) {
@@ -54,9 +46,7 @@ fun ProductDetailScreen(
     if (productState.productEntity != null) {
         ProductContent(
             productId,
-            productState.productEntity!!,
-            sharedTransitionScope,
-            animatedContentScope
+            productState.productEntity!!
         ) {
             onBackPressed()
         }
@@ -66,13 +56,11 @@ fun ProductDetailScreen(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductContent(
     productId: String?,
     productEntity: ProductEntity,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
     onBackPressed: () -> Unit,
 
     ) {
@@ -93,54 +81,49 @@ fun ProductContent(
             modifier = Modifier.padding(paddingValues)
         ) {
             Column {
-                with(sharedTransitionScope) {
 
-                    AsyncImage(
-                        model = productEntity.thumbnail,
-                        contentDescription = productEntity.title,
-                        modifier = Modifier
-                            .sharedElement(
-                                sharedTransitionScope.rememberSharedContentState(key = "image-${productId}"),
-                                animatedVisibilityScope = animatedContentScope
-                            )
-                            .aspectRatio(1f)
-                            .height(200.dp)
-                            .fillMaxWidth()
-                    )
-                }
+                AsyncImage(
+                    model = productEntity.thumbnail,
+                    contentDescription = productEntity.title,
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .height(200.dp)
+                        .fillMaxWidth()
+                )
+            }
 
-                Column(
-                    Modifier
-                        .padding(10.dp),
-                ) {
-                    Text(
-                        text = productEntity.category.uppercase(),
-                        style = appTypography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(8.dp)
-                    )
+            Column(
+                Modifier
+                    .padding(10.dp),
+            ) {
+                Text(
+                    text = productEntity.category.uppercase(),
+                    style = appTypography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.padding(8.dp)
+                )
 
-                    Text(
-                        text = productEntity.title,
-                        style = appTypography.titleLarge,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                Text(
+                    text = productEntity.title,
+                    style = appTypography.titleLarge,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    modifier = Modifier.padding(8.dp)
+                )
 
-                    Text(
-                        text = productEntity.description,
-                        style = appTypography.bodySmall,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                Text(
+                    text = productEntity.description,
+                    style = appTypography.bodySmall,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    modifier = Modifier.padding(8.dp)
+                )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                }
-
+                Spacer(modifier = Modifier.height(8.dp))
 
             }
+
+
         }
+
 
     }
 
