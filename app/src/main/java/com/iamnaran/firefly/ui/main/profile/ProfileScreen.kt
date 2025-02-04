@@ -23,32 +23,38 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.SimpleAlertDialog
+import com.iamnaran.firefly.ui.main.profile.component.LanguageDropDown
 import com.iamnaran.firefly.ui.main.profile.component.LanguageItem
 import com.iamnaran.firefly.ui.main.profile.component.ProfileCard
 import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
 import com.iamnaran.firefly.utils.helper.AppLanguageHelper
+import com.iamnaran.firefly.utils.helper.appLanguages
 
 @Composable
 fun ProfileScreen(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     navigateToLogin: () -> Unit,
 ) {
+    val context = LocalContext.current
     val appLanguageHelper by lazy {
         AppLanguageHelper()
     }
-
-    val selectedLanguageCode: String = appLanguageHelper.getLanguageCode(LocalContext.current)
-
+    val selectedLanguageCode: String = appLanguageHelper.getLanguageCode(context)
     var selectedLanguage by remember { mutableStateOf(selectedLanguageCode) }
+
+    val onAppLanguageChanged: (String) -> Unit = { newLanguage ->
+        selectedLanguage = newLanguage
+        appLanguageHelper.changeLanguage(context, newLanguage)
+    }
 
     val openAlertDialog = remember { mutableStateOf(false) }
 
     val user = profileViewModel.profileState.collectAsStateLifecycleAware()
     user.value.userEntityDetails?.let {
         ProfileContent(
-            it, openAlertDialog, selectedLanguage,
+            it, selectedLanguage, onAppLanguageChanged
         ) {
             openAlertDialog.value = true
         }
@@ -73,8 +79,8 @@ fun ProfileScreen(
 @Composable
 fun ProfileContent(
     userEntity: UserEntity,
-    openAlertDialog: MutableState<Boolean>,
     selectedLanguage: String,
+    onAppLanguageChanged : (String) -> Unit,
     onLogoutClick: () -> Unit
 ) {
 
@@ -90,9 +96,7 @@ fun ProfileContent(
 
         Button(
             onClick = {
-
                 onLogoutClick()
-
             }, Modifier
                 .padding(MaterialTheme.dimens.regular)
         ) {
@@ -100,18 +104,11 @@ fun ProfileContent(
 
         }
 
-
-        Row(modifier = Modifier.padding(8.dp)) {
-            Text(
-                text = stringResource(id = R.string.app_language),
-                style = appTypography.labelSmall,
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.padding(MaterialTheme.dimens.medium)
-            )
-
-            LanguageItem(selectedLanguage = selectedLanguage)
-        }
-
+        LanguageDropDown(
+            languagesList = appLanguages,
+            selectedLanguage = selectedLanguage,
+            onAppLanguageChanged
+        )
 
     }
 }
