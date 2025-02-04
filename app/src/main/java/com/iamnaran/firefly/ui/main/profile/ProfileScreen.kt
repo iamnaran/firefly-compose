@@ -2,14 +2,12 @@ package com.iamnaran.firefly.ui.main.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,15 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.data.local.entities.UserEntity
 import com.iamnaran.firefly.ui.main.interest.components.dialogs.SimpleAlertDialog
 import com.iamnaran.firefly.ui.main.profile.component.LanguageDropDown
-import com.iamnaran.firefly.ui.main.profile.component.LanguageItem
 import com.iamnaran.firefly.ui.main.profile.component.ProfileCard
-import com.iamnaran.firefly.ui.theme.appTypography
 import com.iamnaran.firefly.ui.theme.dimens
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
 import com.iamnaran.firefly.utils.helper.AppLanguageHelper
@@ -38,10 +33,12 @@ fun ProfileScreen(
     navigateToLogin: () -> Unit,
 ) {
     val context = LocalContext.current
-    val appLanguageHelper by lazy {
-        AppLanguageHelper()
+    val appLanguageHelper by remember {
+        lazy {
+            AppLanguageHelper()
+        }
     }
-    val selectedLanguageCode: String = appLanguageHelper.getLanguageCode(context)
+    val selectedLanguageCode = remember { appLanguageHelper.getLanguageCode(context) }
     var selectedLanguage by remember { mutableStateOf(selectedLanguageCode) }
 
     val onAppLanguageChanged: (String) -> Unit = { newLanguage ->
@@ -51,8 +48,10 @@ fun ProfileScreen(
 
     val openAlertDialog = remember { mutableStateOf(false) }
 
-    val user = profileViewModel.profileState.collectAsStateLifecycleAware()
-    user.value.userEntityDetails?.let {
+    val userState by profileViewModel.profileState.collectAsStateLifecycleAware()
+    val userEntity = userState.userEntityDetails
+
+    userEntity?.let {
         ProfileContent(
             it, selectedLanguage, onAppLanguageChanged
         ) {
@@ -80,7 +79,7 @@ fun ProfileScreen(
 fun ProfileContent(
     userEntity: UserEntity,
     selectedLanguage: String,
-    onAppLanguageChanged : (String) -> Unit,
+    onAppLanguageChanged: (String) -> Unit,
     onLogoutClick: () -> Unit
 ) {
 
