@@ -13,7 +13,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import com.iamnaran.firefly.utils.helper.FireflyRippleTheme
 
 
 private val LightColors = lightColorScheme(
@@ -108,9 +107,7 @@ fun FireflyComposeTheme(
 
     // Local Composition
     CompositionLocalProvider(
-        LocalDimens provides Dimens(),
-        LocalRippleTheme provides FireflyRippleTheme
-    ) {
+        LocalDimens provides Dimens()) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = appTypography,
