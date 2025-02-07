@@ -145,7 +145,7 @@ fun RootNavHost(isAuthenticated: Boolean) {
                     AppTopBar(topAppbarTitle.value,
                         barScrollBehavior,
                         onActionCameraClick = {
-
+                            rootNavHostController.navigate(AppScreen.Main.Settings.route)
                         }
                     )
                 } else {

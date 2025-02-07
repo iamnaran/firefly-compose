@@ -1,126 +1,74 @@
 package com.iamnaran.firefly.ui.main.settings
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.data.local.entities.UserEntity
-import com.iamnaran.firefly.ui.main.interest.components.dialogs.SimpleAlertDialog
-import com.iamnaran.firefly.ui.main.profile.component.LanguageDropDown
-import com.iamnaran.firefly.ui.main.profile.component.ProfileCard
-import com.iamnaran.firefly.ui.theme.dimens
+import com.iamnaran.firefly.ui.main.settings.components.LanguageRow
+import com.iamnaran.firefly.ui.navigation.topappbar.ChildAppTopBar
 import com.iamnaran.firefly.utils.extension.collectAsStateLifecycleAware
-import com.iamnaran.firefly.utils.helper.AppLocaleManager
 import com.iamnaran.firefly.utils.helper.appLanguages
 
 @Composable
 fun SettingScreen(
-    settingViewModel: SettingViewModel= hiltViewModel(),
-    navigateToLogin: () -> Unit,
+    settingViewModel: SettingViewModel = hiltViewModel(),
+    navigateBack: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val appLocaleManager by remember {
-        lazy {
-            AppLocaleManager()
-        }
-    }
-    val selectedLanguageCode = remember { appLocaleManager.getLanguageCode(context) }
-    var selectedLanguage by remember { mutableStateOf(selectedLanguageCode) }
+    val settingState by settingViewModel.settingState.collectAsStateLifecycleAware()
+    val userEntity = settingState.userEntityDetails
 
     val onAppLanguageChanged: (String) -> Unit = { newLanguage ->
-        selectedLanguage = newLanguage
-        appLocaleManager.changeLanguage(context, newLanguage)
+        settingViewModel.changeLanguage(newLanguage)
     }
 
-    val openAlertDialog = remember { mutableStateOf(false) }
 
-    val userState by settingViewModel.profileState.collectAsStateLifecycleAware()
-    val userEntity = userState.userEntityDetails
-
-    userEntity?.let {
-        ProfileContent(
-            it, selectedLanguage, onAppLanguageChanged
-        ) {
-            openAlertDialog.value = true
-        }
+    SettingContent(
+        selectedLanguage = settingState.selectedLanguage,
+        onAppLanguageChanged
+    ) {
+        navigateBack()
     }
 
-    when {
-        openAlertDialog.value -> {
-            SimpleAlertDialog(
-                dialogTitle = stringResource(id = R.string.prompt_logout_title),
-                dialogSubTitle = stringResource(id = R.string.prompt_logout_description),
-                onDismissRequest = {
-                    openAlertDialog.value = false
-                }) {
-                openAlertDialog.value = false
-                navigateToLogin()
-                settingViewModel.doLogout()
-            }
-        }
-    }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileContent(
-    userEntity: UserEntity,
+fun SettingContent(
     selectedLanguage: String,
     onAppLanguageChanged: (String) -> Unit,
-    onLogoutClick: () -> Unit
+    onNavigateBack: () -> Unit
 ) {
+    val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    Column(
-        Modifier
-            .padding(MaterialTheme.dimens.large)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        ProfileCard(userEntity)
-
-        Button(
-            onClick = {
-                onLogoutClick()
-            }, Modifier
-                .padding(MaterialTheme.dimens.regular)
+    Scaffold(topBar = {
+        ChildAppTopBar(
+            stringResource(R.string.settings),
+            barScrollBehavior
         ) {
-            Text(text = "Logout")
-
+            onNavigateBack()
         }
+    }) { paddingValues ->
 
-        Column  {
-            Text(
-                modifier = Modifier
-                    .padding(4.dp),
-                text = stringResource(R.string.app_language),
-                color = MaterialTheme.colorScheme.primary,
-            )
-
-            LanguageDropDown(
-                languagesList = appLanguages,
-                selectedLanguage = selectedLanguage,
-                onAppLanguageChanged
-            )
+        Box(modifier = Modifier.padding(paddingValues)) {
+            LazyColumn {
+                items(appLanguages.size) { index ->
+                    LanguageRow(appLanguages[index], appLanguages[index].code == selectedLanguage) {
+                        onAppLanguageChanged(it.code)
+                    }
+                }
+            }
         }
-
-
 
     }
+
+
 }
 

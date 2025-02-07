@@ -2,6 +2,7 @@ package com.iamnaran.firefly.ui.theme
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
@@ -51,5 +52,8 @@ object AppIcons {
 
     val SettingFilled = Icons.Filled.Settings
     val SettingOutlined = Icons.Outlined.Settings
+
+    val Check = Icons.Default.Check
+
 
 }

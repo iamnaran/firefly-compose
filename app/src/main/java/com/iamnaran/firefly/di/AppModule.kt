@@ -7,6 +7,7 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.iamnaran.firefly.utils.helper.AppLocaleManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +32,7 @@ object  AppModule {
         return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
     }
 
+
     @Provides
     @Singleton
     fun provideImageLoader(
@@ -48,4 +50,7 @@ object  AppModule {
             .okHttpClient { okHttpClient }
             .build()
     }
+
+
+
 }

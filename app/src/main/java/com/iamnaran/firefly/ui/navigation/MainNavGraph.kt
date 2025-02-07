@@ -1,7 +1,6 @@
 package com.iamnaran.firefly.ui.navigation
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,7 +19,7 @@ import com.iamnaran.firefly.ui.main.interest.InterestScreen
 import com.iamnaran.firefly.ui.main.notification.NotificationScreen
 import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeDetailScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
-import com.iamnaran.firefly.utils.AppLog
+import com.iamnaran.firefly.ui.main.settings.SettingScreen
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.mainNavGraph(
@@ -132,6 +131,15 @@ fun NavGraphBuilder.mainNavGraph(
                 ) {
                     navController.navigateUp()
                 }
+            }
+        }
+
+
+        composable(
+            route = AppScreen.Main.Settings.route,
+        ) {
+            SettingScreen {
+                navController.navigateUp()
             }
         }
 

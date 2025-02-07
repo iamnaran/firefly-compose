@@ -20,6 +20,7 @@
     <string name="interest">रुचि</string>
     <string name="notification">सूचना</string>
     <string name="ar_camera">एआर कैमरा</string>
+    <string name="settings">सेटिङ</string>
 
     <string name="app_language">ऐप भाषा</string>
     <string name="prompt_logout_title">लॉगआउट पुष्टिकरण</string>

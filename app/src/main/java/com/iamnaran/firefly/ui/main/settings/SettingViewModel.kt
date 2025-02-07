@@ -1,49 +1,42 @@
 package com.iamnaran.firefly.ui.main.settings
 
-import androidx.lifecycle.viewModelScope
+import android.content.Context
 import com.google.gson.Gson
 import com.iamnaran.firefly.data.preference.PreferenceHelper
-import com.iamnaran.firefly.domain.usecase.auth.GetUserByIdUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
+import com.iamnaran.firefly.utils.helper.AppLocaleManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val preferenceHelper: PreferenceHelper,
-    private val getUserByIdUseCase: GetUserByIdUseCase,
-    private val gson: Gson,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel() {
 
-    private val _profileState = MutableStateFlow(SettingState())
-    val profileState: StateFlow<SettingState> = _profileState
+    private val appLocaleManager = AppLocaleManager()
+    private val _settingState = MutableStateFlow(SettingState())
+    val settingState: StateFlow<SettingState> = _settingState
 
     private var loggedInUserId: String = ""
 
     init {
         loggedInUserId = preferenceHelper.getLoggedInUserId()!!
-        getLoggedInUser(loggedInUserId)
+        loadInitialLanguage()
+
     }
 
-
-    private fun getLoggedInUser(userId: String) {
-        viewModelScope.launch {
-            getUserByIdUseCase(userId).onEach { userDetails ->
-                _profileState.value = SettingState(userDetails)
-
-            }.launchIn(this)
-        }
+    private fun loadInitialLanguage() {
+        val currentLanguage = appLocaleManager.getLanguageCode(context)
+        _settingState.value = _settingState.value.copy(selectedLanguage = currentLanguage)
     }
 
-    fun doLogout() {
-        viewModelScope.launch {
-            preferenceHelper.clearPreference()
-        }
+    fun changeLanguage(languageCode: String) {
+        appLocaleManager.changeLanguage(context, languageCode)
+        _settingState.value = _settingState.value.copy(selectedLanguage = languageCode)
     }
 
 

@@ -19,6 +19,7 @@ private object Routes {
     const val HOME = "home"
     const val PROFILE = "profile"
     const val NOTIFICATION = "notification"
+    const val SETTINGS = "settings"
 
     // details
     const val PRODUCT_DETAIL = "productDetail/{${ArgParams.PRODUCT_ID}}"
@@ -83,6 +84,13 @@ sealed class AppScreen(val route: String) {
             title = R.string.interest,
             selectedIcon = AppIcons.InterestFilled,
             unselectedIcon = AppIcons.InterestOutlined,
+        )
+
+        object Settings :  TopLevelDestination(
+            route = Routes.SETTINGS,
+            title = R.string.settings,
+            selectedIcon = AppIcons.SettingFilled,
+            unselectedIcon = AppIcons.SettingOutlined,
         )
 
 
