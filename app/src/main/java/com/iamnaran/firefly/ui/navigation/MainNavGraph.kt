@@ -1,9 +1,5 @@
 package com.iamnaran.firefly.ui.navigation
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -11,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
-import com.iamnaran.firefly.ui.main.LocalSharedTransitionScope
 import com.iamnaran.firefly.ui.main.explore.ExploreScreen
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
@@ -21,7 +16,6 @@ import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeDetai
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
 import com.iamnaran.firefly.ui.main.settings.SettingScreen
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     rootNavBackStackEntry: NavBackStackEntry?
@@ -33,15 +27,7 @@ fun NavGraphBuilder.mainNavGraph(
     ) {
         composable(
             route = AppScreen.Main.Home.route,
-            enterTransition = {
-                return@composable fadeIn(tween(1000))
-            },
-            exitTransition = {
-                return@composable fadeOut(tween(700))
-            },
         ) {
-            val sharedTransitionScope = LocalSharedTransitionScope.current
-
             HomeScreen(
                 onProductClick = {
                     val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
@@ -53,12 +39,6 @@ fun NavGraphBuilder.mainNavGraph(
 
         composable(
             route = AppScreen.Main.Notification.route,
-            enterTransition = {
-                return@composable fadeIn(tween(1000))
-            },
-            exitTransition = {
-                return@composable fadeOut(tween(700))
-            },
         ) {
             NotificationScreen() {
                 val route = AppScreen.Main.RecipeDetail.createRoute(recipeId = it)
@@ -68,12 +48,6 @@ fun NavGraphBuilder.mainNavGraph(
 
         composable(
             route = AppScreen.Main.Profile.route,
-            enterTransition = {
-                return@composable fadeIn(tween(1000))
-            },
-            exitTransition = {
-                return@composable fadeOut(tween(700))
-            },
         ) {
             ProfileScreen(navigateToLogin = {
                 navController.navigate(AppScreen.Auth.route) {
@@ -86,12 +60,6 @@ fun NavGraphBuilder.mainNavGraph(
 
         composable(
             route = AppScreen.Main.Explore.route,
-            enterTransition = {
-                return@composable fadeIn(tween(1000))
-            },
-            exitTransition = {
-                return@composable fadeOut(tween(700))
-            },
         ) {
             ExploreScreen() {
 
@@ -101,12 +69,6 @@ fun NavGraphBuilder.mainNavGraph(
 
         composable(
             route = AppScreen.Main.Interest.route,
-            enterTransition = {
-                return@composable fadeIn(tween(1000))
-            },
-            exitTransition = {
-                return@composable fadeOut(tween(700))
-            },
         ) {
             InterestScreen() {
 
@@ -115,12 +77,6 @@ fun NavGraphBuilder.mainNavGraph(
 
         composable(
             route = AppScreen.Main.ProductDetail.route,
-            enterTransition = {
-                return@composable fadeIn(tween(1000))
-            },
-            exitTransition = {
-                return@composable fadeOut(tween(700))
-            },
         ) {
 
             // value also can be  retrieve directly from responsible view-model
@@ -135,8 +91,10 @@ fun NavGraphBuilder.mainNavGraph(
         }
 
 
-        composable(
+        dialog(
             route = AppScreen.Main.Settings.route,
+            dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+
         ) {
             SettingScreen {
                 navController.navigateUp()

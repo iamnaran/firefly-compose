@@ -1,6 +1,7 @@
 package com.iamnaran.firefly.ui.main.settings
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,20 +24,15 @@ fun SettingScreen(
     navigateBack: () -> Unit,
 ) {
     val settingState by settingViewModel.settingState.collectAsStateLifecycleAware()
-    val userEntity = settingState.userEntityDetails
-
     val onAppLanguageChanged: (String) -> Unit = { newLanguage ->
         settingViewModel.changeLanguage(newLanguage)
     }
-
-
     SettingContent(
         selectedLanguage = settingState.selectedLanguage,
         onAppLanguageChanged
     ) {
         navigateBack()
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +43,7 @@ fun SettingContent(
     onNavigateBack: () -> Unit
 ) {
     val barScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
-    Scaffold(topBar = {
+    Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         ChildAppTopBar(
             stringResource(R.string.settings),
             barScrollBehavior
@@ -68,7 +63,5 @@ fun SettingContent(
         }
 
     }
-
-
 }
 

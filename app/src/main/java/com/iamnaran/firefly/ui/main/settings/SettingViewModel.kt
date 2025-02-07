@@ -18,15 +18,12 @@ class SettingViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val appLocaleManager = AppLocaleManager()
+
     private val _settingState = MutableStateFlow(SettingState())
     val settingState: StateFlow<SettingState> = _settingState
 
-    private var loggedInUserId: String = ""
-
     init {
-        loggedInUserId = preferenceHelper.getLoggedInUserId()!!
         loadInitialLanguage()
-
     }
 
     private fun loadInitialLanguage() {
@@ -38,6 +35,5 @@ class SettingViewModel @Inject constructor(
         appLocaleManager.changeLanguage(context, languageCode)
         _settingState.value = _settingState.value.copy(selectedLanguage = languageCode)
     }
-
 
 }
