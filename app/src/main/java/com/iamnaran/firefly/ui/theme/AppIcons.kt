@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Interests
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.ArrowBack
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.outlined.Interests
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Settings
 
 object AppIcons {
     // Material Icons
@@ -44,7 +46,10 @@ object AppIcons {
     val Camera = Icons.Outlined.CameraAlt
     val Menu = Icons.Outlined.Menu
 
-    val BackArrow = Icons.Outlined.ArrowBack
+    val BackArrow = Icons.Outlined.ArrowBackIosNew
     val BackArrowIos = Icons.Outlined.ArrowBackIosNew
+
+    val SettingFilled = Icons.Filled.Settings
+    val SettingOutlined = Icons.Outlined.Settings
 
 }

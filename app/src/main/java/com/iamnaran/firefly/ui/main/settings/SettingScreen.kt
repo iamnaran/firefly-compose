@@ -1,4 +1,4 @@
-package com.iamnaran.firefly.ui.main.profile
+package com.iamnaran.firefly.ui.main.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,8 +29,8 @@ import com.iamnaran.firefly.utils.helper.AppLocaleManager
 import com.iamnaran.firefly.utils.helper.appLanguages
 
 @Composable
-fun ProfileScreen(
-    profileViewModel: ProfileViewModel = hiltViewModel(),
+fun SettingScreen(
+    settingViewModel: SettingViewModel= hiltViewModel(),
     navigateToLogin: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -49,7 +49,7 @@ fun ProfileScreen(
 
     val openAlertDialog = remember { mutableStateOf(false) }
 
-    val userState by profileViewModel.profileState.collectAsStateLifecycleAware()
+    val userState by settingViewModel.profileState.collectAsStateLifecycleAware()
     val userEntity = userState.userEntityDetails
 
     userEntity?.let {
@@ -70,7 +70,7 @@ fun ProfileScreen(
                 }) {
                 openAlertDialog.value = false
                 navigateToLogin()
-                profileViewModel.doLogout()
+                settingViewModel.doLogout()
             }
         }
     }

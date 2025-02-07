@@ -18,7 +18,7 @@ val appLanguages = listOf(
     Language("hi", "हिन्दी")
 )
 
-class AppLanguageHelper {
+class AppLocaleManager {
 
     fun changeLanguage(context: Context, languageCode: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -30,10 +30,17 @@ class AppLanguageHelper {
     }
 
     fun getLanguageCode(context: Context,): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.getSystemService(LocaleManager::class.java).applicationLocales[0]?.toLanguageTag()?.split("-")?.first() ?: appLanguages.first().code
+        val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java)
+                ?.applicationLocales
+                ?.get(0)
         } else {
-            AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()?.split("-")?.first() ?: appLanguages.first().code
+            AppCompatDelegate.getApplicationLocales().get(0)
         }
+        return locale?.language ?: getDefaultLanguageCode()
+    }
+
+    private fun getDefaultLanguageCode(): String {
+        return  appLanguages.first().code
     }
 }

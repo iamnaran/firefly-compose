@@ -44,8 +44,8 @@ fun AppTopBar(
                 onActionCameraClick()
             }) {
                 Icon(
-                    imageVector = AppIcons.Camera,
-                    contentDescription = "video call",
+                    imageVector = AppIcons.SettingOutlined,
+                    contentDescription = "Settings",
                 )
             }
 

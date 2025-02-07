@@ -145,6 +145,7 @@ fun RootNavHost(isAuthenticated: Boolean) {
                     AppTopBar(topAppbarTitle.value,
                         barScrollBehavior,
                         onActionCameraClick = {
+
                         }
                     )
                 } else {
