@@ -22,6 +22,9 @@
     <string name="ar_camera">एआर कैमरा</string>
     <string name="settings">सेटिङ</string>
 
+    <string name="okay">लॉगआउट</string>
+    <string name="cancel">पिछला</string>
+
     <string name="app_language">ऐप भाषा</string>
     <string name="prompt_logout_title">लॉगआउट पुष्टिकरण</string>
     <string name="prompt_logout_description">क्या आप वाकई लॉगआउट करना चाहते हैं? सभी कैश डेटा हटा दिए जाएंगे।</string>
@@ -39,7 +42,7 @@
     <string name="tab_groups">समूह</string>
     <string name="share_text">साझा करें</string>
     <string name="unable_to_login">लॉगिन करने में असमर्थ, कृपया अपनी साख जांचें</string>
-    <string name="empty_string"></string>
+    <string name="empty_string" />
 
     <string name="char_uuid_missed_connection">आपका मिस्ड कनेक्शन UUID</string>
     <string name="char_uuid_emergency">आपका आपातकालीन सेवा UUID</string>

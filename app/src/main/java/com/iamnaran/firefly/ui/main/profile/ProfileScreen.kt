@@ -101,9 +101,7 @@ fun ProfileContent(
                 .padding(MaterialTheme.dimens.regular)
         ) {
             Text(text = "Logout")
-
         }
-
         Column  {
             Text(
                 modifier = Modifier
@@ -118,9 +116,6 @@ fun ProfileContent(
                 onAppLanguageChanged
             )
         }
-
-
-
     }
 }
 

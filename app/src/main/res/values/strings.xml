@@ -25,6 +25,10 @@
     <string name="ar_camera">Ar Camera</string>
     <string name="settings">Settings</string>
 
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+
+
     <string name="app_language">App language</string>
     <string name="prompt_logout_title">Logout Confirmation</string>
     <string name="prompt_logout_description">Are you sure you want to logout? All caches data will be cleared.</string>
