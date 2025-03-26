@@ -1,4 +1,4 @@
-# Jetpack Compose Template App
+# Jetpack Compose App
 
 A production-ready template app to kickstart your Android development journey with Jetpack Compose.
 
@@ -15,6 +15,7 @@ A production-ready template app to kickstart your Android development journey wi
 - **Data Store Preference**
 - **Product Listing with Offline First**
 
+## Available in [ Multi-Module | IOS | Multi-Platform ]
 
 **Native Multi-Module Version Of This App**
 - Using Ktor, Koin, MVVM, Room, Flow, Clean Architecture, Nested Navigation Graph 
