@@ -108,14 +108,9 @@ fun ProductItem(
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(8.dp)
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
-
             }
-
     }
-
-
 }
 
 @Preview(showBackground = true)

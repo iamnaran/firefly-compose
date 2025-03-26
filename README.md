@@ -20,18 +20,14 @@ A production-ready template app to kickstart your Android development journey wi
 - **Kotlin Coroutine NetworkResourceBound**
 - **Product Listing with Offline First**
 
+
+**Multi-Module Version Of This App**
+Using Ktor, Koin, MVVM, Room, Clean Architecture "[JANTAR](https://github.com/iamnaran/jantar)"
+
+Stay tuned for further updates!
+
 ## API Integration with DummyJSON API
 
 Thanks to the DummyJSON API, you can find the new username and password here: [GitHub - DummyJSON](https://github.com/Ovi/DummyJSON) or [DummyJSON Documentation](https://dummyjson.com/docs/auth).
 
-## Getting Started
-1. Clone the repository.
-2. Open the project in Android Studio.
-3. Build and run the app on your device or emulator.
-
-Feel free to explore the codebase, customize components, and integrate additional features based on your project requirements.
-
-**Kotlin Multiplatform App**
-Clone of this App "[jellyfish](https://github.com/iamnaran/jellyfish)" is currently in the development phase.
-Stay tuned for further updates!
 
