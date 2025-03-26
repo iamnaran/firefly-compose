@@ -22,10 +22,12 @@ A production-ready template app to kickstart your Android development journey wi
 
 
 **Native Multi-Module Version Of This App**
-Using Ktor, Koin, MVVM, Room, Flow, Clean Architecture Nested Navigation Graph "[JANTAR](https://github.com/iamnaran/jantar)"
+- Using Ktor, Koin, MVVM, Room, Flow, Clean Architecture Nested Navigation Graph 
+- Link to Repo [JANTAR](https://github.com/iamnaran/jantar)
 
 **Native iOS Version Of This App**
-Using App Navigator, Realm, SwiftUI, MVVM, Clean Architecture "[Dragonfly](https://github.com/iamnaran/dragonfly)"
+- Using App Navigator, Realm, SwiftUI, MVVM, Clean Architecture 
+- Link to Repo [Dragonfly](https://github.com/iamnaran/dragonfly)
 
 **Compose Multi-platform Version Of This App**
 Currently WIP and new update soon "[Dragonfly](https://github.com/iamnaran/jellyfish)"
