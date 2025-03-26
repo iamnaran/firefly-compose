@@ -8,21 +8,16 @@ A production-ready template app to kickstart your Android development journey wi
 
 - **Jetpack Compose**
 - **Dependency Injection - Hilt**
-- **Navigation Graph**: 
 - **Nested Navigation Graph**
-- **Splash Screen API**
 - **Clean Architecture**
-- **Kotlin Flow**
 - **Room**
 - **Retrofit**
 - **Data Store Preference**
-- **Login Authentication**
-- **Kotlin Coroutine NetworkResourceBound**
 - **Product Listing with Offline First**
 
 
 **Native Multi-Module Version Of This App**
-- Using Ktor, Koin, MVVM, Room, Flow, Clean Architecture Nested Navigation Graph 
+- Using Ktor, Koin, MVVM, Room, Flow, Clean Architecture, Nested Navigation Graph 
 - Link to Repo [JANTAR](https://github.com/iamnaran/jantar)
 
 **Native iOS Version Of This App**
