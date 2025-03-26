@@ -37,12 +37,12 @@ fun SimpleAlertDialog(
             },
             confirmButton = {
                 TextButton(onClick = { onConfirmation() }) {
-                    Text(text = stringResource(R.string.))
+                    Text(text = stringResource(R.string.okay))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { onDismissRequest() }) {
-                    Text(text = stringResource(R.string.))
+                    Text(text = stringResource(R.string.cancel))
                 }
             },
             title = {
