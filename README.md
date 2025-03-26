@@ -23,7 +23,7 @@ A production-ready template app to kickstart your Android development journey wi
 
 **Native iOS Version Of This App**
 - Using App Navigator, Realm, SwiftUI, MVVM, Clean Architecture 
-- Link to Repo [Dragonfly](https://github.com/iamnaran/dragonfly)
+- Link to Repo [Dragonfly](https://github.com/iamnaran/dragon-fly-ios)
 
 **Compose Multi-platform Version Of This App**
 Currently WIP and new update soon "[Dragonfly](https://github.com/iamnaran/jellyfish)"
