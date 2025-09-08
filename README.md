@@ -1,0 +1,34 @@
+# The Jetpack Compose Template 2025
+
+A production-ready template app to kickstart your Android development journey with Jetpack Compose.
+
+![App Preview](firefly.png)
+
+## Features
+
+- **Jetpack Compose**
+- **Dependency Injection - Hilt**
+- **Navigation Graph & Nested Navigation Graph****
+- **Clean Architecture**
+- **Room - Pagination**
+- **Retrofit**
+- **Data Store Preference**
+- **Network Bound Resources Offline First**
+
+## Available in [ Multi-Module | IOS | Multi-Platform ]
+
+**Native Multi-Module Version Of This App**
+- Using Ktor, Koin, MVVM, Room, Flow, Clean Architecture, Nested Navigation Graph 
+- Link to Repo [JANTAR](https://github.com/iamnaran/jantar)
+
+**Native iOS Version Of This App**
+- Using App Navigator, Realm, SwiftUI, MVVM, Clean Architecture 
+- Link to Repo [DRAGONFLY](https://github.com/iamnaran/dragon-fly-ios)
+
+Stay tuned for further updates!
+
+## API Integration with DummyJSON API
+
+Thanks to the DummyJSON API, you can find the new username and password here: [GitHub - DummyJSON](https://github.com/Ovi/DummyJSON) or [DummyJSON Documentation](https://dummyjson.com/docs/auth).
+
+
