@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Firefly</string>
+    <string name="title_activity_login">लगइन गतिविधि</string>
+
+    <string name="label_email">इमेल</string>
+    <string name="label_password">पासवर्ड</string>
+    <string name="label_name">नाम</string>
+
+    <string name="first_fragment_label">पहिलो खण्ड</string>
+    <string name="second_fragment_label">दोस्रो खण्ड</string>
+    <string name="next">अर्को</string>
+    <string name="previous">अघिल्लो</string>
+
+    <string name="hide_password">पासवर्ड लुकाउनुहोस्</string>
+    <string name="show_password">पासवर्ड देखाउनुहोस्</string>
+
+    <string name="home">होम</string>
+    <string name="profile">प्रोफाइल</string>
+    <string name="explore">अनुसन्धान</string>
+    <string name="interest">रुचि</string>
+    <string name="notification">सूचना</string>
+    <string name="ar_camera">एआर क्यामेरा</string>
+    <string name="settings">सेटिङ</string>
+
+    <string name="okay">लॉगआउट</string>
+    <string name="cancel">अघिल्लो</string>
+
+    <string name="app_language">एप भाषा</string>
+    <string name="prompt_logout_title">लगआउट पुष्टि</string>
+    <string name="prompt_logout_description">के तपाईं पक्का हुनुहुन्छ कि लगआउट गर्न चाहनुहुन्छ? सबै क्यास डेटा हटाइनेछ।</string>
+
+    <string name="web_client_id">204093542286-ih7rkg9391htlsp982p9nu3ep4112ohk.apps.googleusercontent.com</string>
+
+    <string name="lorem_ipsum">
+        लोरेम इप्सम डोलर सिट अमेट, कन्सेक्टेचर एडिपिसिंग एलिट। नाम इन स्केलरिस्क सेम…
+    </string>
+
+    <string name="dismiss">रद्द गर्नुहोस्</string>
+    <string name="tab_home">होम</string>
+    <string name="tab_article">लेख</string>
+    <string name="tab_DM">सन्देश</string>
+    <string name="tab_groups">समूह</string>
+    <string name="share_text">सेयर गर्नुहोस्</string>
+    <string name="unable_to_login">लगइन गर्न असमर्थ, कृपया तपाईंको प्रमाणहरू जाँच गर्नुहोस्</string>
+    <string name="empty_string" />
+
+    <string name="char_uuid_missed_connection">तपाईंको मिस्ड कनेक्सन UUID</string>
+    <string name="char_uuid_emergency">तपाईंको आपतकालीन सेवा UUID</string>
+    <string name="char_uuid_emergency_call">तपाईंको आपतकालीन कल UUID</string>
+    <string name="char_uuid_catch">तपाईंको क्याच UUID</string>
+    <string name="char_uuid_catch_all">तपाईंको क्याच सबै UUID</string>
+    <string name="char_uuid_missed_calls">तपाईंको मिस्ड कल UUID</string>
+</resources>
