@@ -11,61 +11,60 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.iamnaran.firefly.ui.navigation.AppScreen
+import androidx.navigation.toRoute
+import com.iamnaran.firefly.R
+import com.iamnaran.firefly.ui.navigation.FireflyScreen
+import com.iamnaran.firefly.ui.theme.AppIcons
 
 @Composable
 fun BottomBar(
     navController: NavHostController,
 ) {
-    val navigationScreen = listOf(
-        AppScreen.Main.Home,
-        AppScreen.Main.Notification,
-        AppScreen.Main.Interest,
-        AppScreen.Main.Profile
-    )
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.toRoute<FireflyScreen>()
 
     NavigationBar {
-
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-
-        navigationScreen.forEach { item ->
+        bottomNavItems.forEach { screen ->
+            val isSelected = currentDestination?.let { it::class == screen::class } == true
 
             NavigationBarItem(
-                selected = currentRoute == item.route,
-
+                selected = isSelected,
                 label = {
                     Text(
-                        text = stringResource(id = item.title!!),
-                        style = MaterialTheme.typography.displaySmall
+                        text = when (screen) {
+                            FireflyScreen.Home -> stringResource(R.string.home)
+                            FireflyScreen.Explore -> stringResource(R.string.explore)
+                            FireflyScreen.Interest -> stringResource(R.string.interest)
+                            FireflyScreen.Notification -> stringResource(R.string.notification)
+                            FireflyScreen.Profile -> stringResource(R.string.profile)
+                            else -> ""
+                        },
+                        style = MaterialTheme.typography.labelSmall
                     )
                 },
                 icon = {
-//                    BadgedBox(badge = {
-//                        if (item.badgeCount){
-//                            Badge {
-//                                Text(text = item.badgeCount.toString())
-//                            }
-//                        }else{
-//                        }
-//                    }) {
-//
-//                    }
                     Icon(
-                        imageVector = (if (item.route == currentRoute) item.selectedIcon else item.unselectedIcon)!!,
-                        contentDescription = stringResource(id = item.title!!)
+                        imageVector = when (screen) {
+                            FireflyScreen.Home -> if (isSelected) AppIcons.HomeFilled else AppIcons.HomeOutlined
+                            FireflyScreen.Explore -> if (isSelected) AppIcons.ExploredFilled else AppIcons.ExploredOutlined
+                            FireflyScreen.Interest -> if (isSelected) AppIcons.InterestFilled else AppIcons.InterestOutlined
+                            FireflyScreen.Notification -> if (isSelected) AppIcons.NotificationFilled else AppIcons.NotificationOutlined
+                            FireflyScreen.Profile -> if (isSelected) AppIcons.ProfileFilled else AppIcons.ProfileOutlined
+                            else -> AppIcons.HomeOutlined
+                        },
+                        contentDescription = null
                     )
                 },
-
                 onClick = {
-                    navController.navigate(item.route) {
+                    navController.navigate(screen) {   // 🚀 type-safe navigation
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true
                     }
-                },
+                }
             )
         }
     }

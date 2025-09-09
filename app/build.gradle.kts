@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.hilt)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {

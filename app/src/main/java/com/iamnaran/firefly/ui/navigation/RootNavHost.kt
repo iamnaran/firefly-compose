@@ -1,7 +1,5 @@
 package com.iamnaran.firefly.ui.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
@@ -27,11 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.appcomponent.snackbar.ObserveAsEvents
 import com.iamnaran.firefly.ui.appcomponent.snackbar.SnackbarManager
 import com.iamnaran.firefly.ui.navigation.bottomappbar.BottomBar
 import com.iamnaran.firefly.ui.navigation.topappbar.AppTopBar
-import com.iamnaran.firefly.utils.AppLog
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
@@ -46,10 +45,6 @@ fun RootNavHost(isAuthenticated: Boolean) {
 
         val showBottomBarState = rememberSaveable { (mutableStateOf(true)) }
         val showTopBarState = rememberSaveable { (mutableStateOf(true)) }
-
-        // State composable used to hold the
-        // value of the current active screen
-        val currentScreen = remember { mutableStateOf(AppScreen.Main.Home.route) }
 
         val coroutineScope = rememberCoroutineScope()
         val rootNavHostController = rememberNavController()
@@ -75,62 +70,46 @@ fun RootNavHost(isAuthenticated: Boolean) {
             }
         }
 
+        val currentDestination = rootNavBackStackEntry?.toRoute<FireflyScreen>()
+
+
         // Control TopBar and BottomBar
-        when (rootNavBackStackEntry?.destination?.route) {
-            AppScreen.Main.Home.route -> {
+        when (currentDestination) {
+            is FireflyScreen.Home -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
-                topAppbarTitle.value = stringResource(AppScreen.Main.Home.title!!)
-
+                topAppbarTitle.value = stringResource(R.string.home)
             }
-
-            AppScreen.Main.Profile.route -> {
+            is FireflyScreen.Profile -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
-                topAppbarTitle.value = stringResource(AppScreen.Main.Profile.title!!)
-
+                topAppbarTitle.value = stringResource(R.string.profile)
             }
-
-            AppScreen.Main.Notification.route -> {
+            is FireflyScreen.Notification -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
-                topAppbarTitle.value = stringResource(AppScreen.Main.Notification.title!!)
+                topAppbarTitle.value = stringResource(R.string.notification)
             }
-
-            AppScreen.Main.Explore.route -> {
+            is FireflyScreen.Explore -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
-                topAppbarTitle.value = stringResource(AppScreen.Main.Explore.title!!)
+                topAppbarTitle.value = stringResource(R.string.explore)
             }
-
-            AppScreen.Main.ProductDetail.route -> {
+            is FireflyScreen.Interest -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(R.string.interest)
+            }
+            is FireflyScreen.ProductDetail,
+            is FireflyScreen.RecipeDetail -> {
                 showBottomBarState.value = false
                 showTopBarState.value = false
             }
-
-
-            AppScreen.Main.Interest.route -> {
-                showBottomBarState.value = true
-                showTopBarState.value = true
-                topAppbarTitle.value = stringResource(AppScreen.Main.Interest.title!!)
-            }
-
-            AppScreen.Main.ProductDetail.route -> {
-                showBottomBarState.value = true
-                showTopBarState.value = true
-            }
-
-            AppScreen.Main.RecipeDetail.route -> {
-                showBottomBarState.value = true
-                showTopBarState.value = true
-            }
-
             else -> {
                 showBottomBarState.value = false
                 showTopBarState.value = false
             }
         }
-
 
         Scaffold(
             modifier = Modifier
@@ -144,7 +123,7 @@ fun RootNavHost(isAuthenticated: Boolean) {
                     AppTopBar(topAppbarTitle.value,
                         barScrollBehavior,
                         onActionCameraClick = {
-                            rootNavHostController.navigate(AppScreen.Main.Settings.route)
+                            rootNavHostController.navigate(FireflyScreen.Settings)
                         }
                     )
                 } else {
@@ -164,14 +143,14 @@ fun RootNavHost(isAuthenticated: Boolean) {
             ) {
                 NavHost(
                     navController = rootNavHostController,
-                    startDestination = if (isAuthenticated) AppScreen.Main.route else AppScreen.Auth.route,
+                    startDestination = if (isAuthenticated) FireflyScreen.MainRoot else FireflyScreen.AuthRoot,
                 ) {
 
                     authNavGraph(
                         rootNavHostController
                     )
                     mainNavGraph(
-                        rootNavHostController, rootNavBackStackEntry
+                        rootNavHostController
                     )
                 }
             }

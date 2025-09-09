@@ -1,12 +1,12 @@
 package com.iamnaran.firefly.ui.navigation
 
 import androidx.compose.ui.window.DialogProperties
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.iamnaran.firefly.ui.main.explore.ExploreScreen
 import com.iamnaran.firefly.ui.main.home.HomeScreen
 import com.iamnaran.firefly.ui.main.home.productdetail.ProductDetailScreen
@@ -17,101 +17,79 @@ import com.iamnaran.firefly.ui.main.profile.ProfileScreen
 import com.iamnaran.firefly.ui.main.settings.SettingScreen
 
 fun NavGraphBuilder.mainNavGraph(
-    navController: NavHostController,
-    rootNavBackStackEntry: NavBackStackEntry?
+    navController: NavHostController
 ) {
 
-    navigation(
-        startDestination = AppScreen.Main.Home.route,
-        route = AppScreen.Main.route
+    navigation<FireflyScreen.MainRoot>(
+        startDestination = FireflyScreen.Home,
     ) {
-        composable(
-            route = AppScreen.Main.Home.route,
-        ) {
+        composable<FireflyScreen.Home> {
             HomeScreen(
                 onProductClick = {
-                    val route = AppScreen.Main.ProductDetail.createRoute(productId = it)
+                    val route = FireflyScreen.ProductDetail(productId = it)
                     navController.navigate(route)
                 }
             )
         }
 
 
-        composable(
-            route = AppScreen.Main.Notification.route,
-        ) {
-            NotificationScreen() {
-                val route = AppScreen.Main.RecipeDetail.createRoute(recipeId = it)
+        composable<FireflyScreen.Notification> {
+            NotificationScreen {
+                val route = FireflyScreen.RecipeDetail(recipeId = it)
                 navController.navigate(route)
             }
         }
 
-        composable(
-            route = AppScreen.Main.Profile.route,
-        ) {
+        composable<FireflyScreen.ProductDetail> {
             ProfileScreen(navigateToLogin = {
-                navController.navigate(AppScreen.Auth.route) {
-                    popUpTo(AppScreen.Main.route) {
+                navController.navigate(FireflyScreen.AuthRoot) {
+                    popUpTo(FireflyScreen.MainRoot) {
                         inclusive = true
                     }
                 }
             })
         }
 
-        composable(
-            route = AppScreen.Main.Explore.route,
-        ) {
-            ExploreScreen() {
+        composable<FireflyScreen.Explore> {
+            ExploreScreen {
 
             }
         }
 
 
-        composable(
-            route = AppScreen.Main.Interest.route,
-        ) {
-            InterestScreen() {
+        composable<FireflyScreen.Interest> {
+            InterestScreen {
 
             }
         }
 
-        composable(
-            route = AppScreen.Main.ProductDetail.route,
-        ) {
-
-            // value also can be  retrieve directly from responsible view-model
-            val productId = rootNavBackStackEntry?.arguments?.getString("productId")
-            if (productId != null) {
-                ProductDetailScreen(
-                    productId = productId
-                ) {
-                    navController.navigateUp()
-                }
+        composable<FireflyScreen.ProductDetail> { backStackEntry ->
+            val productDetail = backStackEntry.toRoute<FireflyScreen.ProductDetail>()
+            ProductDetailScreen(
+                productId = productDetail.productId
+            ) {
+                navController.navigateUp()
             }
         }
 
 
-        dialog(
-            route = AppScreen.Main.Settings.route,
+        dialog<FireflyScreen.Settings>(
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
-
         ) {
             SettingScreen {
                 navController.navigateUp()
             }
         }
 
-        dialog(
-            route = AppScreen.Main.RecipeDetail.route,
+        dialog<FireflyScreen.RecipeDetail>(
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
 
-        ) {
+        ) { backStackEntry ->
 
-            val recipeId = rootNavBackStackEntry?.arguments?.getString("recipeId")
-            if (recipeId != null) {
-                RecipeDetailScreen(recipeId = recipeId) {
-                    navController.navigateUp()
-                }
+            val recipeDetail = backStackEntry.toRoute<FireflyScreen.RecipeDetail>()
+
+            RecipeDetailScreen(recipeId = recipeDetail.recipeId) {
+                navController.navigateUp()
             }
 
 

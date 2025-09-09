@@ -10,30 +10,27 @@ import com.iamnaran.firefly.ui.auth.signup.SignUpScreen
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
 ) {
-    navigation(
-        startDestination = AppScreen.Auth.Login.route,
-        route = AppScreen.Auth.route
+
+
+    navigation<FireflyScreen.AuthRoot>(
+        startDestination = FireflyScreen.Login,
     ) {
-        composable(
-            route = AppScreen.Auth.Login.route
-        ) {
+        composable<FireflyScreen.Login> {
             LoginScreen(
                 navigateToHome = {
-                    navController.navigate(AppScreen.Main.route) {
-                        popUpTo(AppScreen.Auth.route) {
+                    navController.navigate(FireflyScreen.MainRoot) {
+                        popUpTo(FireflyScreen.AuthRoot) {
                             inclusive = true
                         }
                     }
                 },
                 navigateToSignUp = {
-                    navController.navigate(AppScreen.Auth.Register.route)
+                    navController.navigate(FireflyScreen.Register)
                 },
             )
         }
 
-        composable(
-            route = AppScreen.Auth.Register.route
-        ) {
+        composable<FireflyScreen.Register> {
             SignUpScreen(onNavigateBack = {
                 navController.navigateUp()
             })
