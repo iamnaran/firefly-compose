@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.ui.appcomponent.snackbar.ObserveAsEvents
 import com.iamnaran.firefly.ui.appcomponent.snackbar.SnackbarManager
@@ -70,38 +69,37 @@ fun RootNavHost(isAuthenticated: Boolean) {
             }
         }
 
-        val currentDestination = rootNavBackStackEntry?.toRoute<FireflyScreen>()
-
 
         // Control TopBar and BottomBar
-        when (currentDestination) {
-            is FireflyScreen.Home -> {
+        when (rootNavBackStackEntry?.destination?.route) {
+            HomeRoute::class.qualifiedName-> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
                 topAppbarTitle.value = stringResource(R.string.home)
             }
-            is FireflyScreen.Profile -> {
-                showBottomBarState.value = true
-                showTopBarState.value = true
-                topAppbarTitle.value = stringResource(R.string.profile)
-            }
-            is FireflyScreen.Notification -> {
+
+            NotificationRoute::class.qualifiedName -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
                 topAppbarTitle.value = stringResource(R.string.notification)
             }
-            is FireflyScreen.Explore -> {
+            ExploreRoute::class.qualifiedName -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
                 topAppbarTitle.value = stringResource(R.string.explore)
             }
-            is FireflyScreen.Interest -> {
+            InterestRoute::class.qualifiedName -> {
                 showBottomBarState.value = true
                 showTopBarState.value = true
                 topAppbarTitle.value = stringResource(R.string.interest)
             }
-            is FireflyScreen.ProductDetail,
-            is FireflyScreen.RecipeDetail -> {
+            ProfileRoute::class.qualifiedName -> {
+                showBottomBarState.value = true
+                showTopBarState.value = true
+                topAppbarTitle.value = stringResource(R.string.profile)
+            }
+            ProductDetailRoute::class.qualifiedName,
+            RecipeDetailRoute::class.qualifiedName -> {
                 showBottomBarState.value = false
                 showTopBarState.value = false
             }
@@ -123,7 +121,7 @@ fun RootNavHost(isAuthenticated: Boolean) {
                     AppTopBar(topAppbarTitle.value,
                         barScrollBehavior,
                         onActionCameraClick = {
-                            rootNavHostController.navigate(FireflyScreen.Settings)
+                            rootNavHostController.navigate(SettingsRoute)
                         }
                     )
                 } else {
@@ -143,7 +141,7 @@ fun RootNavHost(isAuthenticated: Boolean) {
             ) {
                 NavHost(
                     navController = rootNavHostController,
-                    startDestination = if (isAuthenticated) FireflyScreen.MainRoot else FireflyScreen.AuthRoot,
+                    startDestination = if (isAuthenticated) MainGraphRoute else AuthGraphRoot,
                 ) {
 
                     authNavGraph(
@@ -160,3 +158,4 @@ fun RootNavHost(isAuthenticated: Boolean) {
 
 
 }
+

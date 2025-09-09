@@ -1,10 +1,12 @@
 package com.iamnaran.firefly.ui.auth.login
 
 import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
 import androidx.lifecycle.viewModelScope
+import com.iamnaran.firefly.data.dto.UserResponse
 import com.iamnaran.firefly.data.preference.PreferenceHelper
 import com.iamnaran.firefly.data.remote.Resource
-import com.iamnaran.firefly.data.dto.UserResponse
 import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
 import com.iamnaran.firefly.domain.usecase.auth.SetLoggedInUserUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
@@ -35,127 +37,98 @@ class LoginViewModel @Inject constructor(
     val loginState = _loginState.asStateFlow()
 
 
-    fun handleLoginUIEvent(loginUiEvents: LoginUIEvent) {
-
-        when (loginUiEvents) {
-
-            is LoginUIEvent.EmailChanged -> {
-                _loginState.value = loginState.value.copy(
-                    password = loginUiEvents.inputEmailValue
-                )
-            }
-
-            is LoginUIEvent.PasswordChanged -> {
-
-                _loginState.value = _loginState.value.copy(
-                    password = loginUiEvents.inputPasswordValue
-                )
-
-            }
-
+    fun handleLoginUIEvent(event: LoginUIEvent) {
+        when (event) {
+            is LoginUIEvent.EmailChanged -> updateState { copy(email = event.inputEmailValue) }
+            is LoginUIEvent.PasswordChanged -> updateState { copy(password = event.inputPasswordValue) }
             is LoginUIEvent.OnSubmit -> {
-                _loginState.value = _loginState.value.copy(
-                    isLoading = true,
-                    isLoginSuccessful = false,
-                )
-                _loginState.value = _loginState.value.copy(
-                    loginErrorState = LoginErrorState(
-                        serverErrorState = ErrorState(
-                            false,
-                            serverErrorMsg = ""
-                        )
+                // Changed: combine multiple updates into one to avoid multiple recompositions
+                updateState {
+                    copy(
+                        isLoading = true,
+                        isLoginSuccessful = false,
+                        loginErrorState = LoginErrorState(serverErrorState = ErrorState(false, ""))
                     )
-                )
+                }
                 doLoginWork()
-
             }
-
         }
     }
-
     private fun doLoginWork() {
-
         viewModelScope.launch {
-            postServerLoginUseCase(
-                _loginState.value.email,
-                _loginState.value.password
-            ).collectLatest { resource ->
+            postServerLoginUseCase(_loginState.value.email, _loginState.value.password)
+                .collectLatest { resource ->
                     when (resource) {
                         is Resource.Success -> {
-                            if (resource.data != null) {
-                                AppLog.showLog("----------LOGIN SUCCESS----------")
-                                preferenceHelper.saveLoggedInUserDetails(
-                                    resource.data.id.toString(),
-                                    resource.data.token,
-                                    true,
-                                )
-                                setLoggedInUserUseCase(resource.data)
-                                _loginState.value = _loginState.value.copy(
-                                    isLoginSuccessful = true,
-                                    isLoading = false
-                                )
-
-                            }
+                            resource.data?.let { user ->
+                                saveUserData(user.id.toString(), user.token, user)
+                                updateState { copy(isLoginSuccessful = true, isLoading = false) } // Changed: combine updates
+                            } ?: updateState { copy(isLoading = false) } // Edge case: null user
                         }
 
-                        is Resource.Loading -> {
-                            _loginState.value = _loginState.value.copy(
-                                isLoading = true
+                        is Resource.Loading -> updateState { copy(isLoading = true) } // Changed: only update isLoading
+
+                        is Resource.Error -> updateState {
+                            // Changed: single update for error handling
+                            copy(
+                                isLoading = false,
+                                isLoginSuccessful = false,
+                                loginErrorState = LoginErrorState(
+                                    serverErrorState = ErrorState(true, resource.message.orEmpty())
+                                )
                             )
                         }
 
                         else -> {
-                            _loginState.value = _loginState.value.copy(
-                                isLoginSuccessful = false,
-                                isLoading = false
-                            )
-
-                            _loginState.value = _loginState.value.copy(
-                                loginErrorState = LoginErrorState(
-                                    serverErrorState = ErrorState(
-                                        true,
-                                        serverErrorMsg = resource.message.toString()
-                                    )
-                                )
-                            )
+                            updateState { copy(isLoading = false) }
                         }
                     }
                 }
         }
     }
 
-    suspend fun signInIntentSender() = googleAuthClient.signIn()
+    private suspend fun saveUserData(userId: String, token: String, user: UserResponse) {
+        preferenceHelper.saveLoggedInUserDetails(userId, token, true)
+        setLoggedInUserUseCase(user)
+    }
 
-    suspend fun onSignInResult(intent: Intent?) {
-        val signInResult = googleAuthClient.signInWithIntent(intent!!)
-        signInResult.run {
-            if (signInResult.data != null) {
-                val userResponse = UserResponse(
-                    id = Math.random().toInt(),
-                    username = signInResult.data.name,
-                    email = signInResult.data.email,
-                    firstName = signInResult.data.name,
-                    lastName = "",
-                    gender = "",
-                    image = signInResult.data.profilePic.toString(),
-                    token = signInResult.data.userId,
-                )
 
-                preferenceHelper.saveLoggedInUserDetails(
-                    userResponse.id.toString(),
-                    signInResult.data.userId,
-                    true,
-                )
+    private var _googleSignInLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
+    fun setGoogleSignInLauncher(launcher: ActivityResultLauncher<IntentSenderRequest>) {
+        _googleSignInLauncher = launcher
+    }
 
-                setLoggedInUserUseCase(userResponse)
-                _loginState.value = _loginState.value.copy(
-                    isLoginSuccessful = true,
-                    isLoading = false
-                )
-            }
+    private fun updateState(update: LoginState.() -> LoginState) {
+        _loginState.value = _loginState.value.update()
+    }
 
+
+
+    fun signInWithGoogle() {
+        viewModelScope.launch {
+            val intentSender = googleAuthClient.signIn() ?: return@launch
+            // Launch Google Sign-In through stored launcher
+            _googleSignInLauncher?.launch(IntentSenderRequest.Builder(intentSender).build())
         }
+    }
 
+    // Handle Google Sign-In result
+    suspend fun handleGoogleSignInResult(intent: Intent?) {
+        val result: SignInResult = googleAuthClient.signInWithIntent(intent ?: return)
+        result.data?.let { data ->
+            val user = UserResponse(
+                id = (System.currentTimeMillis() % Int.MAX_VALUE).toInt(), // Changed: generate unique ID
+                username = data.name,
+                email = data.email,
+                firstName = data.name,
+                lastName = "",
+                gender = "",
+                image = data.profilePic.toString(),
+                token = data.userId
+            )
+            saveUserData(user.id.toString(), data.userId, user)
+            updateState { copy(isLoginSuccessful = true, isLoading = false) } // Changed: single state update
+        }
     }
 
 

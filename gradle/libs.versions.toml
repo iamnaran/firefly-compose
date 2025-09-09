@@ -22,7 +22,6 @@ coilSvg = "2.7.0"
 room = "2.7.2"
 
 timber = "5.0.1"
-
 preferenceKtx = "1.2.1"
 datastorePreferences = "1.1.7"
 securityCrypto = "1.1.0"
@@ -48,7 +47,6 @@ splashscreen = "1.0.1"
 lifecycleViewmodelCompose = "2.9.3"
 
 navigation = "2.9.3"
-navigationCompose = "2.9.3"
 hiltNavigationCompose = "1.2.0"
 
 
@@ -75,7 +73,7 @@ androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "l
 
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 

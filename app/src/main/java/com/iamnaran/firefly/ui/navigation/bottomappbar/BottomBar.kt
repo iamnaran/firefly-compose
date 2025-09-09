@@ -7,13 +7,17 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.toRoute
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.ui.navigation.FireflyScreen
+import com.iamnaran.firefly.ui.navigation.ExploreRoute
+import com.iamnaran.firefly.ui.navigation.HomeRoute
+import com.iamnaran.firefly.ui.navigation.InterestRoute
+import com.iamnaran.firefly.ui.navigation.NotificationRoute
+import com.iamnaran.firefly.ui.navigation.ProfileRoute
 import com.iamnaran.firefly.ui.theme.AppIcons
 
 @Composable
@@ -22,22 +26,28 @@ fun BottomBar(
 ) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.toRoute<FireflyScreen>()
+    val currentDestination = navBackStackEntry?.destination
+
+    val navDestinationScreens = remember {
+        bottomNavItemsList
+    }
 
     NavigationBar {
-        bottomNavItems.forEach { screen ->
-            val isSelected = currentDestination?.let { it::class == screen::class } == true
+
+        navDestinationScreens.forEach { screen ->
+            val isSelected = currentDestination?.let { it.route == screen.destination.toString() } == true
 
             NavigationBarItem(
                 selected = isSelected,
                 label = {
                     Text(
-                        text = when (screen) {
-                            FireflyScreen.Home -> stringResource(R.string.home)
-                            FireflyScreen.Explore -> stringResource(R.string.explore)
-                            FireflyScreen.Interest -> stringResource(R.string.interest)
-                            FireflyScreen.Notification -> stringResource(R.string.notification)
-                            FireflyScreen.Profile -> stringResource(R.string.profile)
+                        text = when (screen.destination) {
+                            HomeRoute -> stringResource(R.string.home)
+                            ExploreRoute -> stringResource(R.string.explore)
+                            InterestRoute -> stringResource(R.string.interest)
+                            NotificationRoute -> stringResource(R.string.notification)
+                            ProfileRoute -> stringResource(R.string.profile)
+
                             else -> ""
                         },
                         style = MaterialTheme.typography.labelSmall
@@ -45,19 +55,20 @@ fun BottomBar(
                 },
                 icon = {
                     Icon(
-                        imageVector = when (screen) {
-                            FireflyScreen.Home -> if (isSelected) AppIcons.HomeFilled else AppIcons.HomeOutlined
-                            FireflyScreen.Explore -> if (isSelected) AppIcons.ExploredFilled else AppIcons.ExploredOutlined
-                            FireflyScreen.Interest -> if (isSelected) AppIcons.InterestFilled else AppIcons.InterestOutlined
-                            FireflyScreen.Notification -> if (isSelected) AppIcons.NotificationFilled else AppIcons.NotificationOutlined
-                            FireflyScreen.Profile -> if (isSelected) AppIcons.ProfileFilled else AppIcons.ProfileOutlined
+                        imageVector = when (screen.destination) {
+                            HomeRoute -> if (isSelected) AppIcons.HomeFilled else AppIcons.HomeOutlined
+                            ExploreRoute -> if (isSelected) AppIcons.ExploredFilled else AppIcons.ExploredOutlined
+                            InterestRoute -> if (isSelected) AppIcons.InterestFilled else AppIcons.InterestOutlined
+                            NotificationRoute -> if (isSelected) AppIcons.NotificationFilled else AppIcons.NotificationOutlined
+                            ProfileRoute -> if (isSelected) AppIcons.ProfileFilled else AppIcons.ProfileOutlined
+
                             else -> AppIcons.HomeOutlined
                         },
                         contentDescription = null
                     )
                 },
                 onClick = {
-                    navController.navigate(screen) {   // 🚀 type-safe navigation
+                    navController.navigate(screen.destination) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }

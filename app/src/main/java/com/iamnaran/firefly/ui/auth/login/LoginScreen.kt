@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,75 +65,46 @@ fun LoginScreen(
     navigateToSignUp: () -> Unit,
 ) {
     val loginState by viewModel.loginState.collectAsState()
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
-    val launcher = rememberLauncherForActivityResult(
+    // Launcher for Google Sign-In
+    val googleLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
-        onResult = { activityResult ->
-            if (activityResult.resultCode == RESULT_OK) {
+        onResult = { result ->
+            if (result.resultCode == RESULT_OK) {
                 coroutineScope.launch {
-                    viewModel.onSignInResult(activityResult.data)
+                    viewModel.handleGoogleSignInResult(result.data)
                 }
             } else {
-                AppLog.showLog("Error SignIn")
+                AppLog.showLog("Google Sign-In canceled or failed")
             }
-
-        })
-
-    LaunchedEffect(key1 = loginState.isLoginSuccessful) {
-        if (loginState.isLoginSuccessful) {
-            navigateToHome()
         }
+    )
+
+    // Set launcher in ViewModel
+    LaunchedEffect(Unit) {
+        viewModel.setGoogleSignInLauncher(googleLauncher)
     }
 
-    LaunchedEffect(loginState.loginErrorState.serverErrorState.hasError) {
-        if (loginState.loginErrorState.serverErrorState.hasError) {
-            SnackbarManager.sendEvent(
-                event = SnackEvent(
-                    message = loginState.loginErrorState.serverErrorState.serverErrorMsg
-                )
-            )
+    LaunchedEffect(loginState) {
+        if (loginState.isLoginSuccessful) navigateToHome()
 
-        }
-    }
-
-
-    LaunchedEffect(key1 = loginState.loginErrorState.serverErrorState.hasError) {
-        if (loginState.loginErrorState.serverErrorState.serverErrorMsg.isNotEmpty()) {
-            coroutineScope.launch {
-                SnackbarManager.sendEvent(
-                    SnackEvent(loginState.loginErrorState.serverErrorState.serverErrorMsg)
-                )
-            }
+        val errorMsg = loginState.loginErrorState.serverErrorState.serverErrorMsg
+        if (loginState.loginErrorState.serverErrorState.hasError && errorMsg.isNotEmpty()) {
+            SnackbarManager.sendEvent(SnackEvent(errorMsg))
         }
     }
 
     LoginContent(
         email = loginState.email,
         password = loginState.password,
-        onEmailChange = {
-            viewModel.handleLoginUIEvent(LoginUIEvent.EmailChanged(it))
-        },
-        onPasswordChange = {
-            viewModel.handleLoginUIEvent(LoginUIEvent.PasswordChanged(it))
-        },
-        onLoginClick = {
-            viewModel.handleLoginUIEvent(LoginUIEvent.OnSubmit)
-        },
-        onGoogleLogin = {
-            coroutineScope.launch {
-                launcher.launch(
-                    IntentSenderRequest.Builder(
-                        viewModel.signInIntentSender() ?: return@launch
-                    ).build()
-                )
-            }
-        },
+        onEmailChange = { viewModel.handleLoginUIEvent(LoginUIEvent.EmailChanged(it)) },
+        onPasswordChange = { viewModel.handleLoginUIEvent(LoginUIEvent.PasswordChanged(it)) },
+        onLoginClick = { viewModel.handleLoginUIEvent(LoginUIEvent.OnSubmit) },
+        onGoogleLogin = { viewModel.signInWithGoogle() },
         onSignUpClick = navigateToSignUp,
         isLoginProgress = loginState.isLoading
     )
-
-
 }
 
 @Composable
@@ -146,7 +118,7 @@ fun LoginContent(
     onSignUpClick: () -> Unit,
     isLoginProgress: Boolean
 ) {
-    val passwordFocusRequester = FocusRequester()
+    val passwordFocusRequester = remember { FocusRequester() }
     val focusManager: FocusManager = LocalFocusManager.current
 
     Column(
@@ -154,113 +126,72 @@ fun LoginContent(
             .padding(MaterialTheme.dimens.extraLarge)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Box(
-            modifier = Modifier
-                .weight(2f)
-                .padding(MaterialTheme.dimens.medium), contentAlignment = Alignment.Center
+        // Logo
+        Image(
+            painter = painterResource(id = R.drawable.ic_app_logo),
+            contentDescription = "logo",
+            modifier = Modifier.padding(10.dp)
+        )
+
+        // Input fields
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_app_logo),
-                contentDescription = "logo",
-                Modifier.padding(10.dp)
+            EmailInput(
+                currentValue = email,
+                keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
+                onValueChange = onEmailChange,
+                icon = AppIcons.Email,
+                label = stringResource(id = R.string.label_email),
             )
-        }
 
-        Box(
-            modifier = Modifier.weight(3f),
-        ) {
-            Spacer(modifier = Modifier.height(20.dp))
+            PasswordInput(
+                currentValue = password,
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                focusRequester = passwordFocusRequester,
+                onValueChange = onPasswordChange,
+                icon = AppIcons.Password,
+                label = stringResource(id = R.string.label_password),
+            )
 
-            Column(verticalArrangement = Arrangement.Center) {
-                EmailInput(
-                    currentValue = email,
-                    keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
-                    onValueChange = onEmailChange,
-                    icon = AppIcons.Email,
-                    label = stringResource(id = R.string.label_email),
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                PasswordInput(
-                    currentValue = password,
-                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                    focusRequester = passwordFocusRequester,
-                    onValueChange = onPasswordChange,
-                    icon = AppIcons.Password,
-                    label = stringResource(id = R.string.label_password),
-                )
-
-                Spacer(modifier = Modifier.height(30.dp))
-
-                Button(
-                    onClick = {
-                        onLoginClick()
-                    },
-                    Modifier
-                        .fillMaxWidth()
-                        .disableMutipleTouchEvents()
-                ) {
-                    Box {
-                        if (isLoginProgress) {
-                            AppCircularProgressBar(progressType = ProgressType.SMALL)
-                        } else {
-                            Text(text = "Sign In", Modifier.padding(8.dp))
-
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-
-
-                Button(
-                    onClick = {
-                        onGoogleLogin()
-                    },
-                    Modifier
-                        .fillMaxWidth()
-                        .disableMutipleTouchEvents()
-                ) {
-                    Box {
-                        Text(text = "SignIn with Google", Modifier.padding(8.dp))
-                    }
-                }
-            }
-        }
-
-        Box(
-            modifier = Modifier.weight(0.5f)
-        ) {
-
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            // Login button
+            Button(
+                onClick = onLoginClick,
+                Modifier
+                    .fillMaxWidth()
+                    .disableMutipleTouchEvents()
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "Don't have an account?", color = Color.Black)
-                    TextButton(onClick = {
-
-                        onSignUpClick()
-
-                    }) {
-                        Text(text = "Sign Up")
-                    }
-
+                if (isLoginProgress) {
+                    AppCircularProgressBar(progressType = ProgressType.SMALL)
+                } else {
+                    Text(text = "Sign In", Modifier.padding(8.dp))
                 }
             }
 
+            // Google Sign-in button
+            Button(
+                onClick = onGoogleLogin,
+                Modifier
+                    .fillMaxWidth()
+                    .disableMutipleTouchEvents()
+            ) {
+                Text(text = "Sign In with Google", Modifier.padding(8.dp))
+            }
         }
 
-
+        // Sign-up link
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Don't have an account?", color = Color.Black)
+            TextButton(onClick = onSignUpClick) {
+                Text(text = "Sign Up")
+            }
+        }
     }
-
-
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)

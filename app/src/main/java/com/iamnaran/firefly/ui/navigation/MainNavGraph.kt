@@ -15,56 +15,72 @@ import com.iamnaran.firefly.ui.main.notification.NotificationScreen
 import com.iamnaran.firefly.ui.main.notification.recipe.recipedetail.RecipeDetailScreen
 import com.iamnaran.firefly.ui.main.profile.ProfileScreen
 import com.iamnaran.firefly.ui.main.settings.SettingScreen
+import kotlinx.serialization.Serializable
+
+
+@Serializable data object MainGraphRoute
+@Serializable data object HomeRoute
+
+@Serializable data object NotificationRoute
+
+@Serializable data object ProfileRoute
+
+@Serializable data object ExploreRoute
+
+@Serializable data object InterestRoute
+
+@Serializable data object SettingsRoute
+
+@Serializable data class ProductDetailRoute(val productId: String)
+@Serializable data class RecipeDetailRoute(val recipeId: String)
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController
 ) {
 
-    navigation<FireflyScreen.MainRoot>(
-        startDestination = FireflyScreen.Home,
+    navigation<MainGraphRoute>(
+        startDestination = HomeRoute,
     ) {
-        composable<FireflyScreen.Home> {
+        composable<HomeRoute> {
             HomeScreen(
                 onProductClick = {
-                    val route = FireflyScreen.ProductDetail(productId = it)
+                    val route = ProductDetailRoute(productId = it)
                     navController.navigate(route)
                 }
             )
         }
 
-
-        composable<FireflyScreen.Notification> {
+        composable<NotificationRoute> {
             NotificationScreen {
-                val route = FireflyScreen.RecipeDetail(recipeId = it)
+                val route = RecipeDetailRoute(recipeId = it)
                 navController.navigate(route)
             }
         }
 
-        composable<FireflyScreen.ProductDetail> {
+        composable<ProductDetailRoute> {
             ProfileScreen(navigateToLogin = {
-                navController.navigate(FireflyScreen.AuthRoot) {
-                    popUpTo(FireflyScreen.MainRoot) {
+                navController.navigate(AuthGraphRoot) {
+                    popUpTo(MainGraphRoute) {
                         inclusive = true
                     }
                 }
             })
         }
 
-        composable<FireflyScreen.Explore> {
+        composable<ExploreRoute> {
             ExploreScreen {
 
             }
         }
 
-
-        composable<FireflyScreen.Interest> {
+        composable<InterestRoute> {
             InterestScreen {
 
             }
         }
 
-        composable<FireflyScreen.ProductDetail> { backStackEntry ->
-            val productDetail = backStackEntry.toRoute<FireflyScreen.ProductDetail>()
+        composable<ProductDetailRoute> { backStackEntry ->
+            val productDetail = backStackEntry.toRoute<ProductDetailRoute>()
             ProductDetailScreen(
                 productId = productDetail.productId
             ) {
@@ -72,8 +88,17 @@ fun NavGraphBuilder.mainNavGraph(
             }
         }
 
+        composable<ProfileRoute> {
+            ProfileScreen(navigateToLogin = {
+                navController.navigate(AuthGraphRoot) {
+                    popUpTo(MainGraphRoute) {
+                        inclusive = true
+                    }
+                }
+            })
+        }
 
-        dialog<FireflyScreen.Settings>(
+        dialog<SettingsRoute>(
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
             SettingScreen {
@@ -81,17 +106,16 @@ fun NavGraphBuilder.mainNavGraph(
             }
         }
 
-        dialog<FireflyScreen.RecipeDetail>(
+        dialog<RecipeDetailRoute>(
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
 
         ) { backStackEntry ->
 
-            val recipeDetail = backStackEntry.toRoute<FireflyScreen.RecipeDetail>()
+            val recipeDetail = backStackEntry.toRoute<RecipeDetailRoute>()
 
             RecipeDetailScreen(recipeId = recipeDetail.recipeId) {
                 navController.navigateUp()
             }
-
 
         }
 

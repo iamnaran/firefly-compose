@@ -6,35 +6,39 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.iamnaran.firefly.ui.auth.login.LoginScreen
 import com.iamnaran.firefly.ui.auth.signup.SignUpScreen
+import kotlinx.serialization.Serializable
 
+
+@Serializable data object AuthGraphRoot
+@Serializable data object LoginRoute
+@Serializable data object RegisterRoute
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
 ) {
 
 
-    navigation<FireflyScreen.AuthRoot>(
-        startDestination = FireflyScreen.Login,
+    navigation<AuthGraphRoot>(
+        startDestination = LoginRoute,
     ) {
-        composable<FireflyScreen.Login> {
+        composable<LoginRoute> {
             LoginScreen(
                 navigateToHome = {
-                    navController.navigate(FireflyScreen.MainRoot) {
-                        popUpTo(FireflyScreen.AuthRoot) {
+                    navController.navigate(MainGraphRoute) {
+                        popUpTo(AuthGraphRoot) {
                             inclusive = true
                         }
                     }
                 },
                 navigateToSignUp = {
-                    navController.navigate(FireflyScreen.Register)
+                    navController.navigate(RegisterRoute)
                 },
             )
         }
 
-        composable<FireflyScreen.Register> {
+        composable<RegisterRoute> {
             SignUpScreen(onNavigateBack = {
                 navController.navigateUp()
             })
         }
     }
-
 }
