@@ -67,8 +67,8 @@ fun SignUpContent(
     onNavigateBack: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val passwordFocusRequester = FocusRequester()
+    val snackBarHostState = remember { SnackbarHostState() }
+    val passwordFocusRequester = remember { FocusRequester() }
     val focusManager: FocusManager = LocalFocusManager.current
 
 
@@ -159,8 +159,15 @@ fun SignUpContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        SignUpScreen(
-            onNavigateBack = {}
+        SignUpContent(onNavigateBack = {
+
+        }, email = "", password = "",
+            onEmailChange = {
+
+            },
+            onPasswordChange = {
+
+            },
         )
     }
 }

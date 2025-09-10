@@ -102,8 +102,6 @@ class LoginViewModel @Inject constructor(
         _loginState.value = _loginState.value.update()
     }
 
-
-
     fun signInWithGoogle() {
         viewModelScope.launch {
             val intentSender = googleAuthClient.signIn() ?: return@launch
