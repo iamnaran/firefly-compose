@@ -12,6 +12,7 @@ data class SignUpState(
 
 )
 
+
 data class SignUpErrorState(
     val serverErrorState: ErrorState = ErrorState(),
     val invalidEmailOrPhoneErrorState: ErrorState = ErrorState(),

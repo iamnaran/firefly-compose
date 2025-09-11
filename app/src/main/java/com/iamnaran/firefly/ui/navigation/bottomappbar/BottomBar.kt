@@ -47,7 +47,6 @@ fun BottomBar(
                             InterestRoute -> stringResource(R.string.interest)
                             NotificationRoute -> stringResource(R.string.notification)
                             ProfileRoute -> stringResource(R.string.profile)
-
                             else -> ""
                         },
                         style = MaterialTheme.typography.labelSmall

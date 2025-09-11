@@ -25,7 +25,7 @@ object DatabaseModule {
                 AppDatabase::class.java,
                 "x_firefly_x"
             )
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 

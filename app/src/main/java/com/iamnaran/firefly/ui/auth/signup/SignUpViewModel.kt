@@ -1,49 +1,77 @@
 package com.iamnaran.firefly.ui.auth.signup
 
 import androidx.lifecycle.viewModelScope
-import com.iamnaran.firefly.domain.usecase.auth.PostServerLoginUseCase
+import com.iamnaran.firefly.data.remote.Resource
+import com.iamnaran.firefly.domain.usecase.auth.signup.SignUpUseCase
 import com.iamnaran.firefly.ui.appcomponent.BaseViewModel
 import com.iamnaran.firefly.utils.AppLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val postServerLoginUseCase: PostServerLoginUseCase) :
+class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCase) :
     BaseViewModel() {
 
     private val TAG = AppLog.tagFor(this.javaClass)
 
-    private val _emailState = MutableStateFlow("")
-    val emailState: StateFlow<String> = _emailState
-
-    private val _passwordState = MutableStateFlow("")
-    val passwordState: StateFlow<String> = _passwordState
-
-    fun setEmail(email: String) {
-        _emailState.value = email
-    }
-    fun setPassword(password: String) {
-        _passwordState.value = password
-    }
+    private val _signUpState = MutableStateFlow(SignUpState())
+    val singUpState = _signUpState.asStateFlow()
 
 
-    fun signUp() {
+    fun handleSignUpUIEvent(event: SignUpUIEvent) {
+        when (event) {
+            is SignUpUIEvent.ConfirmPasswordChanged -> {
+                updateState{
+                    copy(confirmPassword = event.inputConfirmPasswordValue)
+                }
+            }
+            is SignUpUIEvent.EmailOrPhoneChanged -> {
+                updateState {
+                    copy(emailOrPhone = event.inputEmailOrPhoneValue)
+                }
 
-        viewModelScope.launch {
-//            userRepository.login(loginRequest).collect { response ->
-//                when (response) {
-//                    is Result.Success -> _loginStateResponse.value = response.data
-//
-//                    is Result.GenericError -> { //Error
-//                    }
-//                    else -> { //Loading
-//                    }
-//                }
-//            }
+            }
+            SignUpUIEvent.OnSubmit -> {
+                proceedSignUp()
+
+            }
+            is SignUpUIEvent.PasswordChanged -> {
+
+                updateState {
+                    copy(password = event.inputPasswordValue)
+                }
+
+            }
         }
     }
+
+    private fun updateState(update: SignUpState.() -> SignUpState) {
+        _signUpState.value = _signUpState.value.update()
+    }
+
+    fun proceedSignUp() {
+
+        viewModelScope.launch {
+
+            signUpUseCase.invoke(_signUpState.value.emailOrPhone,_signUpState.value.password).collect {
+                    resource ->
+                when(resource){
+                    is Resource.Success -> {
+
+
+                    }
+
+                    else -> {
+
+                    }
+                }
+            }
+
+        }
+    }
+
 
 }

@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -38,6 +39,7 @@ import com.iamnaran.firefly.ui.theme.AppIcons
 import com.iamnaran.firefly.ui.appcomponent.common.EmailInput
 import com.iamnaran.firefly.ui.appcomponent.common.PasswordInput
 import com.iamnaran.firefly.ui.theme.FireflyComposeTheme
+import kotlin.math.sign
 
 
 @Composable
@@ -45,14 +47,19 @@ fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
-    val emailState = viewModel.emailState.collectAsState()
-    val passwordState = viewModel.passwordState.collectAsState()
+
+    val signUpState by viewModel.singUpState.collectAsState()
 
     SignUpContent(
-        emailState.value,
-        passwordState.value,
-        onEmailChange = { viewModel.setEmail(it) },
-        onPasswordChange = { viewModel.setPassword(it) }) {
+        signUpState.emailOrPhone,
+        signUpState.password,
+        onEmailChange = {
+            viewModel.handleSignUpUIEvent(SignUpUIEvent.EmailOrPhoneChanged(it))
+                        },
+        onPasswordChange = {
+            viewModel.handleSignUpUIEvent(SignUpUIEvent.PasswordChanged(it))
+        })
+    {
         onNavigateBack()
     }
 
@@ -159,9 +166,11 @@ fun SignUpContent(
 @Composable
 fun DefaultPreview() {
     FireflyComposeTheme {
-        SignUpContent(onNavigateBack = {
+        SignUpContent(
+            onNavigateBack = {
 
-        }, email = "", password = "",
+            },
+            email = "", password = "",
             onEmailChange = {
 
             },

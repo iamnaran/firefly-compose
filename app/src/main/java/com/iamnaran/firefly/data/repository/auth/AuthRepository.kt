@@ -17,5 +17,7 @@ interface AuthRepository {
 
      suspend fun getAllUsers(): Flow<List<UserEntity>>
 
+     suspend fun postRegister(username: String, password: String): Flow<Resource<UserResponse>>
+
 
 }

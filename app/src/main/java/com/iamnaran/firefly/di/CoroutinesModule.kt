@@ -1,9 +1,5 @@
 package com.iamnaran.firefly.di
 
-import com.iamnaran.firefly.di.qualifiers.DefaultDispatcher
-import com.iamnaran.firefly.di.qualifiers.IoDispatcher
-import com.iamnaran.firefly.di.qualifiers.MainDispatcher
-import com.iamnaran.firefly.di.qualifiers.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,32 +8,50 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class IoCoroutineScope
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class DefaultDispatcher
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class MainDispatcher
+
 @Module
-object CoroutinesModule {
-
-    @Provides
-    @DefaultDispatcher
-    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
-
-    @Provides
-    @IoDispatcher
-    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @Provides
-    @MainDispatcher
-    fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
-
-    @Provides
-    @MainImmediateDispatcher
-    fun providesMainImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
-
+@InstallIn(SingletonComponent::class)
+object CoroutineScopesModule {
 
     @Singleton
+    @IoCoroutineScope
     @Provides
-    fun providesCoroutineScope(
-        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher
-    ): CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher)
+    fun provideIoCoroutineScope(
+        @DefaultDispatcher
+        defaultDispatcher: CoroutineDispatcher
+    ): CoroutineScope {
+        return CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    }
+
+    @Singleton
+    @MainDispatcher
+    @Provides
+    fun provideMainCoroutineScope(
+        @DefaultDispatcher
+        defaultDispatcher: CoroutineDispatcher
+    ): CoroutineScope {
+        return CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    }
+
+    @Singleton
+    @DefaultDispatcher
+    @Provides
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
 }
+
+

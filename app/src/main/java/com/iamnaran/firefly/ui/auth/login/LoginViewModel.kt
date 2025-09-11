@@ -54,6 +54,11 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
+    private fun updateState(update: LoginState.() -> LoginState) {
+        _loginState.value = _loginState.value.update()
+    }
+
     private fun doLoginWork() {
         viewModelScope.launch {
             postServerLoginUseCase(_loginState.value.email, _loginState.value.password)
@@ -87,6 +92,8 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+
+
     private suspend fun saveUserData(userId: String, token: String, user: UserResponse) {
         preferenceHelper.saveLoggedInUserDetails(userId, token, true)
         setLoggedInUserUseCase(user)
@@ -98,9 +105,6 @@ class LoginViewModel @Inject constructor(
         _googleSignInLauncher = launcher
     }
 
-    private fun updateState(update: LoginState.() -> LoginState) {
-        _loginState.value = _loginState.value.update()
-    }
 
     fun signInWithGoogle() {
         viewModelScope.launch {

@@ -2,28 +2,28 @@ package com.iamnaran.firefly.domain.usecase.auth
 
 import android.content.Context
 import com.iamnaran.firefly.R
-import com.iamnaran.firefly.data.repository.auth.AuthRepository
-import com.iamnaran.firefly.di.qualifiers.MainDispatcher
 import com.iamnaran.firefly.data.dto.UserResponse
+import com.iamnaran.firefly.data.repository.auth.AuthRepository
+import com.iamnaran.firefly.di.IoCoroutineScope
 import com.iamnaran.firefly.utils.exception.FireflyException
-import com.iamnaran.firefly.utils.helper.FlowUseCase
 import com.iamnaran.firefly.utils.extension.asFlow
+import com.iamnaran.firefly.utils.helper.FlowUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class GetAuthUseCase @Inject constructor(
-    @ApplicationContext private val context: Context,
-    @MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+    @param:ApplicationContext private val context: Context,
+    @param:IoCoroutineScope   private val coroutineScope: CoroutineScope,
     private val authRepository: AuthRepository
-) : FlowUseCase<GetAuthUseCase.Params, UserResponse>(coroutineDispatcher) {
+) : FlowUseCase<GetAuthUseCase.Params, UserResponse>(coroutineScope) {
+
     override fun execute(params: Params?): Flow<UserResponse> = if (params != null) {
-        authRepository.doLogin(params.username,params.password)
+        authRepository.doLogin(params.username, params.password)
     } else {
-        FireflyException.SnackBarException(message = context.getString(R.string.unable_to_login)).asFlow()
+        FireflyException.SnackBarException(message = context.getString(R.string.unable_to_login))
+            .asFlow()
     }
 
     data class Params(
