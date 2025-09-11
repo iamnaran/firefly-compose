@@ -1,5 +1,7 @@
 package com.iamnaran.firefly.ui.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
@@ -142,6 +144,12 @@ fun RootNavHost(isAuthenticated: Boolean) {
                 NavHost(
                     navController = rootNavHostController,
                     startDestination = if (isAuthenticated) MainGraphRoute else AuthGraphRoot,
+                    enterTransition = {
+                        EnterTransition.None
+                    },
+                    exitTransition = {
+                        ExitTransition.None
+                    }
                 ) {
 
                     authNavGraph(
