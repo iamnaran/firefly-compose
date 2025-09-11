@@ -10,9 +10,9 @@ import com.iamnaran.firefly.data.local.entities.ProductEntity
 import com.iamnaran.firefly.data.remote.BaseApiResponse
 import com.iamnaran.firefly.data.remote.pagination.ProductRemoteMediator
 import com.iamnaran.firefly.data.remote.service.ProductApi
-import com.iamnaran.firefly.di.IoCoroutineScope
+import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import com.iamnaran.firefly.utils.helper.networkBoundResource
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class ProductRepositoryImpl @Inject constructor(
     private val productApi: ProductApi,
     private val appDatabase: AppDatabase,
-    @param:IoCoroutineScope private val externalScope: CoroutineScope,
+    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
 ) : ProductRepository, BaseApiResponse() {
 
     private val productDao = appDatabase.productDao()

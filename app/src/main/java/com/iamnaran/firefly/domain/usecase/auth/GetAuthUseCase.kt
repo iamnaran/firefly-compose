@@ -4,20 +4,20 @@ import android.content.Context
 import com.iamnaran.firefly.R
 import com.iamnaran.firefly.data.dto.UserResponse
 import com.iamnaran.firefly.data.repository.auth.AuthRepository
-import com.iamnaran.firefly.di.IoCoroutineScope
+import com.iamnaran.firefly.di.qualifiers.IoDispatcher
 import com.iamnaran.firefly.utils.exception.FireflyException
 import com.iamnaran.firefly.utils.extension.asFlow
 import com.iamnaran.firefly.utils.helper.FlowUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAuthUseCase @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    @param:IoCoroutineScope   private val coroutineScope: CoroutineScope,
+    @param:IoDispatcher   private val dispatcher: CoroutineDispatcher,
     private val authRepository: AuthRepository
-) : FlowUseCase<GetAuthUseCase.Params, UserResponse>(coroutineScope) {
+) : FlowUseCase<GetAuthUseCase.Params, UserResponse>(dispatcher) {
 
     override fun execute(params: Params?): Flow<UserResponse> = if (params != null) {
         authRepository.doLogin(params.username, params.password)

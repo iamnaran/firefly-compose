@@ -7,8 +7,8 @@ import com.iamnaran.firefly.data.remote.BaseApiResponse
 import com.iamnaran.firefly.data.remote.Resource
 import com.iamnaran.firefly.data.remote.service.AuthApi
 import com.iamnaran.firefly.data.remote.service.LoginApi
-import com.iamnaran.firefly.di.IoCoroutineScope
-import kotlinx.coroutines.CoroutineScope
+import com.iamnaran.firefly.di.qualifiers.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,7 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val loginApi: LoginApi,
     private val authApi: AuthApi,
     private val appDatabase: AppDatabase,
-    @param:IoCoroutineScope private val externalScope: CoroutineScope
+    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
 ) : AuthRepository, BaseApiResponse() {
 
     override fun postLogin(
@@ -27,7 +27,7 @@ class AuthRepositoryImpl @Inject constructor(
     ): Flow<Resource<UserResponse>> {
         return flow {
             emit(safeApiCall { loginApi.serverLogin(username, password) })
-        }.flowOn(externalScope.coroutineContext)
+        }.flowOn(coroutineDispatcher)
     }
 
     override fun doLogin(username: String, password: String): Flow<UserResponse> {
@@ -51,7 +51,7 @@ class AuthRepositoryImpl @Inject constructor(
         password: String
     ): Flow<Resource<UserResponse>> {
         return flow { emit(safeApiCall { authApi.registerApi(username, password) }) }.flowOn(
-            externalScope.coroutineContext
+            coroutineDispatcher
         )
     }
 }
