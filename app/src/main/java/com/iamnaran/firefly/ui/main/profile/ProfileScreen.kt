@@ -34,17 +34,11 @@ fun ProfileScreen(
     navigateToLogin: () -> Unit,
 ) {
     val context = LocalContext.current
-    val appLocaleManager by remember {
-        lazy {
-            AppLocaleManager()
-        }
-    }
-    val selectedLanguageCode = remember { appLocaleManager.getLanguageCode(context) }
-    var selectedLanguage by remember { mutableStateOf(selectedLanguageCode) }
+
+    val selectedLanguage by profileViewModel.selectedLanguage.collectAsStateLifecycleAware()
 
     val onAppLanguageChanged: (String) -> Unit = { newLanguage ->
-        selectedLanguage = newLanguage
-        appLocaleManager.changeLanguage(context, newLanguage)
+        profileViewModel.changeLanguage(newLanguage)
     }
 
     val openAlertDialog = remember { mutableStateOf(false) }

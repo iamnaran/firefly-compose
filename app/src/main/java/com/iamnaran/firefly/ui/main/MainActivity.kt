@@ -34,14 +34,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }
-
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
-
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

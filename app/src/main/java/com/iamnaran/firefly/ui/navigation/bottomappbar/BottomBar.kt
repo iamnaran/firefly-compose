@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -19,6 +20,7 @@ import com.iamnaran.firefly.ui.navigation.InterestRoute
 import com.iamnaran.firefly.ui.navigation.NotificationRoute
 import com.iamnaran.firefly.ui.navigation.ProfileRoute
 import com.iamnaran.firefly.ui.theme.AppIcons
+import com.iamnaran.firefly.utils.AppLog
 
 @Composable
 fun BottomBar(
@@ -35,8 +37,7 @@ fun BottomBar(
     NavigationBar {
 
         navDestinationScreens.forEach { screen ->
-            val isSelected = currentDestination?.let { it.route == screen.destination.toString() } == true
-
+            val isSelected = currentDestination?.hierarchy?.any { it.route == screen.destination::class.qualifiedName } == true
             NavigationBarItem(
                 selected = isSelected,
                 label = {

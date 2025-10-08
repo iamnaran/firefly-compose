@@ -6,6 +6,9 @@ import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 data class Language(
     val code: String,
@@ -18,9 +21,11 @@ val appLanguages = listOf(
     Language("hi", "हिन्दी")
 )
 
-class AppLocaleManager {
-
-    fun changeLanguage(context: Context, languageCode: String) {
+@Singleton
+class AppLocaleManager @Inject constructor(
+    @param:ApplicationContext private val context: Context
+) {
+    fun changeLanguage(languageCode: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.getSystemService(LocaleManager::class.java).applicationLocales =
                 LocaleList.forLanguageTags(languageCode)
@@ -29,7 +34,7 @@ class AppLocaleManager {
         }
     }
 
-    fun getLanguageCode(context: Context,): String {
+    fun getLanguageCode(): String {
         val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.getSystemService(LocaleManager::class.java)
                 ?.applicationLocales

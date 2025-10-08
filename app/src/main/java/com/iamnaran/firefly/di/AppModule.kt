@@ -52,5 +52,12 @@ object  AppModule {
     }
 
 
+    @Provides
+    @Singleton
+    fun provideAppLocaleManager(
+        @ApplicationContext context: Context
+    ): AppLocaleManager = AppLocaleManager(context)
+
+
 
 }
