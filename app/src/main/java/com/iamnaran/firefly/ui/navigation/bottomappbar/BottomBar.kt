@@ -26,7 +26,6 @@ import com.iamnaran.firefly.utils.AppLog
 fun BottomBar(
     navController: NavHostController,
 ) {
-
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 

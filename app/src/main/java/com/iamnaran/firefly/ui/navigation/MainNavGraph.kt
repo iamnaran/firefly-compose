@@ -69,13 +69,11 @@ fun NavGraphBuilder.mainNavGraph(
 
         composable<ExploreRoute> {
             ExploreScreen {
-
             }
         }
 
         composable<InterestRoute> {
             InterestScreen {
-
             }
         }
 
@@ -108,17 +106,11 @@ fun NavGraphBuilder.mainNavGraph(
 
         dialog<RecipeDetailRoute>(
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
-
         ) { backStackEntry ->
-
             val recipeDetail = backStackEntry.toRoute<RecipeDetailRoute>()
-
             RecipeDetailScreen(recipeId = recipeDetail.recipeId) {
                 navController.navigateUp()
             }
-
         }
-
     }
-
 }

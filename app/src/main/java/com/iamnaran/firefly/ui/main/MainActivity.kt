@@ -44,16 +44,12 @@ val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { nu
 private fun MainScreenContent(
     isAuthenticated: Boolean
 ) {
-
     SharedTransitionLayout {
         CompositionLocalProvider(
             LocalSharedTransitionScope provides this
         ) {
-
             RootNavHost(isAuthenticated)
         }
-
-
     }
 }
 

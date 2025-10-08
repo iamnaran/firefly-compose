@@ -161,9 +161,6 @@ fun RootNavHost(isAuthenticated: Boolean) {
                 }
             }
         }
-
     }
-
-
 }
 
